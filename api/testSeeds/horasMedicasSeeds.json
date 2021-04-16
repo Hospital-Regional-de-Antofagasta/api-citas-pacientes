@@ -9,6 +9,15 @@
         "NumeroPaciente": 1   
     },
     {
+        "CorrelativoHora":17,
+        "NombreLugar":"HORAS IMAGENOLOGIA",
+        "NombreServicio":"POLI BRONCOPULMONAR ADULTO",
+        "NombreProfesional":"TECNOLOGO MEDICO IMAGENOLOGIA",
+        "FechaCitacion":"2021-04-16T14:21:01.643Z",
+        "HoraCitacion":"10:00",
+        "NumeroPaciente": 1 
+     },
+    {
         "CorrelativoHora":24,
         "NombreLugar":"URGENCIA",
         "NombreServicio":"POLI BRONCOPULMONAR ADULTO",

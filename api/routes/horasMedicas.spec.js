@@ -16,41 +16,43 @@ beforeAll(async done =>{
     await mongoose.disconnect();
     //Conectar a la base de datos de prueba.
     await mongoose.connect(`${process.env.MONGO_URI_TEST}horas_medicas_test`, { useNewUrlParser: true, useUnifiedTopology: true })
+     //Cargar los seeds a la base de datos.
+     for (const horaMedicaSeed of horasMedicasSeeds) {
+        await Promise.all([
+            HorasMedicas.create(horaMedicaSeed),
+        ])
+    } 
     done()
 })
 
 
 afterAll(async (done) => {
+    //Borrar el contenido de la colección en la base de datos despues de la pruebas.
+    await HorasMedicas.deleteMany()
     //Cerrar la conexión a la base de datos despues de la pruebas.
     await mongoose.connection.close()
     done()
 })
 
-beforeEach(async () => {
-    //Cargar los seeds a la base de datos.
-    for (const horaMedicaSeed of horasMedicasSeeds) {
-        await Promise.all([
-            HorasMedicas.create(horaMedicaSeed),
-        ])
-    } 
-})
+// beforeEach(async () => {
+   
+// })
 
-afterEach(async () => {
-    //Borrar el contenido de la colección en la base de datos despues de la pruebas.
-    await HorasMedicas.deleteMany()
-})
+// afterEach(async () => {
+    
+// })
 
 describe('Endpoints', () => {
     describe('Horas Médicas', () => {
         it('Intenta obtener las horas médicas de un paciente sin token', async done =>{ 
-            const respuesta = await request.get('/horas_medicas/horas_medicas_paciente')      
+            const respuesta = await request.get('/horas_medicas/horas_medicas_paciente_historico')      
             expect(respuesta.status).toBe(403)
             expect(respuesta.body.respuesta).toBeTruthy()
             done()
         })
         it('Intenta obtener las horas médicas de un paciente con token (Arreglo sin horas médicas)', async done =>{            
             token = jwt.sign({PAC_PAC_Numero: 2}, secreto)
-            const respuesta = await request.get('/horas_medicas/horas_medicas_paciente')
+            const respuesta = await request.get('/horas_medicas/horas_medicas_paciente_historico')
                 .set('Authorization',token)      
             expect(respuesta.status).toBe(200)
             //Probar que el arreglo está vacío.
@@ -61,18 +63,21 @@ describe('Endpoints', () => {
         })
         it('Intenta obtener las horas médicas de un paciente con token (Arreglo con horas médicas)', async done =>{            
             token = jwt.sign({PAC_PAC_Numero: 1}, secreto)
-            const respuesta = await request.get('/horas_medicas/horas_medicas_paciente')
+            const respuesta = await request.get('/horas_medicas/horas_medicas_paciente_historico')
                 .set('Authorization',token)
             expect(respuesta.status).toBe(200)  
             //Probar que el arreglo tiene dos horas médicas y que ambas son del mismo paciente.
             const arregloHorasMedicas = respuesta.body
-            expect(arregloHorasMedicas.length).toStrictEqual(2)
+            expect(arregloHorasMedicas.length).toStrictEqual(3)
             const primeraHoraMedica = arregloHorasMedicas[0]
             const numeroPacientePrimeraHoraMedica = primeraHoraMedica.NumeroPaciente
             expect(numeroPacientePrimeraHoraMedica).toStrictEqual(1)
             const segundaHoraMedica = arregloHorasMedicas[1]
             const numeroPacienteSegundaHoraMedica = segundaHoraMedica.NumeroPaciente
             expect(numeroPacienteSegundaHoraMedica).toStrictEqual(1)
+            const terceraHoraMedica = arregloHorasMedicas[2]
+            const numeroPacienteTerceraHoraMedica = terceraHoraMedica.NumeroPaciente
+            expect(numeroPacienteTerceraHoraMedica).toStrictEqual(1)
             done()
         })         
     })
