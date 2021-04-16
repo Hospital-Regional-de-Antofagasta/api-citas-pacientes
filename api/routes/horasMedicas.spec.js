@@ -34,23 +34,16 @@ afterAll(async (done) => {
     done()
 })
 
-// beforeEach(async () => {
-   
-// })
-
-// afterEach(async () => {
-    
-// })
 
 describe('Endpoints', () => {
-    describe('Horas Médicas', () => {
-        it('Intenta obtener las horas médicas de un paciente sin token', async done =>{ 
+    describe('Horas Médicas Históricas', () => {
+        it('Intenta obtener las horas médicas históricas de un paciente sin token', async done =>{ 
             const respuesta = await request.get('/horas_medicas/horas_medicas_paciente_historico')      
             expect(respuesta.status).toBe(403)
             expect(respuesta.body.respuesta).toBeTruthy()
             done()
         })
-        it('Intenta obtener las horas médicas de un paciente con token (Arreglo sin horas médicas)', async done =>{            
+        it('Intenta obtener las horas médicas históricas de un paciente con token (Arreglo sin horas médicas)', async done =>{            
             token = jwt.sign({PAC_PAC_Numero: 2}, secreto)
             const respuesta = await request.get('/horas_medicas/horas_medicas_paciente_historico')
                 .set('Authorization',token)      
@@ -61,7 +54,7 @@ describe('Endpoints', () => {
             expect(arregloHorasMedicas.length).toStrictEqual(0)
             done()
         })
-        it('Intenta obtener las horas médicas de un paciente con token (Arreglo con horas médicas)', async done =>{            
+        it('Intenta obtener las horas médicas históricas de un paciente con token (Arreglo con horas médicas)', async done =>{            
             token = jwt.sign({PAC_PAC_Numero: 1}, secreto)
             const respuesta = await request.get('/horas_medicas/horas_medicas_paciente_historico')
                 .set('Authorization',token)
@@ -79,6 +72,12 @@ describe('Endpoints', () => {
             const numeroPacienteTerceraHoraMedica = terceraHoraMedica.NumeroPaciente
             expect(numeroPacienteTerceraHoraMedica).toStrictEqual(1)
             done()
-        })         
+        })
+        const fecha = new Date().setUTCHours(15)
+        console.log(new Date(fecha))
+        // const fecha1 = fecha.toLocaleString('en-US', { timeZone: process.env.ZONA_HORARIA })
+        // console.log(fecha1)
+        // console.log(new Date(fecha1))
+        // console.log(new Date(new Date(fecha1).setUTCHours(15)))          
     })
 })

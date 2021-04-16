@@ -5,7 +5,8 @@ exports.getHorasMedicasPacienteHistorico = (req, res) =>{
     try {
         Recetas.find({
             NumeroPaciente: req.pacPacNumero
-        })    
+        })
+        .sort({ FechaCitacion: 1})//1 ascendente    
         .exec()
         .then(arregloHorasMedicas => res.status(200).send(arregloHorasMedicas))
     } catch (error) {
@@ -16,8 +17,10 @@ exports.getHorasMedicasPacienteHistorico = (req, res) =>{
 exports.getHorasMedicasPacienteHoy = (req, res) =>{
     try {
         Recetas.find({
-            NumeroPaciente: req.pacPacNumero
-        })    
+            NumeroPaciente: req.pacPacNumero,
+            FechaCitacion: new Date('1987-10-26') 
+        })
+        .sort({ FechaCitacion: 1})//1 ascendente    
         .exec()
         .then(arregloHorasMedicas => res.status(200).send(arregloHorasMedicas))
     } catch (error) {
@@ -28,8 +31,10 @@ exports.getHorasMedicasPacienteHoy = (req, res) =>{
 exports.getHorasMedicasPacienteProximas = (req, res) =>{
     try {
         Recetas.find({
-            NumeroPaciente: req.pacPacNumero
-        })    
+            NumeroPaciente: req.pacPacNumero,
+            FechaCitacion: { $gte: '1987-10-19', $lte: '1987-10-26' }
+        })
+        .sort({ FechaCitacion: 1})//1 ascendente    
         .exec()
         .then(arregloHorasMedicas => res.status(200).send(arregloHorasMedicas))
     } catch (error) {
