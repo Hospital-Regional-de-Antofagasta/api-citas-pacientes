@@ -19,11 +19,11 @@ exports.getHorasMedicasPacienteProximas = async (req, res) => {
     const timeZone = req.params.timeZone
     const fechaHoy = new Date()
     // sumarle un dia a la fecha de hoy para obtener la de maniana
-    const fechaManiana = new Date()
-    fechaManiana.setDate(fechaManiana.getDate() + 1)
+    // const fechaManiana = new Date()
+    // fechaManiana.setDate(fechaManiana.getDate() + 1)
     // aplicar la zona horaria a las fechas y obtener solo el dia
     const fechaInicio = moment.tz(fechaHoy, timeZone).startOf('day')
-    const fechaFin = moment.tz(fechaManiana, timeZone).startOf('day')
+    const fechaFin = moment.tz(fechaHoy, timeZone).endOf('day')
     // const fechaInicio =  new Date(fechaHoy.getFullYear(),fechaHoy.getMonth(),fechaHoy.getDate(),0,0,0,0)
     // const fechaFin = new Date(fechaHoy.getFullYear(),fechaHoy.getMonth(),fechaHoy.getDate(),23,59,59,999)
     try {
