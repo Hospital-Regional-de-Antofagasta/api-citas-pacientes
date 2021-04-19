@@ -28,7 +28,7 @@ beforeAll(async done =>{
     const fechaNueva18 =  new Date(fechaHoy.getFullYear(),fechaHoy.getMonth(),fechaHoy.getDate(),16,30,0,0)
     await Promise.all([
         HorasMedicas.findOneAndUpdate({CorrelativoHora: 17},{FechaCitacion: fechaNueva17}),
-        HorasMedicas.findOneAndUpdate({CorrelativoHora: 18},{FechaCitacion: fechaNueva18}) 
+        HorasMedicas.findOneAndUpdate({CorrelativoHora: 18},{FechaCitacion: fechaNueva18})
     ])
     //Cambiar fechas de las horas 19 y 24 del seeder para que sean posteriores al día actual.
     const anio = fechaHoy.getFullYear()+1
@@ -54,7 +54,7 @@ afterAll(async (done) => {
 describe('Endpoints', () => {
     describe('Horas Médicas Históricas', () => {
         it('Intenta obtener las horas médicas históricas de un paciente sin token', async done =>{ 
-            const respuesta = await request.get('/horas_medicas/paciente_historico')      
+            const respuesta = await request.get('/horas_medicas/paciente_historico')
             expect(respuesta.status).toBe(403)
             expect(respuesta.body.respuesta).toBeTruthy()
             done()
@@ -62,7 +62,7 @@ describe('Endpoints', () => {
         it('Intenta obtener las horas médicas históricas de un paciente con token (Arreglo sin horas médicas)', async done =>{            
             token = jwt.sign({PAC_PAC_Numero: 2}, secreto)
             const respuesta = await request.get('/horas_medicas/paciente_historico')
-                .set('Authorization',token)      
+                .set('Authorization',token)
             expect(respuesta.status).toBe(200)
             //Probar que el arreglo está vacío.
             const arregloHorasMedicas=respuesta.body
@@ -74,26 +74,26 @@ describe('Endpoints', () => {
             token = jwt.sign({PAC_PAC_Numero: 1}, secreto)
             const respuesta = await request.get('/horas_medicas/paciente_historico')
                 .set('Authorization',token)
-            expect(respuesta.status).toBe(200)  
+            expect(respuesta.status).toBe(200)
             //Probar que el arreglo tiene cinco horas médicas y que todas son del mismo paciente.
             const arregloHorasMedicas = respuesta.body
-            
+
             const primeraHoraMedica = arregloHorasMedicas[0]
             const numeroPacientePrimeraHoraMedica = primeraHoraMedica.NumeroPaciente
             const correlativoPrimeraHoraMedica = primeraHoraMedica.CorrelativoHora
 
             const segundaHoraMedica = arregloHorasMedicas[1]
-            const numeroPacienteSegundaHoraMedica = segundaHoraMedica.NumeroPaciente            
+            const numeroPacienteSegundaHoraMedica = segundaHoraMedica.NumeroPaciente
             const correlativoSegundaHoraMedica = segundaHoraMedica.CorrelativoHora
-           
+
             const terceraHoraMedica = arregloHorasMedicas[2]
             const numeroPacienteTerceraHoraMedica = terceraHoraMedica.NumeroPaciente           
             const correlativoTerceraHoraMedica = terceraHoraMedica.CorrelativoHora
-            
+
             const cuartaHoraMedica = arregloHorasMedicas[3]
             const numeroPacienteCuartaHoraMedica = cuartaHoraMedica.NumeroPaciente
             const correlativoCuartaHoraMedica = cuartaHoraMedica.CorrelativoHora
-            
+
             const quintaHoraMedica = arregloHorasMedicas[4]
             const numeroPacienteQuintaHoraMedica = quintaHoraMedica.NumeroPaciente
             const correlativoQuintaHoraMedica = quintaHoraMedica.CorrelativoHora
@@ -112,23 +112,23 @@ describe('Endpoints', () => {
             expect(numeroPacienteCuartaHoraMedica).toStrictEqual(1)
             expect(correlativoCuartaHoraMedica).toStrictEqual(19)
 
-            expect(numeroPacienteQuintaHoraMedica).toStrictEqual(1)            
+            expect(numeroPacienteQuintaHoraMedica).toStrictEqual(1)
             expect(correlativoQuintaHoraMedica).toStrictEqual(24)
             done()
-        })       
+        })
     })
-    
+
     describe('Horas Médicas Proximas', () => {
-        it('Intenta obtener las horas médicas posteriores a hoy de un paciente sin token', async done =>{ 
-            const respuesta = await request.get('/horas_medicas/paciente_proximas')      
+        it('Intenta obtener las horas médicas posteriores a hoy de un paciente sin token', async done =>{
+            const respuesta = await request.get(`/horas_medicas/paciente_proximas/${encodeURIComponent('America/Santiago')}`)
             expect(respuesta.status).toBe(403)
             expect(respuesta.body.respuesta).toBeTruthy()
             done()
         })
-        it('Intenta obtener las horas médicas posteriores a hoy de un paciente con token (Arreglo sin horas médicas)', async done =>{            
+        it('Intenta obtener las horas médicas posteriores a hoy de un paciente con token (Arreglo sin horas médicas)', async done =>{
             token = jwt.sign({PAC_PAC_Numero: 2}, secreto)
-            const respuesta = await request.get('/horas_medicas/paciente_proximas')
-                .set('Authorization',token)      
+            const respuesta = await request.get(`/horas_medicas/paciente_proximas/${encodeURIComponent('America/Santiago')}`)
+                .set('Authorization',token)
             expect(respuesta.status).toBe(200)
             //Probar que el arreglo está vacío.
             const arregloHorasMedicas=respuesta.body
@@ -138,22 +138,22 @@ describe('Endpoints', () => {
             expect(arregloHorasMedicas[1].length).toStrictEqual(0)
             done()
         })
-        it('Intenta obtener las horas médicas posteriores a hoy de un paciente con token (Arreglo con horas médicas)', async done =>{            
+        it('Intenta obtener las horas médicas posteriores a hoy de un paciente con token (Arreglo con horas médicas)', async done =>{
             token = jwt.sign({PAC_PAC_Numero: 1}, secreto)
-            const respuesta = await request.get('/horas_medicas/paciente_proximas')
+            const respuesta = await request.get(`/horas_medicas/paciente_proximas/${encodeURIComponent('America/Santiago')}`)
                 .set('Authorization',token)
-            expect(respuesta.status).toBe(200)  
+            expect(respuesta.status).toBe(200)
             //Probar que el arreglo tiene dos arreglos de hora médicas y que todas son del mismo paciente.
             const arregloDeArreglosHorasMedicas = respuesta.body
 
             const arregloHorasMedicasHoy = arregloDeArreglosHorasMedicas[0]
-            
+
             const primeraHoraMedica = arregloHorasMedicasHoy[0]
             const numeroPacientePrimeraHoraMedica = primeraHoraMedica.NumeroPaciente
             const correlativoPrimeraHoraMedica = primeraHoraMedica.CorrelativoHora
-            
+
             const segundaHoraMedica = arregloHorasMedicasHoy[1]
-            const numeroPacienteSegundaHoraMedica = segundaHoraMedica.NumeroPaciente            
+            const numeroPacienteSegundaHoraMedica = segundaHoraMedica.NumeroPaciente
             const correlativoSegundaHoraMedica = segundaHoraMedica.CorrelativoHora
 
             expect(arregloHorasMedicasHoy.length).toStrictEqual(2)
@@ -167,21 +167,21 @@ describe('Endpoints', () => {
             const arregloHorasMedicasProximas = arregloDeArreglosHorasMedicas[1]
 
             const terceraHoraMedica = arregloHorasMedicasProximas[0]
-            const numeroPacienteTerceraHoraMedica = terceraHoraMedica.NumeroPaciente            
+            const numeroPacienteTerceraHoraMedica = terceraHoraMedica.NumeroPaciente
             const correlativoTerceraHoraMedica = terceraHoraMedica.CorrelativoHora
-            
+
             const cuartaHoraMedica = arregloHorasMedicasProximas[1]
-            const numeroPacienteCuartaHoraMedica = cuartaHoraMedica.NumeroPaciente            
+            const numeroPacienteCuartaHoraMedica = cuartaHoraMedica.NumeroPaciente
             const correlativoCuartaHoraMedica = cuartaHoraMedica.CorrelativoHora
 
             expect(arregloHorasMedicasProximas.length).toStrictEqual(2)
 
             expect(numeroPacienteTerceraHoraMedica).toStrictEqual(1)
             expect(correlativoTerceraHoraMedica).toStrictEqual(19)
-            
+
             expect(numeroPacienteCuartaHoraMedica).toStrictEqual(1)
             expect(correlativoCuartaHoraMedica).toStrictEqual(24)
             done()
-        })       
+        })
     })
 })
