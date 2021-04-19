@@ -36,7 +36,7 @@ beforeAll(async done =>{
     const fechaNueva24 =  new Date(anio,2,1,16,30,0,0)
     await Promise.all([
         HorasMedicas.findOneAndUpdate({CorrelativoHora: 19},{FechaCitacion: fechaNueva19}),
-        HorasMedicas.findOneAndUpdate({CorrelativoHora: 24},{FechaCitacion: fechaNueva24}) 
+        HorasMedicas.findOneAndUpdate({CorrelativoHora: 24},{FechaCitacion: fechaNueva24})
     ])
     done()
 })
