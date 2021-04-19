@@ -1,36 +1,39 @@
-const Recetas = require('../models/HorasMedicas')
+const HorasMedicas = require('../models/HorasMedicas')
 const {mensajes} = require ('../config')
 
-exports.getHorasMedicasPacienteHistorico = (req, res) =>{
+exports.getHorasMedicasPacienteHistorico = async (req, res) =>{
     try {
-        Recetas.find({
+        const arregloHorasMedicas = await HorasMedicas.find({
             NumeroPaciente: req.pacPacNumero
         })
         .sort({ FechaCitacion: 1})//1 ascendente    
         .exec()
-        .then(arregloHorasMedicas => res.status(200).send(arregloHorasMedicas))
+        res.status(200).send(arregloHorasMedicas)
     } catch (error) {
         res.status(500).send({ respuesta: mensajes.serverError})
     }
 }
 
-exports.getHorasMedicasPacienteHoy = (req, res) =>{
+exports.getHorasMedicasPacienteHoy = async (req, res) =>{
+    const fechaHoy = new Date()
+    const fechaInicio =  new Date(fechaHoy.getFullYear(),fechaHoy.getMonth(),fechaHoy.getDate(),0,0,0,0)
+    const fechaFin = new Date(fechaHoy.getFullYear(),fechaHoy.getMonth(),fechaHoy.getDate(),23,59,59,999)
     try {
-        Recetas.find({
+        const arregloHorasMedicas = await HorasMedicas.find({
             NumeroPaciente: req.pacPacNumero,
-            FechaCitacion: new Date('1987-10-26') 
+            FechaCitacion: { $gte: fechaInicio, $lte: fechaFin } 
         })
-        .sort({ FechaCitacion: 1})//1 ascendente    
+        .sort({ FechaCitacion: 1})//1 ascendente, -1 descendente    
         .exec()
-        .then(arregloHorasMedicas => res.status(200).send(arregloHorasMedicas))
+        res.status(200).send(arregloHorasMedicas)
     } catch (error) {
         res.status(500).send({ respuesta: mensajes.serverError})
     }
 }
 
-exports.getHorasMedicasPacienteProximas = (req, res) =>{
+exports.getHorasMedicasPacienteProximas = async (req, res) =>{
     try {
-        Recetas.find({
+        await HorasMedicas.find({
             NumeroPaciente: req.pacPacNumero,
             FechaCitacion: { $gte: '1987-10-19', $lte: '1987-10-26' }
         })
