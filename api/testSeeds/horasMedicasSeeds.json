@@ -15,7 +15,7 @@
         "NombreProfesional":"TECNOLOGO MEDICO IMAGENOLOGIA",
         "FechaCitacion":"2021-04-19T14:21:01.643Z",
         "HoraCitacion":"10:00",
-        "NumeroPaciente": 3 
+        "NumeroPaciente": 1 
     },
     {
         "CorrelativoHora":18,
@@ -24,7 +24,7 @@
         "NombreProfesional":"JOSE EDUARDO VERGARA LLANOS",
         "FechaCitacion":"2021-04-19T19:25:00.000Z",
         "HoraCitacion":"9:00",
-        "NumeroPaciente": 3 
+        "NumeroPaciente": 1 
     },
     {
         "CorrelativoHora":19,
