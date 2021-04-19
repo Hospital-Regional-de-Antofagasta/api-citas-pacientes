@@ -1,0 +1,29 @@
+[
+    {
+        "CorrelativoHora":12,
+        "NombreLugar":"HORAS IMAGENOLOGIA",
+        "NombreServicio":"SCANNER URGENCIA",
+        "NombreProfesional":"TECNOLOGO MEDICO IMAGENOLOGIA",
+        "FechaCitacion":"2021-01-02T14:21:01.643Z",
+        "HoraCitacion":"08:30",
+        "NumeroPaciente": 1   
+    },
+    {
+        "CorrelativoHora":17,
+        "NombreLugar":"HORAS IMAGENOLOGIA",
+        "NombreServicio":"POLI BRONCOPULMONAR ADULTO",
+        "NombreProfesional":"TECNOLOGO MEDICO IMAGENOLOGIA",
+        "FechaCitacion":"2021-04-16T14:21:01.643Z",
+        "HoraCitacion":"10:00",
+        "NumeroPaciente": 1 
+     },
+    {
+        "CorrelativoHora":24,
+        "NombreLugar":"URGENCIA",
+        "NombreServicio":"POLI BRONCOPULMONAR ADULTO",
+        "NombreProfesional":"JOSE EDUARDO VERGARA LLANOS",
+        "FechaCitacion":"2021-05-18T14:21:01.643Z",
+        "HoraCitacion":"9:00",
+        "NumeroPaciente": 1 
+     }
+]
