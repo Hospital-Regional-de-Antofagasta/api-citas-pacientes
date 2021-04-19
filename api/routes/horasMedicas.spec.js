@@ -75,33 +75,44 @@ describe('Endpoints', () => {
             const respuesta = await request.get('/horas_medicas/paciente_historico')
                 .set('Authorization',token)
             expect(respuesta.status).toBe(200)  
-            //Probar que el arreglo tiene tres horas médicas y que todas son del mismo paciente.
+            //Probar que el arreglo tiene cinco horas médicas y que todas son del mismo paciente.
             const arregloHorasMedicas = respuesta.body
-            expect(arregloHorasMedicas.length).toStrictEqual(5)
+            
             const primeraHoraMedica = arregloHorasMedicas[0]
             const numeroPacientePrimeraHoraMedica = primeraHoraMedica.NumeroPaciente
-            expect(numeroPacientePrimeraHoraMedica).toStrictEqual(1)
             const correlativoPrimeraHoraMedica = primeraHoraMedica.CorrelativoHora
-            expect(correlativoPrimeraHoraMedica).toStrictEqual(12)
+
             const segundaHoraMedica = arregloHorasMedicas[1]
-            const numeroPacienteSegundaHoraMedica = segundaHoraMedica.NumeroPaciente
-            expect(numeroPacienteSegundaHoraMedica).toStrictEqual(1)
+            const numeroPacienteSegundaHoraMedica = segundaHoraMedica.NumeroPaciente            
             const correlativoSegundaHoraMedica = segundaHoraMedica.CorrelativoHora
-            expect(correlativoSegundaHoraMedica).toStrictEqual(17)
+           
             const terceraHoraMedica = arregloHorasMedicas[2]
-            const numeroPacienteTerceraHoraMedica = terceraHoraMedica.NumeroPaciente
-            expect(numeroPacienteTerceraHoraMedica).toStrictEqual(1)
+            const numeroPacienteTerceraHoraMedica = terceraHoraMedica.NumeroPaciente           
             const correlativoTerceraHoraMedica = terceraHoraMedica.CorrelativoHora
-            expect(correlativoTerceraHoraMedica).toStrictEqual(18)
+            
             const cuartaHoraMedica = arregloHorasMedicas[3]
             const numeroPacienteCuartaHoraMedica = cuartaHoraMedica.NumeroPaciente
-            expect(numeroPacienteCuartaHoraMedica).toStrictEqual(1)
             const correlativoCuartaHoraMedica = cuartaHoraMedica.CorrelativoHora
-            expect(correlativoCuartaHoraMedica).toStrictEqual(19)
+            
             const quintaHoraMedica = arregloHorasMedicas[4]
             const numeroPacienteQuintaHoraMedica = quintaHoraMedica.NumeroPaciente
-            expect(numeroPacienteQuintaHoraMedica).toStrictEqual(1)
             const correlativoQuintaHoraMedica = quintaHoraMedica.CorrelativoHora
+
+            expect(arregloHorasMedicas.length).toStrictEqual(5)
+
+            expect(numeroPacientePrimeraHoraMedica).toStrictEqual(1)
+            expect(correlativoPrimeraHoraMedica).toStrictEqual(12)
+
+            expect(numeroPacienteSegundaHoraMedica).toStrictEqual(1)
+            expect(correlativoSegundaHoraMedica).toStrictEqual(17)
+
+            expect(numeroPacienteTerceraHoraMedica).toStrictEqual(1)
+            expect(correlativoTerceraHoraMedica).toStrictEqual(18)
+
+            expect(numeroPacienteCuartaHoraMedica).toStrictEqual(1)
+            expect(correlativoCuartaHoraMedica).toStrictEqual(19)
+
+            expect(numeroPacienteQuintaHoraMedica).toStrictEqual(1)            
             expect(correlativoQuintaHoraMedica).toStrictEqual(24)
             done()
         })       
@@ -136,28 +147,39 @@ describe('Endpoints', () => {
             const arregloDeArreglosHorasMedicas = respuesta.body
 
             const arregloHorasMedicasHoy = arregloDeArreglosHorasMedicas[0]
+            
             const primeraHoraMedica = arregloHorasMedicasHoy[0]
             const numeroPacientePrimeraHoraMedica = primeraHoraMedica.NumeroPaciente
-            expect(numeroPacientePrimeraHoraMedica).toStrictEqual(1)
             const correlativoPrimeraHoraMedica = primeraHoraMedica.CorrelativoHora
-            expect(correlativoPrimeraHoraMedica).toStrictEqual(17)
+            
             const segundaHoraMedica = arregloHorasMedicasHoy[1]
-            const numeroPacienteSegundaHoraMedica = segundaHoraMedica.NumeroPaciente
-            expect(numeroPacienteSegundaHoraMedica).toStrictEqual(1)
+            const numeroPacienteSegundaHoraMedica = segundaHoraMedica.NumeroPaciente            
             const correlativoSegundaHoraMedica = segundaHoraMedica.CorrelativoHora
+
+            expect(arregloHorasMedicasHoy.length).toStrictEqual(2)
+
+            expect(numeroPacientePrimeraHoraMedica).toStrictEqual(1)
+            expect(correlativoPrimeraHoraMedica).toStrictEqual(17)
+
+            expect(numeroPacienteSegundaHoraMedica).toStrictEqual(1)
             expect(correlativoSegundaHoraMedica).toStrictEqual(18)
 
             const arregloHorasMedicasProximas = arregloDeArreglosHorasMedicas[1]
-            expect(arregloHorasMedicasProximas.length).toStrictEqual(2)
+
             const terceraHoraMedica = arregloHorasMedicasProximas[0]
-            const numeroPacienteTerceraHoraMedica = terceraHoraMedica.NumeroPaciente
-            expect(numeroPacienteTerceraHoraMedica).toStrictEqual(1)
+            const numeroPacienteTerceraHoraMedica = terceraHoraMedica.NumeroPaciente            
             const correlativoTerceraHoraMedica = terceraHoraMedica.CorrelativoHora
-            expect(correlativoTerceraHoraMedica).toStrictEqual(19)
+            
             const cuartaHoraMedica = arregloHorasMedicasProximas[1]
-            const numeroPacienteCuartaHoraMedica = cuartaHoraMedica.NumeroPaciente
-            expect(numeroPacienteCuartaHoraMedica).toStrictEqual(1)
+            const numeroPacienteCuartaHoraMedica = cuartaHoraMedica.NumeroPaciente            
             const correlativoCuartaHoraMedica = cuartaHoraMedica.CorrelativoHora
+
+            expect(arregloHorasMedicasProximas.length).toStrictEqual(2)
+
+            expect(numeroPacienteTerceraHoraMedica).toStrictEqual(1)
+            expect(correlativoTerceraHoraMedica).toStrictEqual(19)
+            
+            expect(numeroPacienteCuartaHoraMedica).toStrictEqual(1)
             expect(correlativoCuartaHoraMedica).toStrictEqual(24)
             done()
         })       
