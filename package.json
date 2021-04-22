@@ -1,7 +1,7 @@
 {
   "name": "api-horas-medicas",
   "version": "1.0.0",
-  "description": "API encargada de responder consultas para leer y/o modificar datos de las horas médicas de los pacientes de HRA.",
+  "description": "API encargada de responder consultas para leer y/o modificar datos de las horas médicas de los pacientes de HRA. recompilar",
   "main": "index.js",
   "scripts": {
     "test": "jest"
