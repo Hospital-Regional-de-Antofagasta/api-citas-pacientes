@@ -1,0 +1,34 @@
+{
+  "name": "api-horas-medicas",
+  "version": "1.0.0",
+  "description": "API encargada de responder consultas para leer y/o modificar datos de las horas médicas de los pacientes de HRA. recompilar",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://DesarrolloHRA@bitbucket.org/DesarrolloHRA/api-horas-medicas.git"
+  },
+  "author": "Claudio González Salazar <pyrates_claudio@hotmail.com>",
+  "license": "ISC",
+  "homepage": "https://bitbucket.org/DesarrolloHRA/api-horas-medicas#readme",
+  "devDependencies": {
+    "@babel/cli": "^7.13.14",
+    "@babel/core": "^7.13.15",
+    "@babel/preset-env": "^7.13.15",
+    "dotenv": "^8.2.0",
+    "jest": "^26.6.3",
+    "supertest": "^6.1.3"
+  },
+  "dependencies": {
+    "@babel/polyfill": "^7.12.1",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "express-boom": "^3.0.0",
+    "jsonwebtoken": "^8.5.1",
+    "moment-timezone": "^0.5.33",
+    "mongoose": "^5.12.4",
+    "set-tz": "^0.2.0"
+  }
+}
