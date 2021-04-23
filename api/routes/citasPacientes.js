@@ -7,12 +7,10 @@ router.get('/horas_medicas/historico/',estaAutenticado, horasMedicasController.g
 
 router.get('/horas_medicas/proximas/:timeZone',estaAutenticado, horasMedicasController.getHorasMedicasPacienteProximas)
 
-//router.get('/imagenologia/historico/',estaAutenticado, horasMedicasController.getHorasMedicasPacienteHistorico)
+router.get('/horas_examenes/historico/',estaAutenticado, horasMedicasController.getHorasExamenesPacienteHistorico)
 
-//router.get('/imagenologia/proximas/:timeZone',estaAutenticado, horasMedicasController.getHorasMedicasPacienteProximas)
+router.get('/horas_examenes/proximas/:timeZone',estaAutenticado, horasMedicasController.getHorasExamenesPacienteProximas)
 
-//router.get('/laboratorio/historico/',estaAutenticado, horasMedicasController.getHorasMedicasPacienteHistorico)
 
-//router.get('/laboratorio/proximas/:timeZone',estaAutenticado, horasMedicasController.getHorasMedicasPacienteProximas)
 
 module.exports = router

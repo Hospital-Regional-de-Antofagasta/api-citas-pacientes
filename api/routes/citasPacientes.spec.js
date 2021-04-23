@@ -107,23 +107,23 @@ describe('Endpoints', () => {
 
             expect(numeroPacientePrimeraHoraMedica).toStrictEqual(1)
             expect(correlativoPrimeraHoraMedica).toStrictEqual(12)
-            expect(ambitoPrimeraHoraMedica).toStrictEqual('1')
+            expect(ambitoPrimeraHoraMedica).toStrictEqual('01')
 
             expect(numeroPacienteSegundaHoraMedica).toStrictEqual(1)
             expect(correlativoSegundaHoraMedica).toStrictEqual(17)
-            expect(ambitoSegundaHoraMedica).toStrictEqual('1')
+            expect(ambitoSegundaHoraMedica).toStrictEqual('01')
 
             expect(numeroPacienteTerceraHoraMedica).toStrictEqual(1)
             expect(correlativoTerceraHoraMedica).toStrictEqual(18)
-            expect(ambitoTerceraHoraMedica).toStrictEqual('1')
+            expect(ambitoTerceraHoraMedica).toStrictEqual('01')
 
             expect(numeroPacienteCuartaHoraMedica).toStrictEqual(1)
             expect(correlativoCuartaHoraMedica).toStrictEqual(19)
-            expect(ambitoCuartaHoraMedica).toStrictEqual('1')
+            expect(ambitoCuartaHoraMedica).toStrictEqual('01')
 
             expect(numeroPacienteQuintaHoraMedica).toStrictEqual(1)
             expect(correlativoQuintaHoraMedica).toStrictEqual(24)
-            expect(ambitoQuintaHoraMedica).toStrictEqual('1')
+            expect(ambitoQuintaHoraMedica).toStrictEqual('01')
             done()
         })
     })
@@ -172,11 +172,11 @@ describe('Endpoints', () => {
 
             expect(numeroPacientePrimeraHoraMedica).toStrictEqual(1)
             expect(correlativoPrimeraHoraMedica).toStrictEqual(17)
-            expect(ambitoPrimeraHoraMedica).toStrictEqual('1')
+            expect(ambitoPrimeraHoraMedica).toStrictEqual('01')
 
             expect(numeroPacienteSegundaHoraMedica).toStrictEqual(1)
             expect(correlativoSegundaHoraMedica).toStrictEqual(18)
-            expect(ambitoSegundaHoraMedica).toStrictEqual('1')
+            expect(ambitoSegundaHoraMedica).toStrictEqual('01')
 
             const arregloHorasMedicasProximas = arregloDeArreglosHorasMedicas[1]
 
@@ -194,11 +194,11 @@ describe('Endpoints', () => {
 
             expect(numeroPacienteTerceraHoraMedica).toStrictEqual(1)
             expect(correlativoTerceraHoraMedica).toStrictEqual(19)
-            expect(ambitoTerceraHoraMedica).toStrictEqual('1')
+            expect(ambitoTerceraHoraMedica).toStrictEqual('01')
 
             expect(numeroPacienteCuartaHoraMedica).toStrictEqual(1)
             expect(correlativoCuartaHoraMedica).toStrictEqual(24)
-            expect(ambitoCuartaHoraMedica).toStrictEqual('1')
+            expect(ambitoCuartaHoraMedica).toStrictEqual('01')
             done()
         })
     })

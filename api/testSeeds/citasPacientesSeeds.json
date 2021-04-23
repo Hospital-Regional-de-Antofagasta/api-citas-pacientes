@@ -7,7 +7,7 @@
         "FechaCitacion":"2021-01-02T14:21:01.643Z",
         "HoraCitacion":"08:30",
         "NumeroPaciente": 1,
-        "CodigoAmbito": "1"    
+        "CodigoAmbito": "01"    
     },
     {
         "CorrelativoCita":17,
@@ -17,7 +17,7 @@
         "FechaCitacion":"2021-04-19T14:21:01.643Z",
         "HoraCitacion":"10:00",
         "NumeroPaciente": 1,
-        "CodigoAmbito": "1"  
+        "CodigoAmbito": "01"  
     },
     {
         "CorrelativoCita":18,
@@ -27,7 +27,7 @@
         "FechaCitacion":"2021-04-19T19:25:00.000Z",
         "HoraCitacion":"9:00",
         "NumeroPaciente": 1,
-        "CodigoAmbito": "1" 
+        "CodigoAmbito": "01" 
     },
     {
         "CorrelativoCita":19,
@@ -37,7 +37,7 @@
         "FechaCitacion":"2021-05-19T19:25:00.000Z",
         "HoraCitacion":"9:00",
         "NumeroPaciente": 1,
-        "CodigoAmbito": "1"  
+        "CodigoAmbito": "01"  
     },
     {
         "CorrelativoCita":24,
@@ -47,6 +47,6 @@
         "FechaCitacion":"2021-05-20T14:21:01.643Z",
         "HoraCitacion":"9:00",
         "NumeroPaciente": 1,
-        "CodigoAmbito": "1"  
+        "CodigoAmbito": "01"  
      }
 ]
