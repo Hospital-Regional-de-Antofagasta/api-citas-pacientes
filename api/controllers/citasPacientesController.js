@@ -51,15 +51,16 @@ const citasProximas = async (req, res, codigoAmbito) => {
     try {
         const arregloDeArreglosCitasPaciente = await Promise.all([
             CitasPacientes.find({
-                NumeroPaciente: req.pacPacNumero,
-                CodigoAmbito: {$in: codigoAmbito},
-                FechaCitacion: { $gte: fechaInicio, $lte: fechaFin }
+                NumeroPaciente: req.pacPacNumero,                
+                FechaCitacion: { $gte: fechaInicio, $lte: fechaFin },
+                CodigoAmbito: {$in: codigoAmbito}
             })
             .sort({ FechaCitacion: 1 }) //1 ascendente, -1 descendente
             .exec(),
             CitasPacientes.find({
                 NumeroPaciente: req.pacPacNumero,
-                FechaCitacion: { $gte: fechaFin }
+                FechaCitacion: { $gte: fechaFin },
+                CodigoAmbito: {$in: codigoAmbito}
             })
             .sort({ FechaCitacion: 1 }) //1 ascendente, -1 descendente
             .exec()

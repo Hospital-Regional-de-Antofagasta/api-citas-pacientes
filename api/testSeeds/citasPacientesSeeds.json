@@ -10,6 +10,26 @@
         "CodigoAmbito": "01"    
     },
     {
+        "CorrelativoCita":13,
+        "NombreLugar":"HORAS IMAGENOLOGIA",
+        "NombreServicio":"SCANNER URGENCIA",
+        "NombreProfesional":"TECNOLOGO MEDICO IMAGENOLOGIA",
+        "FechaCitacion":"2021-01-02T14:21:01.643Z",
+        "HoraCitacion":"08:30",
+        "NumeroPaciente": 1,
+        "CodigoAmbito": "04"    
+    },
+    {
+        "CorrelativoCita":14,
+        "NombreLugar":"HORAS IMAGENOLOGIA",
+        "NombreServicio":"SCANNER URGENCIA",
+        "NombreProfesional":"TECNOLOGO MEDICO IMAGENOLOGIA",
+        "FechaCitacion":"2021-01-02T14:21:01.643Z",
+        "HoraCitacion":"08:30",
+        "NumeroPaciente": 1,
+        "CodigoAmbito": "06"    
+    },
+    {
         "CorrelativoCita":17,
         "NombreLugar":"HORAS IMAGENOLOGIA",
         "NombreServicio":"POLI BRONCOPULMONAR ADULTO",
@@ -38,6 +58,26 @@
         "HoraCitacion":"9:00",
         "NumeroPaciente": 1,
         "CodigoAmbito": "01"  
+    },
+    {
+        "CorrelativoCita":20,
+        "NombreLugar":"URGENCIA",
+        "NombreServicio":"POLI BRONCOPULMONAR ADULTO",
+        "NombreProfesional":"TECNOLOGO MEDICO IMAGENOLOGIA",
+        "FechaCitacion":"2021-05-19T19:25:00.000Z",
+        "HoraCitacion":"9:00",
+        "NumeroPaciente": 1,
+        "CodigoAmbito": "06"  
+    },
+    {
+        "CorrelativoCita":21,
+        "NombreLugar":"URGENCIA",
+        "NombreServicio":"POLI BRONCOPULMONAR ADULTO",
+        "NombreProfesional":"TECNOLOGO MEDICO IMAGENOLOGIA",
+        "FechaCitacion":"2021-05-19T19:25:00.000Z",
+        "HoraCitacion":"9:00",
+        "NumeroPaciente": 1,
+        "CodigoAmbito": "04"  
     },
     {
         "CorrelativoCita":24,
