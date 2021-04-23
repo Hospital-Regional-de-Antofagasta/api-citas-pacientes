@@ -1,11 +1,12 @@
 var moment = require('moment-timezone')
-const HorasMedicas = require('../models/HorasMedicas')
+const HorasMedicas = require('../models/CitasPacientes')
 const { mensajes } = require ('../config')
 
 exports.getHorasMedicasPacienteHistorico = async (req, res) =>{
     try {
         const arregloHorasMedicas = await HorasMedicas.find({
-            NumeroPaciente: req.pacPacNumero
+            NumeroPaciente: req.pacPacNumero,
+            CodigoAmbito: '1',
         })
         .sort({ FechaCitacion: 1 }) //1 ascendente
         .exec()
@@ -30,6 +31,7 @@ exports.getHorasMedicasPacienteProximas = async (req, res) => {
         const arregloDeArreglosHorasMedicas = await Promise.all([
             HorasMedicas.find({
                 NumeroPaciente: req.pacPacNumero,
+                CodigoAmbito: '1',
                 FechaCitacion: { $gte: fechaInicio, $lte: fechaFin }
             })
             .sort({ FechaCitacion: 1 }) //1 ascendente, -1 descendente
@@ -46,4 +48,6 @@ exports.getHorasMedicasPacienteProximas = async (req, res) => {
         res.status(500).send({ respuesta: mensajes.serverError })
     }
 }
+
+
 
