@@ -1,5 +1,5 @@
 {
-  "name": "api-horas-medicas",
+  "name": "api-citas-pacientes",
   "version": "1.0.0",
   "description": "API encargada de responder consultas para leer y/o modificar datos de las citas de los pacientes (horas médicas, exámenes de imagenología y exámenes de laboratorio) de los pacientes de HRA.",
   "main": "index.js",
@@ -8,11 +8,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://DesarrolloHRA@bitbucket.org/DesarrolloHRA/api-horas-medicas.git"
+    "url": "git+https://DesarrolloHRA@bitbucket.org/DesarrolloHRA/api-citas-pacientes.git"
   },
   "author": "Claudio González Salazar <pyrates_claudio@hotmail.com>",
   "license": "ISC",
-  "homepage": "https://bitbucket.org/DesarrolloHRA/api-horas-medicas#readme",
+  "homepage": "https://bitbucket.org/DesarrolloHRA/api-citas-pacientes#readme",
   "devDependencies": {
     "@babel/cli": "^7.13.14",
     "@babel/core": "^7.13.15",
