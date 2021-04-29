@@ -27,20 +27,20 @@ beforeAll(async done =>{
     const fechaHoy1 =  new Date(fechaHoy.getFullYear(),fechaHoy.getMonth(),fechaHoy.getDate(),8,30,0,0)
     const fechaHoy2 =  new Date(fechaHoy.getFullYear(),fechaHoy.getMonth(),fechaHoy.getDate(),16,30,0,0)
     await Promise.all([
-        CitasPacientes.findOneAndUpdate({CorrelativoCita: 13},{FechaCitacion: fechaHoy1}),
-        CitasPacientes.findOneAndUpdate({CorrelativoCita: 14},{FechaCitacion: fechaHoy2}),
-        CitasPacientes.findOneAndUpdate({CorrelativoCita: 17},{FechaCitacion: fechaHoy1}),
-        CitasPacientes.findOneAndUpdate({CorrelativoCita: 18},{FechaCitacion: fechaHoy2})
+        CitasPacientes.findOneAndUpdate({correlativoCita: 13},{fechaCitacion: fechaHoy1}),
+        CitasPacientes.findOneAndUpdate({correlativoCita: 14},{fechaCitacion: fechaHoy2}),
+        CitasPacientes.findOneAndUpdate({correlativoCita: 17},{fechaCitacion: fechaHoy1}),
+        CitasPacientes.findOneAndUpdate({correlativoCita: 18},{fechaCitacion: fechaHoy2})
     ])
     //Cambiar fechas de las citas 19, 20, 21 y 24 del seeder para que sean posteriores al día actual.
     const anio = fechaHoy.getFullYear()+1
     const fechaPosterior1 =  new Date(anio,1,1,8,30,0,0)
     const fechaPosterior2 =  new Date(anio,2,1,16,30,0,0)
     await Promise.all([
-        CitasPacientes.findOneAndUpdate({CorrelativoCita: 19},{FechaCitacion: fechaPosterior1}),
-        CitasPacientes.findOneAndUpdate({CorrelativoCita: 20},{FechaCitacion: fechaPosterior1}),
-        CitasPacientes.findOneAndUpdate({CorrelativoCita: 21},{FechaCitacion: fechaPosterior2}),
-        CitasPacientes.findOneAndUpdate({CorrelativoCita: 24},{FechaCitacion: fechaPosterior2})
+        CitasPacientes.findOneAndUpdate({correlativoCita: 19},{fechaCitacion: fechaPosterior1}),
+        CitasPacientes.findOneAndUpdate({correlativoCita: 20},{fechaCitacion: fechaPosterior1}),
+        CitasPacientes.findOneAndUpdate({correlativoCita: 21},{fechaCitacion: fechaPosterior2}),
+        CitasPacientes.findOneAndUpdate({correlativoCita: 24},{fechaCitacion: fechaPosterior2})
     ])
     done()
 })
@@ -59,12 +59,12 @@ describe('Endpoints', () => {
     describe('Horas Médicas Históricas', () => {
         it('Intenta obtener las horas médicas históricas de un paciente sin token', async done =>{ 
             const respuesta = await request.get('/citas_pacientes/horas_medicas/historico')
-            expect(respuesta.status).toBe(403)
+            expect(respuesta.status).toBe(401)
             expect(respuesta.body.respuesta).toBeTruthy()
             done()
         })
         it('Intenta obtener las horas médicas históricas de un paciente con token (Arreglo sin horas médicas)', async done =>{            
-            token = jwt.sign({PAC_PAC_Numero: 2}, secreto)
+            token = jwt.sign({numeroPaciente: 2}, secreto)
             const respuesta = await request.get('/citas_pacientes/horas_medicas/historico')
                 .set('Authorization',token)
             expect(respuesta.status).toBe(200)
@@ -75,7 +75,7 @@ describe('Endpoints', () => {
             done()
         })
         it('Intenta obtener las horas médicas históricas de un paciente con token (Arreglo con horas médicas)', async done =>{            
-            token = jwt.sign({PAC_PAC_Numero: 1}, secreto)
+            token = jwt.sign({numeroPaciente: 1}, secreto)
             const respuesta = await request.get('/citas_pacientes/horas_medicas/historico')
                 .set('Authorization',token)
             expect(respuesta.status).toBe(200)
@@ -83,29 +83,29 @@ describe('Endpoints', () => {
             const arregloHoras = respuesta.body
 
             const primeraHora = arregloHoras[0]
-            const numeroPacientePrimeraHora = primeraHora.NumeroPaciente
-            const correlativoPrimeraHora = primeraHora.CorrelativoCita
-            const ambitoPrimeraHora = primeraHora.CodigoAmbito
+            const numeroPacientePrimeraHora = primeraHora.numeroPaciente
+            const correlativoPrimeraHora = primeraHora.correlativoCita
+            const ambitoPrimeraHora = primeraHora.codigoAmbito
 
             const segundaHora = arregloHoras[1]
-            const numeroPacienteSegundaHora = segundaHora.NumeroPaciente
-            const correlativoSegundaHora = segundaHora.CorrelativoCita
-            const ambitoSegundaHora = segundaHora.CodigoAmbito
+            const numeroPacienteSegundaHora = segundaHora.numeroPaciente
+            const correlativoSegundaHora = segundaHora.correlativoCita
+            const ambitoSegundaHora = segundaHora.codigoAmbito
 
             const terceraHora = arregloHoras[2]
-            const numeroPacienteTerceraHora = terceraHora.NumeroPaciente           
-            const correlativoTerceraHora = terceraHora.CorrelativoCita
-            const ambitoTerceraHora = terceraHora.CodigoAmbito
+            const numeroPacienteTerceraHora = terceraHora.numeroPaciente           
+            const correlativoTerceraHora = terceraHora.correlativoCita
+            const ambitoTerceraHora = terceraHora.codigoAmbito
 
             const cuartaHora = arregloHoras[3]
-            const numeroPacienteCuartaHora = cuartaHora.NumeroPaciente
-            const correlativoCuartaHora = cuartaHora.CorrelativoCita
-            const ambitoCuartaHora = cuartaHora.CodigoAmbito
+            const numeroPacienteCuartaHora = cuartaHora.numeroPaciente
+            const correlativoCuartaHora = cuartaHora.correlativoCita
+            const ambitoCuartaHora = cuartaHora.codigoAmbito
 
             const quintaHora = arregloHoras[4]
-            const numeroPacienteQuintaHora = quintaHora.NumeroPaciente
-            const correlativoQuintaHora = quintaHora.CorrelativoCita
-            const ambitoQuintaHora = quintaHora.CodigoAmbito
+            const numeroPacienteQuintaHora = quintaHora.numeroPaciente
+            const correlativoQuintaHora = quintaHora.correlativoCita
+            const ambitoQuintaHora = quintaHora.codigoAmbito
 
             expect(arregloHoras.length).toStrictEqual(5)
 
@@ -135,12 +135,12 @@ describe('Endpoints', () => {
     describe('Horas Médicas Proximas', () => {
         it('Intenta obtener las horas médicas posteriores a hoy de un paciente sin token', async done =>{
             const respuesta = await request.get(`/citas_pacientes/horas_medicas/proximas/${encodeURIComponent('America/Santiago')}`)
-            expect(respuesta.status).toBe(403)
+            expect(respuesta.status).toBe(401)
             expect(respuesta.body.respuesta).toBeTruthy()
             done()
         })
         it('Intenta obtener las horas médicas posteriores a hoy de un paciente con token (Arreglo sin horas médicas)', async done =>{
-            token = jwt.sign({PAC_PAC_Numero: 2}, secreto)
+            token = jwt.sign({numeroPaciente: 2}, secreto)
             const respuesta = await request.get(`/citas_pacientes/horas_medicas/proximas/${encodeURIComponent('America/Santiago')}`)
                 .set('Authorization',token)
             expect(respuesta.status).toBe(200)
@@ -153,7 +153,7 @@ describe('Endpoints', () => {
             done()
         })
         it('Intenta obtener las horas médicas posteriores a hoy de un paciente con token (Arreglo con horas médicas)', async done =>{
-            token = jwt.sign({PAC_PAC_Numero: 1}, secreto)
+            token = jwt.sign({numeroPaciente: 1}, secreto)
             const respuesta = await request.get(`/citas_pacientes/horas_medicas/proximas/${encodeURIComponent('America/Santiago')}`)
                 .set('Authorization',token)
             expect(respuesta.status).toBe(200)
@@ -163,14 +163,14 @@ describe('Endpoints', () => {
             const arregloHorasHoy = arregloDeArreglosHoras[0]
 
             const primeraHora = arregloHorasHoy[0]
-            const numeroPacientePrimeraHora = primeraHora.NumeroPaciente
-            const correlativoPrimeraHora = primeraHora.CorrelativoCita
-            const ambitoPrimeraHora = primeraHora.CodigoAmbito
+            const numeroPacientePrimeraHora = primeraHora.numeroPaciente
+            const correlativoPrimeraHora = primeraHora.correlativoCita
+            const ambitoPrimeraHora = primeraHora.codigoAmbito
 
             const segundaHora = arregloHorasHoy[1]
-            const numeroPacienteSegundaHora = segundaHora.NumeroPaciente
-            const correlativoSegundaHora = segundaHora.CorrelativoCita
-            const ambitoSegundaHora = segundaHora.CodigoAmbito
+            const numeroPacienteSegundaHora = segundaHora.numeroPaciente
+            const correlativoSegundaHora = segundaHora.correlativoCita
+            const ambitoSegundaHora = segundaHora.codigoAmbito
 
             expect(arregloHorasHoy.length).toStrictEqual(2)
 
@@ -185,14 +185,14 @@ describe('Endpoints', () => {
             const arregloHorasProximas = arregloDeArreglosHoras[1]
 
             const terceraHora = arregloHorasProximas[0]
-            const numeroPacienteTerceraHora = terceraHora.NumeroPaciente
-            const correlativoTerceraHora = terceraHora.CorrelativoCita
-            const ambitoTerceraHora = terceraHora.CodigoAmbito
+            const numeroPacienteTerceraHora = terceraHora.numeroPaciente
+            const correlativoTerceraHora = terceraHora.correlativoCita
+            const ambitoTerceraHora = terceraHora.codigoAmbito
 
             const cuartaHora = arregloHorasProximas[1]
-            const numeroPacienteCuartaHora = cuartaHora.NumeroPaciente
-            const correlativoCuartaHora = cuartaHora.CorrelativoCita
-            const ambitoCuartaHora = cuartaHora.CodigoAmbito
+            const numeroPacienteCuartaHora = cuartaHora.numeroPaciente
+            const correlativoCuartaHora = cuartaHora.correlativoCita
+            const ambitoCuartaHora = cuartaHora.codigoAmbito
             expect(arregloHorasProximas.length).toStrictEqual(2)
 
             expect(numeroPacienteTerceraHora).toStrictEqual(1)
@@ -209,12 +209,12 @@ describe('Endpoints', () => {
     describe('Horas Exámenes Históricas', () => {
         it('Intenta obtener las horas de exámenes históricas de un paciente sin token', async done =>{ 
             const respuesta = await request.get('/citas_pacientes/horas_examenes/historico')
-            expect(respuesta.status).toBe(403)
+            expect(respuesta.status).toBe(401)
             expect(respuesta.body.respuesta).toBeTruthy()
             done()
         })
         it('Intenta obtener las horas de exámenes históricas de un paciente con token (Arreglo sin horas de exámenes)', async done =>{            
-            token = jwt.sign({PAC_PAC_Numero: 2}, secreto)
+            token = jwt.sign({numeroPaciente: 2}, secreto)
             const respuesta = await request.get('/citas_pacientes/horas_examenes/historico')
                 .set('Authorization',token)
             expect(respuesta.status).toBe(200)
@@ -225,7 +225,7 @@ describe('Endpoints', () => {
             done()
         })
         it('Intenta obtener las horas de exámenes históricas de un paciente con token (Arreglo con horas de exámenes)', async done =>{            
-            token = jwt.sign({PAC_PAC_Numero: 1}, secreto)
+            token = jwt.sign({numeroPaciente: 1}, secreto)
             const respuesta = await request.get('/citas_pacientes/horas_examenes/historico')
                 .set('Authorization',token)
             expect(respuesta.status).toBe(200)
@@ -233,24 +233,24 @@ describe('Endpoints', () => {
             const arregloHoras = respuesta.body
 
             const primeraHora = arregloHoras[0]
-            const numeroPacientePrimeraHora = primeraHora.NumeroPaciente
-            const correlativoPrimeraHora = primeraHora.CorrelativoCita
-            const ambitoPrimeraHora = primeraHora.CodigoAmbito
+            const numeroPacientePrimeraHora = primeraHora.numeroPaciente
+            const correlativoPrimeraHora = primeraHora.correlativoCita
+            const ambitoPrimeraHora = primeraHora.codigoAmbito
 
             const segundaHora = arregloHoras[1]
-            const numeroPacienteSegundaHora = segundaHora.NumeroPaciente
-            const correlativoSegundaHora = segundaHora.CorrelativoCita
-            const ambitoSegundaHora= segundaHora.CodigoAmbito
+            const numeroPacienteSegundaHora = segundaHora.numeroPaciente
+            const correlativoSegundaHora = segundaHora.correlativoCita
+            const ambitoSegundaHora= segundaHora.codigoAmbito
 
             const terceraHora = arregloHoras[2]
-            const numeroPacienteTerceraHora = terceraHora.NumeroPaciente           
-            const correlativoTerceraHora = terceraHora.CorrelativoCita
-            const ambitoTerceraHora = terceraHora.CodigoAmbito
+            const numeroPacienteTerceraHora = terceraHora.numeroPaciente           
+            const correlativoTerceraHora = terceraHora.correlativoCita
+            const ambitoTerceraHora = terceraHora.codigoAmbito
 
             const cuartaHora = arregloHoras[3]
-            const numeroPacienteCuartaHora = cuartaHora.NumeroPaciente
-            const correlativoCuartaHora = cuartaHora.CorrelativoCita
-            const ambitoCuartaHora = cuartaHora.CodigoAmbito
+            const numeroPacienteCuartaHora = cuartaHora.numeroPaciente
+            const correlativoCuartaHora = cuartaHora.correlativoCita
+            const ambitoCuartaHora = cuartaHora.codigoAmbito
 
             expect(arregloHoras.length).toStrictEqual(4)
 
@@ -276,12 +276,12 @@ describe('Endpoints', () => {
     describe('Horas Exámenes  Proximas', () => {
         it('Intenta obtener las horas de exámenes posteriores a hoy de un paciente sin token', async done =>{
             const respuesta = await request.get(`/citas_pacientes/horas_examenes/proximas/${encodeURIComponent('America/Santiago')}`)
-            expect(respuesta.status).toBe(403)
+            expect(respuesta.status).toBe(401)
             expect(respuesta.body.respuesta).toBeTruthy()
             done()
         })
         it('Intenta obtener las horas de exámenes posteriores a hoy de un paciente con token (Arreglo sin horas de exámenes)', async done =>{
-            token = jwt.sign({PAC_PAC_Numero: 2}, secreto)
+            token = jwt.sign({numeroPaciente: 2}, secreto)
             const respuesta = await request.get(`/citas_pacientes/horas_examenes/proximas/${encodeURIComponent('America/Santiago')}`)
                 .set('Authorization',token)
             expect(respuesta.status).toBe(200)
@@ -294,7 +294,7 @@ describe('Endpoints', () => {
             done()
         })
         it('Intenta obtener las horas de exámenes posteriores a hoy de un paciente con token (Arreglo con horas de exámenes)', async done =>{
-            token = jwt.sign({PAC_PAC_Numero: 1}, secreto)
+            token = jwt.sign({numeroPaciente: 1}, secreto)
             const respuesta = await request.get(`/citas_pacientes/horas_examenes/proximas/${encodeURIComponent('America/Santiago')}`)
                 .set('Authorization',token)
             expect(respuesta.status).toBe(200)
@@ -304,14 +304,14 @@ describe('Endpoints', () => {
             const arregloHorasHoy = arregloDeArreglosHoras[0]
 
             const primeraHora = arregloHorasHoy[0]
-            const numeroPacientePrimeraHora = primeraHora.NumeroPaciente
-            const correlativoPrimeraHora = primeraHora.CorrelativoCita
-            const ambitoPrimeraHora = primeraHora.CodigoAmbito
+            const numeroPacientePrimeraHora = primeraHora.numeroPaciente
+            const correlativoPrimeraHora = primeraHora.correlativoCita
+            const ambitoPrimeraHora = primeraHora.codigoAmbito
 
             const segundaHora = arregloHorasHoy[1]
-            const numeroPacienteSegundaHora = segundaHora.NumeroPaciente
-            const correlativoSegundaHora = segundaHora.CorrelativoCita
-            const ambitoSegundaHora = segundaHora.CodigoAmbito
+            const numeroPacienteSegundaHora = segundaHora.numeroPaciente
+            const correlativoSegundaHora = segundaHora.correlativoCita
+            const ambitoSegundaHora = segundaHora.codigoAmbito
 
             expect(arregloHorasHoy.length).toStrictEqual(2)
 
@@ -326,14 +326,14 @@ describe('Endpoints', () => {
             const arregloHorasProximas = arregloDeArreglosHoras[1]
 
             const terceraHora = arregloHorasProximas[0]
-            const numeroPacienteTerceraHora = terceraHora.NumeroPaciente
-            const correlativoTerceraHora = terceraHora.CorrelativoCita
-            const ambitoTerceraHora = terceraHora.CodigoAmbito
+            const numeroPacienteTerceraHora = terceraHora.numeroPaciente
+            const correlativoTerceraHora = terceraHora.correlativoCita
+            const ambitoTerceraHora = terceraHora.codigoAmbito
 
             const cuartaHora = arregloHorasProximas[1]
-            const numeroPacienteCuartaHora = cuartaHora.NumeroPaciente
-            const correlativoCuartaHora = cuartaHora.CorrelativoCita
-            const ambitoCuartaHora = cuartaHora.CodigoAmbito
+            const numeroPacienteCuartaHora = cuartaHora.numeroPaciente
+            const correlativoCuartaHora = cuartaHora.correlativoCita
+            const ambitoCuartaHora = cuartaHora.codigoAmbito
             expect(arregloHorasProximas.length).toStrictEqual(2)
 
             expect(numeroPacienteTerceraHora).toStrictEqual(1)
