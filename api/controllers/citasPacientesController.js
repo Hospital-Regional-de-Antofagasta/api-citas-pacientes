@@ -26,10 +26,10 @@ exports.getHorasExamenesPacienteProximas = async (req, res) => {
 const citasHistorico = async (req, res, codigoAmbito) => {
     try {
         const arregloCitasPaciente = await CitasPacientes.find({
-            NumeroPaciente: req.pacPacNumero,
-            CodigoAmbito: {$in: codigoAmbito}
+            numeroPaciente: req.numeroPaciente,
+            codigoAmbito: {$in: codigoAmbito}
         })
-        .sort({ FechaCitacion: 1 }) //1 ascendente
+        .sort({ fechaCitacion: 1 }) //1 ascendente
         .exec()
         res.status(200).send(arregloCitasPaciente)
     } catch (error) {
@@ -51,18 +51,18 @@ const citasProximas = async (req, res, codigoAmbito) => {
     try {
         const arregloDeArreglosCitasPaciente = await Promise.all([
             CitasPacientes.find({
-                NumeroPaciente: req.pacPacNumero,                
-                FechaCitacion: { $gte: fechaInicio, $lte: fechaFin },
-                CodigoAmbito: {$in: codigoAmbito}
+                numeroPaciente: req.numeroPaciente,                
+                fechaCitacion: { $gte: fechaInicio, $lte: fechaFin },
+                codigoAmbito: {$in: codigoAmbito}
             })
-            .sort({ FechaCitacion: 1 }) //1 ascendente, -1 descendente
+            .sort({ fechaCitacion: 1 }) //1 ascendente, -1 descendente
             .exec(),
             CitasPacientes.find({
-                NumeroPaciente: req.pacPacNumero,
-                FechaCitacion: { $gte: fechaFin },
-                CodigoAmbito: {$in: codigoAmbito}
+                numeroPaciente: req.numeroPaciente,
+                fechaCitacion: { $gte: fechaFin },
+                codigoAmbito: {$in: codigoAmbito}
             })
-            .sort({ FechaCitacion: 1 }) //1 ascendente, -1 descendente
+            .sort({ fechaCitacion: 1 }) //1 ascendente, -1 descendente
             .exec()
         ])
         res.status(200).send(arregloDeArreglosCitasPaciente)
