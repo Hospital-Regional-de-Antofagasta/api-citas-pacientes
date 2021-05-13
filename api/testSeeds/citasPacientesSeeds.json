@@ -7,7 +7,9 @@
         "fechaCitacion":"2021-01-02T14:21:01.643Z",
         "horaCitacion":"08:30",
         "numeroPaciente": 1,
-        "codigoAmbito": "01"    
+        "codigoAmbito": "01",
+        "tipoCita": "C",
+        "alta": null     
     },
     {
         "correlativoCita":13,
@@ -17,7 +19,9 @@
         "fechaCitacion":"2021-01-02T14:21:01.643Z",
         "horaCitacion":"08:30",
         "numeroPaciente": 1,
-        "codigoAmbito": "04"    
+        "codigoAmbito": "04",
+        "tipoCita": "C",
+        "alta": null         
     },
     {
         "correlativoCita":14,
@@ -27,7 +31,9 @@
         "fechaCitacion":"2021-01-02T14:21:01.643Z",
         "horaCitacion":"08:30",
         "numeroPaciente": 1,
-        "codigoAmbito": "06"    
+        "codigoAmbito": "06",
+        "tipoCita": "C",
+        "alta": null        
     },
     {
         "correlativoCita":17,
@@ -37,7 +43,9 @@
         "fechaCitacion":"2021-04-19T14:21:01.643Z",
         "horaCitacion":"10:00",
         "numeroPaciente": 1,
-        "codigoAmbito": "01"  
+        "codigoAmbito": "01",
+        "tipoCita": "C",
+        "alta": null      
     },
     {
         "correlativoCita":18,
@@ -47,7 +55,9 @@
         "fechaCitacion":"2021-04-19T19:25:00.000Z",
         "horaCitacion":"9:00",
         "numeroPaciente": 1,
-        "codigoAmbito": "01" 
+        "codigoAmbito": "01",
+        "tipoCita": "C",
+        "alta": null      
     },
     {
         "correlativoCita":19,
@@ -57,7 +67,9 @@
         "fechaCitacion":"2021-05-19T19:25:00.000Z",
         "horaCitacion":"9:00",
         "numeroPaciente": 1,
-        "codigoAmbito": "01"  
+        "codigoAmbito": "01",
+        "tipoCita": "C",
+        "alta": null       
     },
     {
         "correlativoCita":20,
@@ -67,7 +79,9 @@
         "fechaCitacion":"2021-05-19T19:25:00.000Z",
         "horaCitacion":"9:00",
         "numeroPaciente": 1,
-        "codigoAmbito": "06"  
+        "codigoAmbito": "06",
+        "tipoCita": "C",
+        "alta": null       
     },
     {
         "correlativoCita":21,
@@ -77,7 +91,9 @@
         "fechaCitacion":"2021-05-19T19:25:00.000Z",
         "horaCitacion":"9:00",
         "numeroPaciente": 1,
-        "codigoAmbito": "04"  
+        "codigoAmbito": "04",
+        "tipoCita": "C",
+        "alta": null       
     },
     {
         "correlativoCita":24,
@@ -87,6 +103,8 @@
         "fechaCitacion":"2021-05-20T14:21:01.643Z",
         "horaCitacion":"9:00",
         "numeroPaciente": 1,
-        "codigoAmbito": "01"  
+        "codigoAmbito": "01",
+        "tipoCita": "C",
+        "alta": null      
      }
 ]

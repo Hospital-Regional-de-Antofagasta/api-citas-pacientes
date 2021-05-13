@@ -9,6 +9,8 @@ const CitasPacientes = mongoose.model('citas_paciente', new Schema({
     fechaCitacion: Date,
     horaCitacion: String,
     numeroPaciente: Number,
-    codigoAmbito: String 
+    codigoAmbito: String,
+    tipoCita: String,
+    alta: Boolean
 }))
 module.exports = CitasPacientes
