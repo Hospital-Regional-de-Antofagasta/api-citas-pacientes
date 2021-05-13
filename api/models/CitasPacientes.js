@@ -13,6 +13,9 @@ const CitasPacientes = mongoose.model('citas_paciente', new Schema({
     numeroPaciente: Number,
     codigoAmbito: String,
     tipoCita: String,
-    alta: Boolean
+    alta: {
+        type: Boolean,
+        default: false
+    }
 }))
 module.exports = CitasPacientes
