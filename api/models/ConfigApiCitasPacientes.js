@@ -7,6 +7,7 @@ const ConfigApiCitasPacientes = mongoose.model(
     mensajes: {
       forbiddenAccess: String,
       serverError: String,
+      badRequest: String,
       version: Number,
     },
   })

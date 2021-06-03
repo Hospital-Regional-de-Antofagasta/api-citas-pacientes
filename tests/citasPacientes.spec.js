@@ -1,10 +1,10 @@
-const app = require("../index");
+const app = require("../api/index");
 const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
 const supertest = require("supertest");
-const citasPacientesSeeds = require("../testSeeds/citasPacientesSeeds.json");
+const citasPacientesSeeds = require("../api/testSeeds/citasPacientesSeeds.json");
 
-const CitasPacientes = require("../models/CitasPacientes");
+const CitasPacientes = require("../api/models/CitasPacientes");
 
 const request = supertest(app);
 const secreto = process.env.JWT_SECRET;
@@ -20,7 +20,8 @@ beforeAll(async (done) => {
   });
   //Cargar los seeds a la base de datos.
   for (const citaPacienteSeed of citasPacientesSeeds) {
-    await Promise.all([CitasPacientes.create(citaPacienteSeed)]);
+    if(citaPacienteSeed.correlativoCita < 25)
+      await Promise.all([CitasPacientes.create(citaPacienteSeed)]);
   }
   //Cambiar fechas de las citas 13, 14, 17 y 18 del seeder para que sean del día actual.
   const fechaHoy = new Date();

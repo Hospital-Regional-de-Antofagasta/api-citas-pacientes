@@ -1,5 +1,6 @@
 var moment = require("moment-timezone");
 const CitasPacientes = require("../models/CitasPacientes");
+const SolicitudesCambiarOAnularHorasMedicas = require("../models/SolicitudesCambiarOAnularHorasMedicas");
 const { mensajes } = require("../config");
 
 exports.getHorasMedicasPacienteHistorico = async (req, res) => {
@@ -10,6 +11,28 @@ exports.getHorasMedicasPacienteHistorico = async (req, res) => {
 exports.getHorasMedicasPacienteProximas = async (req, res) => {
   const ambitos = ["01"];
   await citasProximas(req, res, ambitos);
+};
+
+exports.getFormularioSolicitudCambiarOAnularHoraMedica = async (req, res) => {
+  try {
+    req.body.numeroPaciente = req.numeroPaciente;
+    const solicitud = req.body;
+    await SolicitudesCambiarOAnularHorasMedicas.create(solicitud);
+    res.sendStatus(201);
+  } catch (error) {
+    res.status(500).send({ respuesta: mensajes.serverError });
+  }
+};
+
+exports.postSolicitudCambiarOAnularHoraMedica = async (req, res) => {
+  try {
+    req.body.numeroPaciente = req.numeroPaciente;
+    const solicitud = req.body;
+    await SolicitudesCambiarOAnularHorasMedicas.create(solicitud);
+    res.sendStatus(201);
+  } catch (error) {
+    res.status(500).send({ respuesta: mensajes.serverError });
+  }
 };
 
 exports.getHorasExamenesPacienteHistorico = async (req, res) => {
