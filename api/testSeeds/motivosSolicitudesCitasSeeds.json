@@ -1,0 +1,32 @@
+[
+  {
+    "indice": 1,
+    "nombre": "No puedo asistir",
+    "tipoSolicitud": "CAMBIAR"     
+  },
+  {
+    "indice": 2,
+    "nombre": "Quiero cambio de profesional",
+    "tipoSolicitud": "CAMBIAR"
+  },
+  {
+    "indice": 3,
+    "nombre": "Otro",
+    "tipoSolicitud": "CAMBIAR"
+  },
+  {
+    "indice": 1,
+    "nombre": "No requiero la hora",
+    "tipoSolicitud": "ANULAR"
+  },
+  {
+    "indice": 2,
+    "nombre": "Ya me atendí",
+    "tipoSolicitud": "ANULAR"
+  },
+  {
+    "indice": 3,
+    "nombre": "Otro",
+    "tipoSolicitud": "ANULAR"
+  }
+]

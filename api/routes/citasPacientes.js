@@ -1,5 +1,5 @@
 const express = require("express");
-const horasMedicasController = require("../controllers/citasPacientesController");
+const citasPacientesController = require("../controllers/citasPacientesController");
 const estaAutenticado = require("../middleware/auth");
 const {
   validarFecha,
@@ -8,41 +8,47 @@ const {
 const router = express.Router();
 
 router.get(
+  "/:correlativoCita",
+  estaAutenticado,
+  citasPacientesController.getCita
+);
+
+router.get(
   "/horas_medicas/historico/",
   estaAutenticado,
-  horasMedicasController.getHorasMedicasPacienteHistorico
+  citasPacientesController.getHorasMedicasPaciente
 );
 
 router.get(
   "/horas_medicas/proximas/:timeZone",
   estaAutenticado,
-  horasMedicasController.getHorasMedicasPacienteProximas
+  citasPacientesController.getHorasMedicasPacienteProximas
 );
 
 router.get(
-  "/formulario_solicitud_anular_cambiar_hora_medica/:tipoSolicitud&:correlativoCita",
+  "/motivos_solicitudes/:tipoSolicitud",
   estaAutenticado,
-  horasMedicasController.getFormularioSolicitudHoraMedica
+  citasPacientesController.getMotivosSolicitudesCitas
 );
 
 router.post(
-  "/guardar_solicitud_anular_cambiar_hora_medica/:tipoSolicitud",
+  "/horas_medicas/guardar_solicitud_anular_cambiar/",
   estaAutenticado,
   validarSolicitudAnularCambiarHoraMedica,
   validarFecha,
-  horasMedicasController.postSolicitudCambiarOAnularHoraMedica
+  citasPacientesController.postSolicitudCambiarOAnularHoraMedica
 );
 
 router.get(
   "/horas_examenes/historico/",
   estaAutenticado,
-  horasMedicasController.getHorasExamenesPacienteHistorico
+  citasPacientesController.getHorasExamenesPaciente
 );
 
 router.get(
   "/horas_examenes/proximas/:timeZone",
   estaAutenticado,
-  horasMedicasController.getHorasExamenesPacienteProximas
+  citasPacientesController.getHorasExamenesPacienteProximas
 );
 
 module.exports = router;

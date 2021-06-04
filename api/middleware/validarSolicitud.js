@@ -35,7 +35,10 @@ exports.validarSolicitudAnularCambiarHoraMedica = async (req, res, next) => {
     if (
       (solicitud.tipoSolicitud !== "ANULAR" &&
         solicitud.tipoSolicitud !== "CAMBIAR") ||
-      typeof solicitud.correlativoCita !== "number"
+      typeof solicitud.correlativoCita !== "number" ||
+      typeof solicitud.motivo !== "string" || 
+      solicitud.motivo === "" || 
+      typeof solicitud.detallesMotivo !== "string"
     ) {
       return res.status(400).send({ respuesta: mensajes.badRequest });
     }
@@ -51,7 +54,6 @@ exports.validarSolicitudAnularCambiarHoraMedica = async (req, res, next) => {
       .exec();
 
     if (solicitudExistente) {
-      // Ya existe una solicitud de anular o cambiar control
       return res.status(400).send({ respuesta: mensajes.badRequest });
     }
     next();
@@ -62,14 +64,13 @@ exports.validarSolicitudAnularCambiarHoraMedica = async (req, res, next) => {
 
 exports.validarFecha = async (req, res, next) => {
   try {
-    req.body.numeroPaciente = req.numeroPaciente;
     const solicitud = req.body;
     if (
       solicitud.tipoSolicitud === "ANULAR" ||
       solicitud.tipoSolicitud === "CAMBIAR"
     ) {
       const cita = await CitasPacientes.findOne({
-        numeroPaciente: solicitud.numeroPaciente,
+        numeroPaciente: req.numeroPaciente,
         correlativoCita: solicitud.correlativoCita,
         codigoAmbito: "01",
         //tipoCita: "C",

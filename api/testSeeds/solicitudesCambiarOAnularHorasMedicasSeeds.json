@@ -5,7 +5,7 @@
         "correlativoCita": 7,
         "tipoSolicitud": "CAMBIAR",
         "motivo": "",
-        "textoMotivo": "",
+        "detallesMotivo": "",
         "respondida": true,
         "enviadaHospital": false      
     },
@@ -15,7 +15,7 @@
         "correlativoCita": 8,
         "tipoSolicitud": "ANULAR",
         "motivo": "",
-        "textoMotivo": "",
+        "detallesMotivo": "",
         "respondida": true,
         "enviadaHospital": false
     },
@@ -25,7 +25,7 @@
         "correlativoCita": 9,
         "tipoSolicitud": "CAMBIAR",
         "motivo": "",
-        "textoMotivo": "",
+        "detallesMotivo": "",
         "respondida": true,
         "enviadaHospital": false
     },
@@ -35,7 +35,7 @@
         "correlativoCita": 10,
         "tipoSolicitud": "ANULAR",
         "motivo": "",
-        "textoMotivo": "",
+        "detallesMotivo": "",
         "respondida": true,
         "enviadaHospital": false
     }

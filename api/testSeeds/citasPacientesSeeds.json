@@ -1,12 +1,26 @@
 [
     {
+        "correlativoCita":11,
+        "nombreLugar":"HORAS IMAGENOLOGIA",
+        "codigoServicio":"3000-4",
+        "nombreServicio":"SCANNER URGENCIA",
+        "codigoProfesional":"14604071-3",
+        "nombreProfesional":"TECNOLOGO MEDICO IMAGENOLOGIA",
+        "fechaCitacion":"2019-01-02T14:21:01.643Z",
+        "horaCitacion":"08:30",
+        "numeroPaciente": 1,
+        "codigoAmbito": "01",
+        "tipoCita": "C",
+        "alta": false     
+    },
+    {
         "correlativoCita":12,
         "nombreLugar":"HORAS IMAGENOLOGIA",
         "codigoServicio":"3000-4",
         "nombreServicio":"SCANNER URGENCIA",
         "codigoProfesional":"14604071-3",
         "nombreProfesional":"TECNOLOGO MEDICO IMAGENOLOGIA",
-        "fechaCitacion":"2021-01-02T14:21:01.643Z",
+        "fechaCitacion":"2019-01-02T14:21:01.643Z",
         "horaCitacion":"08:30",
         "numeroPaciente": 1,
         "codigoAmbito": "01",
@@ -29,6 +43,20 @@
     },
     {
         "correlativoCita":14,
+        "nombreLugar":"HORAS IMAGENOLOGIA",
+        "codigoServicio":"3000-4",
+        "nombreServicio":"SCANNER URGENCIA",
+        "codigoProfesional":"14604071-3",
+        "nombreProfesional":"TECNOLOGO MEDICO IMAGENOLOGIA",
+        "fechaCitacion":"2021-01-02T14:21:01.643Z",
+        "horaCitacion":"08:30",
+        "numeroPaciente": 1,
+        "codigoAmbito": "06",
+        "tipoCita": "C",
+        "alta": false        
+    },
+    {
+        "correlativoCita":15,
         "nombreLugar":"HORAS IMAGENOLOGIA",
         "codigoServicio":"3000-4",
         "nombreServicio":"SCANNER URGENCIA",
@@ -93,7 +121,7 @@
         "fechaCitacion":"2021-05-19T19:25:00.000Z",
         "horaCitacion":"9:00",
         "numeroPaciente": 1,
-        "codigoAmbito": "06",
+        "codigoAmbito": "01",
         "tipoCita": "C",
         "alta": false       
     },
@@ -194,19 +222,5 @@
         "codigoAmbito": "01",
         "tipoCita": "C",
         "alta": false      
-    },
-    {
-        "correlativoCita":30,
-        "nombreLugar":"URGENCIA",
-        "codigoServicio":"3001-0",
-        "nombreServicio":"POLI BRONCOPULMONAR ADULTO",
-        "codigoProfesional":"14604071-3",
-        "nombreProfesional":"TECNOLOGO MEDICO IMAGENOLOGIA",
-        "fechaCitacion":"2021-05-19T19:25:00.000Z",
-        "horaCitacion":"9:00",
-        "numeroPaciente": 1,
-        "codigoAmbito": "01",
-        "tipoCita": "C",
-        "alta": false       
     }
 ]
