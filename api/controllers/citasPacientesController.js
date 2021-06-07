@@ -1,28 +1,68 @@
 var moment = require("moment-timezone");
 const CitasPacientes = require("../models/CitasPacientes");
+const SolicitudesCambiarOAnularHorasMedicas = require("../models/SolicitudesCambiarOAnularHorasMedicas");
+const MotivosSolicitudesCitas = require('../models/MotivosSolicitudesCitas')
 const { mensajes } = require("../config");
 
-exports.getHorasMedicasPacienteHistorico = async (req, res) => {
-  const ambitos = ["01"];
-  await citasHistorico(req, res, ambitos);
+
+
+exports.getCita = async (req, res) => {
+  try {
+    const cita = await CitasPacientes.findOne({
+      correlativoCita: req.params.correlativoCita
+    })
+    .exec();
+    res.status(200).send(cita);
+  } catch (error) {
+    res.status(500).send({ respuesta: mensajes.serverError });
+  }
+};
+
+exports.getMotivosSolicitudesCitas = async (req, res) => {
+  try {
+    const motivos = await MotivosSolicitudesCitas.find({
+      tipoSolicitud: req.params.tipoSolicitud
+    })
+    .sort({ indice: 1 }) //1 ascendente
+    .exec();
+    res.status(200).send(motivos);
+  } catch (error) {
+    res.status(500).send({ respuesta: mensajes.serverError });
+  }
+};
+
+exports.getHorasMedicasPaciente = async (req, res) => {
+  const ambitos = ["01"];//ambito 01 son horas médicas.
+  await citas(req, res, ambitos);
 };
 
 exports.getHorasMedicasPacienteProximas = async (req, res) => {
-  const ambitos = ["01"];
+  const ambitos = ["01"];//ambito 01 son horas médicas.
   await citasProximas(req, res, ambitos);
 };
 
-exports.getHorasExamenesPacienteHistorico = async (req, res) => {
-  const ambitos = ["04", "06"];
-  await citasHistorico(req, res, ambitos);
+exports.postSolicitudCambiarOAnularHoraMedica = async (req, res) => {
+  try {
+    req.body.numeroPaciente = req.numeroPaciente;
+    const solicitud = req.body;
+    await SolicitudesCambiarOAnularHorasMedicas.create(solicitud);
+    res.sendStatus(201);
+  } catch (error) {
+    res.status(500).send({ respuesta: mensajes.serverError });
+  }
+};
+
+exports.getHorasExamenesPaciente = async (req, res) => {
+  const ambitos = ["04", "06"];//ambito 04 son horas de laboratorio y 06 horas de imagenología.
+  await citas(req, res, ambitos);
 };
 
 exports.getHorasExamenesPacienteProximas = async (req, res) => {
-  const ambitos = ["04", "06"];
+  const ambitos = ["04", "06"];//ambito 04 son horas de laboratorio y 06 horas de imagenología.
   await citasProximas(req, res, ambitos);
 };
 
-const citasHistorico = async (req, res, codigoAmbito) => {
+const citas = async (req, res, codigoAmbito) => {
   try {
     const arregloCitasPaciente = await CitasPacientes.find({
       numeroPaciente: req.numeroPaciente,

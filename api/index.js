@@ -3,7 +3,7 @@ setTZ("UTC");
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
-const { loadConfig } = require("./config");
+const { loadConfig, cargarFeriados } = require("./config");
 const citasPacientes = require("./routes/citasPacientes");
 const app = express();
 app.use(express.json());
@@ -15,6 +15,7 @@ mongoose.connect(process.env.MONGO_URI, {
 });
 
 loadConfig();
+cargarFeriados();
 
 app.use("/v1/citas_pacientes", citasPacientes);
 

@@ -1,0 +1,42 @@
+[
+    {
+        "correlativoSolicitud":13,
+        "numeroPaciente": 1,
+        "correlativoCita": 7,
+        "tipoSolicitud": "CAMBIAR",
+        "motivo": "",
+        "detallesMotivo": "",
+        "respondida": true,
+        "enviadaHospital": false      
+    },
+    {
+        "correlativoSolicitud":14,
+        "numeroPaciente": 1,
+        "correlativoCita": 8,
+        "tipoSolicitud": "ANULAR",
+        "motivo": "",
+        "detallesMotivo": "",
+        "respondida": true,
+        "enviadaHospital": false
+    },
+    {
+        "correlativoSolicitud":15,
+        "numeroPaciente": 1,
+        "correlativoCita": 9,
+        "tipoSolicitud": "CAMBIAR",
+        "motivo": "",
+        "detallesMotivo": "",
+        "respondida": true,
+        "enviadaHospital": false
+    },
+    {
+        "correlativoSolicitud":16,
+        "numeroPaciente": 1,
+        "correlativoCita": 10,
+        "tipoSolicitud": "ANULAR",
+        "motivo": "",
+        "detallesMotivo": "",
+        "respondida": true,
+        "enviadaHospital": false
+    }
+]
