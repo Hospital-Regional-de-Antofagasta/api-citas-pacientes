@@ -27,11 +27,10 @@ exports.validarAlta = async (req, res, next) => {
   }
 };
 
-exports.validarSolicitudAnularCambiarHoraMedica = async (req, res, next) => {
+exports.validarBodySolicitudAnularCambiarHoraMedica = async (req, res, next) => {
   try {
     req.body.numeroPaciente = req.numeroPaciente;
     const solicitud = req.body;
-
     if (
       (solicitud.tipoSolicitud !== "ANULAR" &&
         solicitud.tipoSolicitud !== "CAMBIAR") ||
@@ -62,7 +61,7 @@ exports.validarSolicitudAnularCambiarHoraMedica = async (req, res, next) => {
   }
 };
 
-exports.validarFecha = async (req, res, next) => {
+exports.validarFechaSolicitudAnularCambiarHoraMedica = async (req, res, next) => {
   try {
     const solicitud = req.body;
     if (
@@ -93,3 +92,4 @@ exports.validarFecha = async (req, res, next) => {
     res.status(500).send({ respuesta: mensajes.serverError });
   }
 };
+
