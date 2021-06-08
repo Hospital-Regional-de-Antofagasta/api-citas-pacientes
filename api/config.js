@@ -1,4 +1,7 @@
-const ConfigApiCitasPacientes = require("./models/ConfigApiCitasPacientes");
+const ConfigApiCitasPacientes = require("../models/ConfigApiCitasPacientes");//SOLO VERSION GRATUITA DE VERCEL
+const DiasFeriados = require("../models/DiasFeriados");//SOLO VERSION GRATUITA DE VERCEL
+//const ConfigApiCitasPacientes = require("./models/ConfigApiCitasPacientes");
+//const DiasFeriados = require("./models/DiasFeriados");
 
 let mensajes = {
   forbiddenAccess: "No tiene la autorización para realizar esta acción.",

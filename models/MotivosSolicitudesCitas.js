@@ -7,6 +7,10 @@ const MotivosSolicitudesCitas = mongoose.model(
     indice: Number,
     nombre: String,
     tipoSolicitud: String,
+    habilitado: {
+      type: Boolean,
+      default: true,
+    },
   })
 );
 module.exports = MotivosSolicitudesCitas;

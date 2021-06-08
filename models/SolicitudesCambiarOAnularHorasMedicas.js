@@ -12,7 +12,7 @@ const SolicitudesCambiarOAnularHorasMedicas = mongoose.model(
       numeroPaciente: Number,
       correlativoCita: Number,
       tipoSolicitud: String,
-      motivo: String,
+      motivo: Number,
       detallesMotivo: String,
       respondida: {
         type: Boolean,

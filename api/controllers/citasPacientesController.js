@@ -1,31 +1,23 @@
 var moment = require("moment-timezone");
-const CitasPacientes = require("../models/CitasPacientes");
-const SolicitudesCambiarOAnularHorasMedicas = require("../models/SolicitudesCambiarOAnularHorasMedicas");
-const MotivosSolicitudesCitas = require('../models/MotivosSolicitudesCitas')
+
+const CitasPacientes = require("../../models/CitasPacientes");//SOLO VERSION GRATUITA DE VERCEL
+//const CitasPacientes = require("../models/CitasPacientes");
+
 const { mensajes } = require("../config");
 
 
 
 exports.getCita = async (req, res) => {
   try {
+    const correlativo = req.params.correlativoCita
+    if(typeof correlativo !== 'string'){
+      res.status(400).send({ respuesta: mensajes.badRequest });
+    }
     const cita = await CitasPacientes.findOne({
-      correlativoCita: req.params.correlativoCita
+      correlativoCita: correlativo
     })
     .exec();
     res.status(200).send(cita);
-  } catch (error) {
-    res.status(500).send({ respuesta: mensajes.serverError });
-  }
-};
-
-exports.getMotivosSolicitudesCitas = async (req, res) => {
-  try {
-    const motivos = await MotivosSolicitudesCitas.find({
-      tipoSolicitud: req.params.tipoSolicitud
-    })
-    .sort({ indice: 1 }) //1 ascendente
-    .exec();
-    res.status(200).send(motivos);
   } catch (error) {
     res.status(500).send({ respuesta: mensajes.serverError });
   }
@@ -39,17 +31,6 @@ exports.getHorasMedicasPaciente = async (req, res) => {
 exports.getHorasMedicasPacienteProximas = async (req, res) => {
   const ambitos = ["01"];//ambito 01 son horas médicas.
   await citasProximas(req, res, ambitos);
-};
-
-exports.postSolicitudCambiarOAnularHoraMedica = async (req, res) => {
-  try {
-    req.body.numeroPaciente = req.numeroPaciente;
-    const solicitud = req.body;
-    await SolicitudesCambiarOAnularHorasMedicas.create(solicitud);
-    res.sendStatus(201);
-  } catch (error) {
-    res.status(500).send({ respuesta: mensajes.serverError });
-  }
 };
 
 exports.getHorasExamenesPaciente = async (req, res) => {
@@ -77,17 +58,21 @@ const citas = async (req, res, codigoAmbito) => {
 };
 
 const citasProximas = async (req, res, codigoAmbito) => {
-  const timeZone = req.params.timeZone;
-  const fechaHoy = new Date();
-  // sumarle un dia a la fecha de hoy para obtener la de maniana
-  // const fechaManiana = new Date()
-  // fechaManiana.setDate(fechaManiana.getDate() + 1)
-  // aplicar la zona horaria a las fechas y obtener solo el dia
-  const fechaInicio = moment.tz(fechaHoy, timeZone).startOf("day");
-  const fechaFin = moment.tz(fechaHoy, timeZone).endOf("day");
-  // const fechaInicio =  new Date(fechaHoy.getFullYear(),fechaHoy.getMonth(),fechaHoy.getDate(),0,0,0,0)
-  // const fechaFin = new Date(fechaHoy.getFullYear(),fechaHoy.getMonth(),fechaHoy.getDate(),23,59,59,999)
   try {
+    const timeZone = req.params.timeZone;
+    if(typeof timeZone !== 'string'){
+      console.log('proximas')
+      res.status(400).send({ respuesta: mensajes.badRequest });
+    }      
+    const fechaHoy = new Date();
+    // sumarle un dia a la fecha de hoy para obtener la de maniana
+    // const fechaManiana = new Date()
+    // fechaManiana.setDate(fechaManiana.getDate() + 1)
+    // aplicar la zona horaria a las fechas y obtener solo el dia
+    const fechaInicio = moment.tz(fechaHoy, timeZone).startOf("day");
+    const fechaFin = moment.tz(fechaHoy, timeZone).endOf("day");
+    // const fechaInicio =  new Date(fechaHoy.getFullYear(),fechaHoy.getMonth(),fechaHoy.getDate(),0,0,0,0)
+    // const fechaFin = new Date(fechaHoy.getFullYear(),fechaHoy.getMonth(),fechaHoy.getDate(),23,59,59,999)
     const arregloDeArreglosCitasPaciente = await Promise.all([
       CitasPacientes.find({
         numeroPaciente: req.numeroPaciente,
