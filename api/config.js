@@ -1,4 +1,8 @@
-const ConfigApiCitasPacientes = require("./models/ConfigApiCitasPacientes");
+//const {ConfigApiCitasPacientes, DiasFeriados} = require("../api/models/ModelosAPICitasPacientes");//SOLO PARA PRUEBAS
+const ConfigApiCitasPacientes = require("../models/ConfigApiCitasPacientes");
+const DiasFeriados = require("../models/DiasFeriados");
+//const ConfigApiCitasPacientes = require("./models/ConfigApiCitasPacientes");
+//const DiasFeriados = require("./models/DiasFeriados");
 
 let mensajes = {
   forbiddenAccess: "No tiene la autorización para realizar esta acción.",

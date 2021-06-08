@@ -1,5 +1,8 @@
-const SolicitudesCambiarOAnularHorasMedicas = require("../models/SolicitudesCambiarOAnularHorasMedicas");
-const MotivosSolicitudesCitas = require('../models/MotivosSolicitudesCitas')
+const SolicitudesCambiarOAnularHorasMedicas = require("../../models/SolicitudesCambiarOAnularHorasMedicas");//SOLO VERSION GRATUITA DE VERCEL
+const MotivosSolicitudesCitas = require('../../models/MotivosSolicitudesCitas')//SOLO VERSION GRATUITA DE VERCEL
+//const SolicitudesCambiarOAnularHorasMedicas = require("../models/SolicitudesCambiarOAnularHorasMedicas");
+//const MotivosSolicitudesCitas = require('../models/MotivosSolicitudesCitas')
+
 const { mensajes } = require("../config");
 
 

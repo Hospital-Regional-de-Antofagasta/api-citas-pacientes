@@ -1,9 +1,12 @@
 const momentBussinessDays = require("moment-business-days");
 const moment = require("moment");
-const CitasPacientes = require("../models/CitasPacientes");
-const SolicitudesCambiarOAnularHorasMedicas = require("../models/SolicitudesCambiarOAnularHorasMedicas");
-const { mensajes } = require("../config");
 
+const CitasPacientes = require("../../models/CitasPacientes");//SOLO VERSION GRATUITA DE VERCEL
+const SolicitudesCambiarOAnularHorasMedicas = require("../../models/SolicitudesCambiarOAnularHorasMedicas");//SOLO VERSION GRATUITA DE VERCEL
+//const CitasPacientes = require("../models/CitasPacientes");
+//const SolicitudesCambiarOAnularHorasMedicas = require("../models/SolicitudesCambiarOAnularHorasMedicas");
+
+const { mensajes } = require("../config");
 
 exports.validarAlta = async (req, res, next) => {
   try {
@@ -27,7 +30,11 @@ exports.validarAlta = async (req, res, next) => {
   }
 };
 
-exports.validarBodySolicitudAnularCambiarHoraMedica = async (req, res, next) => {
+exports.validarBodySolicitudAnularCambiarHoraMedica = async (
+  req,
+  res,
+  next
+) => {
   try {
     req.body.numeroPaciente = req.numeroPaciente;
     const solicitud = req.body;
@@ -35,22 +42,21 @@ exports.validarBodySolicitudAnularCambiarHoraMedica = async (req, res, next) => 
       (solicitud.tipoSolicitud !== "ANULAR" &&
         solicitud.tipoSolicitud !== "CAMBIAR") ||
       typeof solicitud.correlativoCita !== "number" ||
-      typeof solicitud.motivo !== "string" || 
-      solicitud.motivo === "" || 
+      typeof solicitud.motivo !== "string" ||
+      solicitud.motivo === "" ||
       typeof solicitud.detallesMotivo !== "string"
     ) {
       return res.status(400).send({ respuesta: mensajes.badRequest });
     }
-    const solicitudExistente = await SolicitudesCambiarOAnularHorasMedicas.findOne(
-      {
+    const solicitudExistente =
+      await SolicitudesCambiarOAnularHorasMedicas.findOne({
         numeroPaciente: solicitud.numeroPaciente,
         correlativoCita: solicitud.correlativoCita,
         tipoSolicitud: { $in: ["ANULAR", "CAMBIAR"] },
-      }
-    )
-      .sort({ createdAt: -1 }) // -1 descendente
-      .select("tipoSolicitud -_id") //quitar el _id
-      .exec();
+      })
+        .sort({ createdAt: -1 }) // -1 descendente
+        .select("tipoSolicitud -_id") //quitar el _id
+        .exec();
 
     if (solicitudExistente) {
       return res.status(400).send({ respuesta: mensajes.badRequest });
@@ -61,7 +67,11 @@ exports.validarBodySolicitudAnularCambiarHoraMedica = async (req, res, next) => 
   }
 };
 
-exports.validarFechaSolicitudAnularCambiarHoraMedica = async (req, res, next) => {
+exports.validarFechaSolicitudAnularCambiarHoraMedica = async (
+  req,
+  res,
+  next
+) => {
   try {
     const solicitud = req.body;
     if (
@@ -92,4 +102,3 @@ exports.validarFechaSolicitudAnularCambiarHoraMedica = async (req, res, next) =>
     res.status(500).send({ respuesta: mensajes.serverError });
   }
 };
-

@@ -5,6 +5,7 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const { loadConfig, cargarFeriados } = require("./config");
 const citasPacientes = require("./routes/citasPacientes");
+const citasPacientesPorTipo = require("./routes/citasPacientesPorTipo");
 const solicitudesCitasPacientes = require("./routes/solicitudesCitasPacientes");
 const app = express();
 app.use(express.json());
@@ -19,6 +20,8 @@ loadConfig();
 cargarFeriados();
 
 app.use("/v1/citas_pacientes", citasPacientes);
+
+app.use("/v1/citas_pacientes/tipo", citasPacientesPorTipo);
 
 app.use("/v1/citas_pacientes/solicitudes", solicitudesCitasPacientes);
 

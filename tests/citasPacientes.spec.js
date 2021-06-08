@@ -5,13 +5,13 @@ const supertest = require("supertest");
 const moment = require("moment");
 const citasPacientesSeeds = require("../api/testSeeds/citasPacientesSeeds.json");
 const diasFeriadosSeeds = require("../api/testSeeds/diasFeriadosSeeds.json");
-const solicitudesCambiarOAnularHorasMedicasSeeds = require("../api/testSeeds/solicitudesCambiarOAnularHorasMedicasSeeds.json");
-const motivosSolicitudesCitas = require("../api/testSeeds/motivosSolicitudesCitasSeeds.json");
 const { cargarFeriados } = require("../api/config");
-const CitasPacientes = require("../api/models/CitasPacientes");
-const DiasFeriados = require("../api/models/DiasFeriados");
-const SolicitudesCambiarOAnularHorasMedicas = require("../api/models/SolicitudesCambiarOAnularHorasMedicas");
-const MotivosSolicitudesCitas = require("../api/models/MotivosSolicitudesCitas");
+
+const CitasPacientes = require("../models/CitasPacientes");//SOLO VERSION GRATUITA DE VERCEL
+const DiasFeriados = require("../models/DiasFeriados");//SOLO VERSION GRATUITA DE VERCEL
+//const CitasPacientes = require("../api/models/CitasPacientes");
+//const DiasFeriados = require("../api/models/DiasFeriados");
+
 
 const request = supertest(app);
 const secreto = process.env.JWT_SECRET;
@@ -28,8 +28,6 @@ beforeAll(async (done) => {
   //Cargar los seeds a la base de datos.
   await CitasPacientes.create(citasPacientesSeeds);
   await DiasFeriados.create(diasFeriadosSeeds);
-  await SolicitudesCambiarOAnularHorasMedicas.create(solicitudesCambiarOAnularHorasMedicasSeeds);
-  await MotivosSolicitudesCitas.create(motivosSolicitudesCitas);
   //Fechas para preparar escenarios de prueba.
   const fechaHoy = new Date();
   const fechaHoy1 = new Date(
@@ -148,8 +146,6 @@ afterAll(async (done) => {
   //Borrar el contenido de la colección en la base de datos despues de la pruebas.
   await CitasPacientes.deleteMany();
   await DiasFeriados.deleteMany();
-  await SolicitudesCambiarOAnularHorasMedicas.deleteMany();
-  await MotivosSolicitudesCitas.deleteMany();
   //Cerrar la conexión a la base de datos despues de la pruebas.
   await mongoose.connection.close();
   done();
@@ -186,10 +182,10 @@ describe("Endpoints", () => {
       done();
     });
   })   
-  describe("/v1/citas_pacientes/horas_medicas/historico", () => {
+  describe("/v1/citas_pacientes/tipo/horas_medicas", () => {
     it("Intenta obtener las horas médicas históricas de un paciente sin token", async (done) => {
       const respuesta = await request.get(
-        "/v1/citas_pacientes/horas_medicas/historico"
+        "/v1/citas_pacientes/tipo/horas_medicas"
       );
       expect(respuesta.status).toBe(401);
       expect(respuesta.body.respuesta).toBeTruthy();
@@ -198,7 +194,7 @@ describe("Endpoints", () => {
     it("Intenta obtener las horas médicas históricas de un paciente con token (Arreglo sin horas médicas)", async (done) => {
       token = jwt.sign({ numeroPaciente: 2 }, secreto);
       const respuesta = await request
-        .get("/v1/citas_pacientes/horas_medicas/historico")
+        .get("/v1/citas_pacientes/tipo/horas_medicas")
         .set("Authorization", token);
       expect(respuesta.status).toBe(200);
       //Probar que el arreglo está vacío.
@@ -210,7 +206,7 @@ describe("Endpoints", () => {
     it("Intenta obtener las horas médicas históricas de un paciente con token (Arreglo con horas médicas)", async (done) => {
       token = jwt.sign({ numeroPaciente: 1 }, secreto);
       const respuesta = await request
-        .get("/v1/citas_pacientes/horas_medicas/historico")
+        .get("/v1/citas_pacientes/tipo/horas_medicas")
         .set("Authorization", token);
       expect(respuesta.status).toBe(200);
       //Probar que el arreglo tiene 11 horas médicas y que todas son del mismo paciente.
@@ -268,10 +264,10 @@ describe("Endpoints", () => {
       done();
     });
   });
-  describe("/v1/citas_pacientes/horas_medicas/proximas/:timeZone", () => {
+  describe("/v1/citas_pacientes/tipo/horas_medicas/proximas/:timeZone", () => {
     it("Intenta obtener las horas médicas posteriores a hoy de un paciente sin token", async (done) => {
       const respuesta = await request.get(
-        `/v1/citas_pacientes/horas_medicas/proximas/${encodeURIComponent(
+        `/v1/citas_pacientes/tipo/horas_medicas/proximas/${encodeURIComponent(
           "America/Santiago"
         )}`
       );
@@ -283,7 +279,7 @@ describe("Endpoints", () => {
       token = jwt.sign({ numeroPaciente: 2 }, secreto);
       const respuesta = await request
         .get(
-          `/v1/citas_pacientes/horas_medicas/proximas/${encodeURIComponent(
+          `/v1/citas_pacientes/tipo/horas_medicas/proximas/${encodeURIComponent(
             "America/Santiago"
           )}`
         )
@@ -300,7 +296,7 @@ describe("Endpoints", () => {
       token = jwt.sign({ numeroPaciente: 1 }, secreto);
       const respuesta = await request
         .get(
-          `/v1/citas_pacientes/horas_medicas/proximas/${encodeURIComponent(
+          `/v1/citas_pacientes/tipo/horas_medicas/proximas/${encodeURIComponent(
             "America/Santiago"
           )}`
         )
@@ -357,10 +353,10 @@ describe("Endpoints", () => {
       done();
     });
   });
-  describe("/v1/citas_pacientes/horas_examenes/historico", () => {
+  describe("/v1/citas_pacientes/tipo/horas_examenes", () => {
     it("Intenta obtener las horas de exámenes históricas de un paciente sin token", async (done) => {
       const respuesta = await request.get(
-        "/v1/citas_pacientes/horas_examenes/historico"
+        "/v1/citas_pacientes/tipo/horas_examenes"
       );
       expect(respuesta.status).toBe(401);
       expect(respuesta.body.respuesta).toBeTruthy();
@@ -369,7 +365,7 @@ describe("Endpoints", () => {
     it("Intenta obtener las horas de exámenes históricas de un paciente con token (Arreglo sin horas de exámenes)", async (done) => {
       token = jwt.sign({ numeroPaciente: 2 }, secreto);
       const respuesta = await request
-        .get("/v1/citas_pacientes/horas_examenes/historico")
+        .get("/v1/citas_pacientes/tipo/horas_examenes")
         .set("Authorization", token);
       expect(respuesta.status).toBe(200);
       //Probar que el arreglo está vacío.
@@ -381,7 +377,7 @@ describe("Endpoints", () => {
     it("Intenta obtener las horas de exámenes históricas de un paciente con token (Arreglo con horas de exámenes)", async (done) => {
       token = jwt.sign({ numeroPaciente: 1 }, secreto);
       const respuesta = await request
-        .get("/v1/citas_pacientes/horas_examenes/historico")
+        .get("/v1/citas_pacientes/tipo/horas_examenes")
         .set("Authorization", token);
       expect(respuesta.status).toBe(200);
       //Probar que el arreglo tiene cinco horas médicas y que todas son del mismo paciente.
@@ -407,10 +403,10 @@ describe("Endpoints", () => {
       done()
     });
   });
-  describe("/v1/citas_pacientes/horas_examenes/proximas/:timeZone", () => {
+  describe("/v1/citas_pacientes/tipo/horas_examenes/proximas/:timeZone", () => {
     it("Intenta obtener las horas de exámenes posteriores a hoy de un paciente sin token", async (done) => {
       const respuesta = await request.get(
-        `/v1/citas_pacientes/horas_examenes/proximas/${encodeURIComponent(
+        `/v1/citas_pacientes/tipo/horas_examenes/proximas/${encodeURIComponent(
           "America/Santiago"
         )}`
       );
@@ -422,7 +418,7 @@ describe("Endpoints", () => {
       token = jwt.sign({ numeroPaciente: 2 }, secreto);
       const respuesta = await request
         .get(
-          `/v1/citas_pacientes/horas_examenes/proximas/${encodeURIComponent(
+          `/v1/citas_pacientes/tipo/horas_examenes/proximas/${encodeURIComponent(
             "America/Santiago"
           )}`
         )
@@ -440,7 +436,7 @@ describe("Endpoints", () => {
       token = jwt.sign({ numeroPaciente: 1 }, secreto);
       const respuesta = await request
         .get(
-          `/v1/citas_pacientes/horas_examenes/proximas/${encodeURIComponent(
+          `/v1/citas_pacientes/tipo/horas_examenes/proximas/${encodeURIComponent(
             "America/Santiago"
           )}`
         )

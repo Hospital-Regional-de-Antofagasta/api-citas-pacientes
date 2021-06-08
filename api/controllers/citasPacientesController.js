@@ -1,5 +1,8 @@
 var moment = require("moment-timezone");
-const CitasPacientes = require("../models/CitasPacientes");
+
+const CitasPacientes = require("../../models/CitasPacientes");//SOLO VERSION GRATUITA DE VERCEL
+//const CitasPacientes = require("../models/CitasPacientes");
+
 const { mensajes } = require("../config");
 
 

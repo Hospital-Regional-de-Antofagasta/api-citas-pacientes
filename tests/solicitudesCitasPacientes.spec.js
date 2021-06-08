@@ -8,10 +8,15 @@ const diasFeriadosSeeds = require("../api/testSeeds/diasFeriadosSeeds.json");
 const solicitudesCambiarOAnularHorasMedicasSeeds = require("../api/testSeeds/solicitudesCambiarOAnularHorasMedicasSeeds.json");
 const motivosSolicitudesCitas = require("../api/testSeeds/motivosSolicitudesCitasSeeds.json");
 const { cargarFeriados } = require("../api/config");
-const CitasPacientes = require("../api/models/CitasPacientes");
-const DiasFeriados = require("../api/models/DiasFeriados");
-const SolicitudesCambiarOAnularHorasMedicas = require("../api/models/SolicitudesCambiarOAnularHorasMedicas");
-const MotivosSolicitudesCitas = require("../api/models/MotivosSolicitudesCitas");
+
+const CitasPacientes = require("../models/CitasPacientes");//SOLO VERSION GRATUITA DE VERCEL
+const DiasFeriados = require("../models/DiasFeriados");//SOLO VERSION GRATUITA DE VERCEL
+const SolicitudesCambiarOAnularHorasMedicas = require("../models/SolicitudesCambiarOAnularHorasMedicas");//SOLO VERSION GRATUITA DE VERCEL
+const MotivosSolicitudesCitas = require("../models/MotivosSolicitudesCitas");//SOLO VERSION GRATUITA DE VERCEL
+//const CitasPacientes = require("../api/models/CitasPacientes");
+//const DiasFeriados = require("../api/models/DiasFeriados");
+//const SolicitudesCambiarOAnularHorasMedicas = require("../api/models/SolicitudesCambiarOAnularHorasMedicas");
+//const MotivosSolicitudesCitas = require("../api/models/MotivosSolicitudesCitas");
 
 const request = supertest(app);
 const secreto = process.env.JWT_SECRET;
