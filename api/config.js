@@ -1,6 +1,5 @@
-//const {ConfigApiCitasPacientes, DiasFeriados} = require("../api/models/ModelosAPICitasPacientes");//SOLO PARA PRUEBAS
-const ConfigApiCitasPacientes = require("../models/ConfigApiCitasPacientes");
-const DiasFeriados = require("../models/DiasFeriados");
+const ConfigApiCitasPacientes = require("../models/ConfigApiCitasPacientes");//SOLO VERSION GRATUITA DE VERCEL
+const DiasFeriados = require("../models/DiasFeriados");//SOLO VERSION GRATUITA DE VERCEL
 //const ConfigApiCitasPacientes = require("./models/ConfigApiCitasPacientes");
 //const DiasFeriados = require("./models/DiasFeriados");
 
