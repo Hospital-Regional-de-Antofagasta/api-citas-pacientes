@@ -233,7 +233,7 @@ describe("Endpoints", () => {
       token = jwt.sign({ numeroPaciente: 1 }, secreto);
       let body = {
         tipoSolicitud: "ANULAR",
-        motivo: "Ya me atendí",
+        motivo: 1,
         detallesMotivo: ""
       };
       const respuesta = await request
@@ -250,7 +250,7 @@ describe("Endpoints", () => {
       token = jwt.sign({ numeroPaciente: 1 }, secreto);
       let body = {
         tipoSolicitud: "CAMBIAR",
-        motivo: "Quiero cambio de profesional",
+        motivo: 1,
         detallesMotivo: ""
       };
       const respuesta = await request
@@ -268,7 +268,7 @@ describe("Endpoints", () => {
       let body = {
         correlativoCita: 3,
         tipoSolicitud: "ANULAR",
-        motivo: "Ya me atendí",
+        motivo: 1,
         detallesMotivo: ""
       };
       const respuesta = await request
@@ -286,7 +286,7 @@ describe("Endpoints", () => {
       let body = {
         correlativoCita: 3,
         tipoSolicitud: "CAMBIAR",
-        motivo: "Quiero cambio de profesional",
+        motivo: 1,
         detallesMotivo: ""
       };
       const respuesta = await request
@@ -304,7 +304,7 @@ describe("Endpoints", () => {
       let body = {
         correlativoCita: 17,
         tipoSolicitud: "CAMBIAR",
-        motivo: "Quiero cambio de profesional",
+        motivo: 1,
         detallesMotivo: ""
       };
       const respuesta = await request
@@ -322,7 +322,7 @@ describe("Endpoints", () => {
       let body = {
         correlativoCita: 20,
         tipoSolicitud: "CAMBIAR",
-        motivo: "Quiero cambio de profesional",
+        motivo: 1,
         detallesMotivo: ""
       };
       const respuesta = await request
@@ -340,7 +340,7 @@ describe("Endpoints", () => {
       let body = {
         correlativoCita: 17,
         tipoSolicitud: "ANULAR",
-        motivo: "Ya me atendí",
+        motivo: 1,
         detallesMotivo: ""
       };
       const respuesta = await request
@@ -358,7 +358,7 @@ describe("Endpoints", () => {
       let body = {
         correlativoCita: 20,
         tipoSolicitud: "ANULAR",
-        motivo: "Ya me atendí",
+        motivo: 1,
         detallesMotivo: ""
       };
       const respuesta = await request
@@ -376,7 +376,7 @@ describe("Endpoints", () => {
       let body = {
         correlativoCita: 24,
         tipoSolicitud: "CAMBIAR",
-        motivo: "Quiero cambio de profesional",
+        motivo: 1,
         detallesMotivo: ""
       };
       const respuesta = await request
@@ -399,7 +399,7 @@ describe("Endpoints", () => {
       let body = {
         correlativoCita: 25,
         tipoSolicitud: "ANULAR",
-        motivo: "Ya me atendí",
+        motivo: 1,
         detallesMotivo: ""
       };
       const respuesta = await request
@@ -423,7 +423,7 @@ describe("Endpoints", () => {
         numeroPaciente: 1,
         correlativoCita: 26,
         tipoSolicitud: "ANULAR",
-        motivo: "Ya me atendí",
+        motivo: 1,
         detallesMotivo: ""
       };
 
@@ -452,7 +452,7 @@ describe("Endpoints", () => {
         numeroPaciente: 1,
         correlativoCita: 27,
         tipoSolicitud: "CAMBIAR",
-        motivo: "Quiero cambio de profesional",
+        motivo: 1,
         detallesMotivo: ""
       };
 
@@ -481,7 +481,7 @@ describe("Endpoints", () => {
         numeroPaciente: 1,
         correlativoCita: 26,
         tipoSolicitud: "ANULAR",
-        motivo: "Ya me atendí",
+        motivo: 1,
         detallesMotivo: ""
       };
 
@@ -512,7 +512,7 @@ describe("Endpoints", () => {
         numeroPaciente: 1,
         correlativoCita: 27,
         tipoSolicitud: "CAMBIAR",
-        motivo: "Quiero cambio de profesional",
+        motivo: 1,
         detallesMotivo: ""
       };
 

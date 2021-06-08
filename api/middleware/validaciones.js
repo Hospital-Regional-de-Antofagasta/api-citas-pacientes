@@ -42,7 +42,7 @@ exports.validarBodySolicitudAnularCambiarHoraMedica = async (
       (solicitud.tipoSolicitud !== "ANULAR" &&
         solicitud.tipoSolicitud !== "CAMBIAR") ||
       typeof solicitud.correlativoCita !== "number" ||
-      typeof solicitud.motivo !== "string" ||
+      typeof solicitud.motivo !== "number" ||
       solicitud.motivo === "" ||
       typeof solicitud.detallesMotivo !== "string"
     ) {
