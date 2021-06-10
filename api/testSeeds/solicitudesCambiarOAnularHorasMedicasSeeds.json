@@ -4,7 +4,7 @@
         "numeroPaciente": 1,
         "correlativoCita": 7,
         "tipoSolicitud": "CAMBIAR",
-        "motivo": "",
+        "motivo": "Quiero cambio de profesional",
         "detallesMotivo": "",
         "respondida": true,
         "enviadaHospital": false      
@@ -14,7 +14,7 @@
         "numeroPaciente": 1,
         "correlativoCita": 8,
         "tipoSolicitud": "ANULAR",
-        "motivo": "",
+        "motivo": "Ya me atendí",
         "detallesMotivo": "",
         "respondida": true,
         "enviadaHospital": false
@@ -24,7 +24,7 @@
         "numeroPaciente": 1,
         "correlativoCita": 9,
         "tipoSolicitud": "CAMBIAR",
-        "motivo": "",
+        "motivo": "Quiero cambio de profesional",
         "detallesMotivo": "",
         "respondida": true,
         "enviadaHospital": false
@@ -34,7 +34,7 @@
         "numeroPaciente": 1,
         "correlativoCita": 10,
         "tipoSolicitud": "ANULAR",
-        "motivo": "",
+        "motivo": "Ya me atendí",
         "detallesMotivo": "",
         "respondida": true,
         "enviadaHospital": false

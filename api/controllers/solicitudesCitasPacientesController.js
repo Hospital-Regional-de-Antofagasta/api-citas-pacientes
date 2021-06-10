@@ -25,6 +25,23 @@ exports.getMotivosSolicitudesCitas = async (req, res) => {
   }
 };
 
+exports.getExisteSolicitudCambiarOAnularHoraMedica = async (req, res) => {
+  try {
+    const solicitud = await SolicitudesCambiarOAnularHorasMedicas.findOne({
+      numeroPaciente: req.numeroPaciente,
+      correlativoCita: req.params.correlativoCita,
+      tipoSolicitud: { $in: ["ANULAR", "CAMBIAR"] },
+    }).exec();
+    if(solicitud){
+      res.status(200).send({ respuesta: true });
+    }else{
+      res.status(200).send({ respuesta: false });
+    }
+  } catch (error) {
+    res.status(500).send({ respuesta: mensajes.serverError });
+  }
+};
+
 exports.postSolicitudCambiarOAnularHoraMedica = async (req, res) => {
   try {
     req.body.numeroPaciente = req.numeroPaciente;
