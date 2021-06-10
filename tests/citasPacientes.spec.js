@@ -7,11 +7,10 @@ const citasPacientesSeeds = require("../api/testSeeds/citasPacientesSeeds.json")
 const diasFeriadosSeeds = require("../api/testSeeds/diasFeriadosSeeds.json");
 const { cargarFeriados } = require("../api/config");
 
-const CitasPacientes = require("../models/CitasPacientes");//SOLO VERSION GRATUITA DE VERCEL
-const DiasFeriados = require("../models/DiasFeriados");//SOLO VERSION GRATUITA DE VERCEL
+const CitasPacientes = require("../models/CitasPacientes"); //SOLO VERSION GRATUITA DE VERCEL
+const DiasFeriados = require("../models/DiasFeriados"); //SOLO VERSION GRATUITA DE VERCEL
 //const CitasPacientes = require("../api/models/CitasPacientes");
 //const DiasFeriados = require("../api/models/DiasFeriados");
-
 
 const request = supertest(app);
 const secreto = process.env.JWT_SECRET;
@@ -21,10 +20,13 @@ beforeAll(async (done) => {
   //Cerrar la conexión que se crea en el index.
   await mongoose.disconnect();
   //Conectar a la base de datos de prueba.
-  await mongoose.connect(`${process.env.MONGO_URI_TEST}solicitudes_citas_pacientes_test`, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  });
+  await mongoose.connect(
+    `${process.env.MONGO_URI_TEST}solicitudes_citas_pacientes_test`,
+    {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    }
+  );
   //Cargar los seeds a la base de datos.
   await CitasPacientes.create(citasPacientesSeeds);
   await DiasFeriados.create(diasFeriadosSeeds);
@@ -64,14 +66,54 @@ beforeAll(async (done) => {
   if (fechaFeriado.getDate() < 10) diaFeriado = "0" + diaFeriado;
   if (fechaFeriado.getMonth() < 10) mesFeriado = "0" + mesFeriado;
   await DiasFeriados.create({
-      fecha: fechaFeriado.getFullYear() + "-" + mesFeriado + "-" + diaFeriado,
-    });
+    fecha: fechaFeriado.getFullYear() + "-" + mesFeriado + "-" + diaFeriado,
+  });
   cargarFeriados();
-  const fechaAnterior1 = new Date(fechaHoy.getFullYear() - 2, 0, 1, 8, 30, 0, 0)
-  const fechaAnterior2 = new Date(fechaHoy.getFullYear() - 1, 0, 1, 8, 30, 0, 0)
-  const fechaAnterior3 = new Date(fechaHoy.getFullYear() - 1, 1, 2, 8, 30, 0, 0)
-  const fechaPosterior1 = new Date(fechaHoy.getFullYear() + 1, 1, 1, 8, 30, 0, 0);
-  const fechaPosterior2 = new Date(fechaHoy.getFullYear() + 1, 2, 1, 16, 30, 0, 0);
+  const fechaAnterior1 = new Date(
+    fechaHoy.getFullYear() - 2,
+    0,
+    1,
+    8,
+    30,
+    0,
+    0
+  );
+  const fechaAnterior2 = new Date(
+    fechaHoy.getFullYear() - 1,
+    0,
+    1,
+    8,
+    30,
+    0,
+    0
+  );
+  const fechaAnterior3 = new Date(
+    fechaHoy.getFullYear() - 1,
+    1,
+    2,
+    8,
+    30,
+    0,
+    0
+  );
+  const fechaPosterior1 = new Date(
+    fechaHoy.getFullYear() + 1,
+    1,
+    1,
+    8,
+    30,
+    0,
+    0
+  );
+  const fechaPosterior2 = new Date(
+    fechaHoy.getFullYear() + 1,
+    2,
+    1,
+    16,
+    30,
+    0,
+    0
+  );
   //Cambiar fechas de las citas  del seeder para los diferentes escenarios.
   await Promise.all([
     CitasPacientes.updateOne(
@@ -121,14 +163,14 @@ beforeAll(async (done) => {
     CitasPacientes.updateOne(
       { correlativoCita: 25 },
       { fechaCitacion: fechaPosterior1 }
-    ),      
+    ),
     CitasPacientes.updateOne(
       { correlativoCita: 26 },
       { fechaCitacion: fechaPosterior2 }
     ),
     CitasPacientes.updateOne(
       { correlativoCita: 27 },
-      { fechaCitacion: fechaPosterior2}
+      { fechaCitacion: fechaPosterior2 }
     ),
     CitasPacientes.updateOne(
       { correlativoCita: 28 },
@@ -152,36 +194,34 @@ afterAll(async (done) => {
 });
 
 describe("Endpoints", () => {
-  describe("/v1/citas_pacientes/:correlativoCita", ()=>{
+  describe("/v1/citas_pacientes/:correlativoCita", () => {
     it("Intenta obtener una cita sin token", async (done) => {
-      const respuesta = await request.get(
-        "/v1/citas_pacientes/20"
-      );
+      const respuesta = await request.get("/v1/citas_pacientes/20");
       expect(respuesta.status).toBe(401);
       expect(respuesta.body.respuesta).toBeTruthy();
       done();
     });
     it("Intenta obtener una cita que no existe con token", async (done) => {
       token = jwt.sign({ numeroPaciente: 1 }, secreto);
-      const respuesta = await request.get(
-        "/v1/citas_pacientes/10"
-      ).set("Authorization", token);
-      const cita = respuesta.body
+      const respuesta = await request
+        .get("/v1/citas_pacientes/10")
+        .set("Authorization", token);
+      const cita = respuesta.body;
       expect(respuesta.status).toBe(200);
       expect(cita).toStrictEqual({});
       done();
     });
     it("Intenta obtener una cita con token", async (done) => {
       token = jwt.sign({ numeroPaciente: 1 }, secreto);
-      const respuesta = await request.get(
-        "/v1/citas_pacientes/11"
-      ).set("Authorization", token);
-      const cita = respuesta.body
+      const respuesta = await request
+        .get("/v1/citas_pacientes/11")
+        .set("Authorization", token);
+      const cita = respuesta.body;
       expect(respuesta.status).toBe(200);
       expect(cita.correlativoCita).toStrictEqual(11);
       done();
     });
-  })   
+  });
   describe("/v1/citas_pacientes/tipo/horas_medicas", () => {
     it("Intenta obtener las horas médicas históricas de un paciente sin token", async (done) => {
       const respuesta = await request.get(
@@ -353,6 +393,57 @@ describe("Endpoints", () => {
       done();
     });
   });
+  describe("/v1/citas_pacientes/tipo/horas_medicas/historico/:timeZone", () => {
+    it("Intenta obtener las horas médicas anteriores a hoy de un paciente sin token", async (done) => {
+      const respuesta = await request.get(
+        `/v1/citas_pacientes/tipo/horas_medicas/historico/${encodeURIComponent(
+          "America/Santiago"
+        )}`
+      );
+      expect(respuesta.status).toBe(401);
+      expect(respuesta.body.respuesta).toBeTruthy();
+      done();
+    });
+    it("Intenta obtener las horas médicas anteriores a hoy de un paciente con token (Arreglo sin horas médicas)", async (done) => {
+      token = jwt.sign({ numeroPaciente: 2 }, secreto);
+      const respuesta = await request
+        .get(
+          `/v1/citas_pacientes/tipo/horas_medicas/historico/${encodeURIComponent(
+            "America/Santiago"
+          )}`
+        )
+        .set("Authorization", token);
+      expect(respuesta.status).toBe(200);
+      const arregloHorasMedicas = respuesta.body;
+      expect(arregloHorasMedicas).toStrictEqual([]);
+      expect(arregloHorasMedicas.length).toStrictEqual(0);
+      done();
+    });
+    it("Intenta obtener las horas médicas anteriores a hoy de un paciente con token (Arreglo con horas médicas)", async (done) => {
+      token = jwt.sign({ numeroPaciente: 1 }, secreto);
+      const respuesta = await request
+        .get(
+          `/v1/citas_pacientes/tipo/horas_medicas/historico/${encodeURIComponent(
+            "America/Santiago"
+          )}`
+        )
+        .set("Authorization", token);
+      expect(respuesta.status).toBe(200);
+
+      const arreglosHoras = respuesta.body;
+
+      expect(arreglosHoras.length).toStrictEqual(2);
+
+      expect(arreglosHoras[0].numeroPaciente).toStrictEqual(1);
+      expect(arreglosHoras[0].correlativoCita).toStrictEqual(12);
+      expect(arreglosHoras[0].codigoAmbito).toStrictEqual("01");
+
+      expect(arreglosHoras[1].numeroPaciente).toStrictEqual(1);
+      expect(arreglosHoras[1].correlativoCita).toStrictEqual(11);
+      expect(arreglosHoras[1].codigoAmbito).toStrictEqual("01");
+      done();
+    });
+  });
   describe("/v1/citas_pacientes/tipo/horas_examenes", () => {
     it("Intenta obtener las horas de exámenes históricas de un paciente sin token", async (done) => {
       const respuesta = await request.get(
@@ -400,7 +491,7 @@ describe("Endpoints", () => {
       expect(arregloHoras[3].numeroPaciente).toStrictEqual(1);
       expect(arregloHoras[3].correlativoCita).toStrictEqual(21);
       expect(arregloHoras[3].codigoAmbito).toStrictEqual("04");
-      done()
+      done();
     });
   });
   describe("/v1/citas_pacientes/tipo/horas_examenes/proximas/:timeZone", () => {
@@ -465,5 +556,51 @@ describe("Endpoints", () => {
       done();
     });
   });
-  
+  describe("/v1/citas_pacientes/tipo/horas_examenes/historico/:timeZone", () => {
+    it("Intenta obtener las horas de exámenes anteriores a hoy de un paciente sin token", async (done) => {
+      const respuesta = await request.get(
+        `/v1/citas_pacientes/tipo/horas_examenes/historico/${encodeURIComponent(
+          "America/Santiago"
+        )}`
+      );
+      expect(respuesta.status).toBe(401);
+      expect(respuesta.body.respuesta).toBeTruthy();
+      done();
+    });
+    it("Intenta obtener las horas de exámenes anteriores a hoy de un paciente con token (Arreglo sin horas de exámenes)", async (done) => {
+      token = jwt.sign({ numeroPaciente: 2 }, secreto);
+      const respuesta = await request
+        .get(
+          `/v1/citas_pacientes/tipo/horas_examenes/historico/${encodeURIComponent(
+            "America/Santiago"
+          )}`
+        )
+        .set("Authorization", token);
+      expect(respuesta.status).toBe(200);
+      const arregloHorasMedicas = respuesta.body;
+      expect(arregloHorasMedicas).toStrictEqual([]);
+      expect(arregloHorasMedicas.length).toStrictEqual(0);
+      done();
+    });
+    it("Intenta obtener las horas de exámenes anteriores a hoy de un paciente con token (Arreglo con horas de exámenes)", async (done) => {
+      token = jwt.sign({ numeroPaciente: 1 }, secreto);
+      const respuesta = await request
+        .get(
+          `/v1/citas_pacientes/tipo/horas_examenes/historico/${encodeURIComponent(
+            "America/Santiago"
+          )}`
+        )
+        .set("Authorization", token);
+      expect(respuesta.status).toBe(200);
+
+      const arreglosHoras = respuesta.body;
+
+      expect(arreglosHoras.length).toStrictEqual(1);
+
+      expect(arreglosHoras[0].numeroPaciente).toStrictEqual(1);
+      expect(arreglosHoras[0].correlativoCita).toStrictEqual(13);
+      expect(arreglosHoras[0].codigoAmbito).toStrictEqual("04");
+      done();
+    });
+  });
 });
