@@ -47,7 +47,7 @@ exports.postSolicitudCambiarOAnularHoraMedica = async (req, res) => {
     req.body.numeroPaciente = req.numeroPaciente;
     const solicitud = req.body;
     await SolicitudesCambiarOAnularHorasMedicas.create(solicitud);
-    res.sendStatus(201);
+    res.status(201).send({});
   } catch (error) {
     res.status(500).send({ respuesta: mensajes.serverError });
   }
