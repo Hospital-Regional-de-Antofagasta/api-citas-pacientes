@@ -2,10 +2,10 @@ const momentBussinessDays = require("moment-business-days");
 const moment = require("moment");
 
 const CitasPacientes = require("../../models/CitasPacientes"); //SOLO VERSION GRATUITA DE VERCEL
-const SolicitudesCambiarOAnularHorasMedicas = require("../../models/SolicitudesCambiarOAnularHorasMedicas"); //SOLO VERSION GRATUITA DE VERCEL
+const SolicitudesAnularCambiarCitasPacientes = require("../../models/SolicitudesAnularCambiarCitasPacientes"); //SOLO VERSION GRATUITA DE VERCEL
 const MotivosSolicitudesCitas = require("../../models/MotivosSolicitudesCitas"); //SOLO VERSION GRATUITA DE VERCEL
 //const CitasPacientes = require("../models/CitasPacientes");
-//const SolicitudesCambiarOAnularHorasMedicas = require("../models/SolicitudesCambiarOAnularHorasMedicas");
+//const SolicitudesAnularCambiarCitasPacientes = require("../models/SolicitudesAnularCambiarCitasPacientes");
 //const MotivosSolicitudesCitas = require("../models/MotivosSolicitudesCitas");
 
 const { mensajes } = require("../config");
@@ -75,7 +75,7 @@ exports.validarExistenciaSolicitudAnularCambiarHoraMedica = async (
   try {
     const solicitud = req.body;
     const solicitudExistente =
-      await SolicitudesCambiarOAnularHorasMedicas.findOne({
+      await SolicitudesAnularCambiarCitasPacientes.findOne({
         numeroPaciente: solicitud.numeroPaciente,
         correlativoCita: solicitud.correlativoCita,
         tipoSolicitud: { $in: ["ANULAR", "CAMBIAR"] },

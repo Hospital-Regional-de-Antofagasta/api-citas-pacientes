@@ -1,8 +1,8 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const SolicitudesCambiarOAnularHorasMedicas = mongoose.model(
-  "solicitudes_cambiar_anular_horas_medica",
+const SolicitudesAnularCambiarCitasPacientes = mongoose.model(
+  "solicitudes_anular_cambiar_citas_paciente",
   new Schema(
     {
       correlativoSolicitud: {
@@ -25,7 +25,7 @@ const SolicitudesCambiarOAnularHorasMedicas = mongoose.model(
     },
     { timestamps: true }
   ),
-  "solicitudes_cambiar_anular_horas_medicas"
+  "solicitudes_anular_cambiar_citas_pacientes"
 );
 
-module.exports = SolicitudesCambiarOAnularHorasMedicas;
+module.exports = SolicitudesAnularCambiarCitasPacientes;

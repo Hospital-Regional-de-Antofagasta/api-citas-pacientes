@@ -5,17 +5,17 @@ const supertest = require("supertest");
 const moment = require("moment");
 const citasPacientesSeeds = require("../api/testSeeds/citasPacientesSeeds.json");
 const diasFeriadosSeeds = require("../api/testSeeds/diasFeriadosSeeds.json");
-const solicitudesCambiarOAnularHorasMedicasSeeds = require("../api/testSeeds/solicitudesCambiarOAnularHorasMedicasSeeds.json");
+const solicitudesAnularCambiarCitasPacientesSeeds = require("../api/testSeeds/solicitudesAnularCambiarCitasPacientesSeeds.json");
 const motivosSolicitudesCitas = require("../api/testSeeds/motivosSolicitudesCitasSeeds.json");
 const { cargarFeriados } = require("../api/config");
 
 const CitasPacientes = require("../models/CitasPacientes");//SOLO VERSION GRATUITA DE VERCEL
 const DiasFeriados = require("../models/DiasFeriados");//SOLO VERSION GRATUITA DE VERCEL
-const SolicitudesCambiarOAnularHorasMedicas = require("../models/SolicitudesCambiarOAnularHorasMedicas");//SOLO VERSION GRATUITA DE VERCEL
+const SolicitudesAnularCambiarCitasPacientes = require("../models/SolicitudesAnularCambiarCitasPacientes");//SOLO VERSION GRATUITA DE VERCEL
 const MotivosSolicitudesCitas = require("../models/MotivosSolicitudesCitas");//SOLO VERSION GRATUITA DE VERCEL
 //const CitasPacientes = require("../api/models/CitasPacientes");
 //const DiasFeriados = require("../api/models/DiasFeriados");
-//const SolicitudesCambiarOAnularHorasMedicas = require("../api/models/SolicitudesCambiarOAnularHorasMedicas");
+//const SolicitudesAnularCambiarCitasPacientes = require("../api/models/SolicitudesAnularCambiarCitasPacientes");
 //const MotivosSolicitudesCitas = require("../api/models/MotivosSolicitudesCitas");
 
 const request = supertest(app);
@@ -33,7 +33,7 @@ beforeAll(async (done) => {
   //Cargar los seeds a la base de datos.
   await CitasPacientes.create(citasPacientesSeeds);
   await DiasFeriados.create(diasFeriadosSeeds);
-  await SolicitudesCambiarOAnularHorasMedicas.create(solicitudesCambiarOAnularHorasMedicasSeeds);
+  await SolicitudesAnularCambiarCitasPacientes.create(solicitudesAnularCambiarCitasPacientesSeeds);
   await MotivosSolicitudesCitas.create(motivosSolicitudesCitas);
   //Fechas para preparar escenarios de prueba.
   const fechaHoy = new Date();
@@ -153,7 +153,7 @@ afterAll(async (done) => {
   //Borrar el contenido de la colección en la base de datos despues de la pruebas.
   await CitasPacientes.deleteMany();
   await DiasFeriados.deleteMany();
-  await SolicitudesCambiarOAnularHorasMedicas.deleteMany();
+  await SolicitudesAnularCambiarCitasPacientes.deleteMany();
   await MotivosSolicitudesCitas.deleteMany();
   //Cerrar la conexión a la base de datos despues de la pruebas.
   await mongoose.connection.close();
@@ -370,7 +370,7 @@ describe("Endpoints", () => {
       expect(respuesta.status).toBe(201);
 
       //Borrar solicitud
-      await SolicitudesCambiarOAnularHorasMedicas.deleteOne({
+      await SolicitudesAnularCambiarCitasPacientes.deleteOne({
         correlativoCita: 24,
       });
 
@@ -393,7 +393,7 @@ describe("Endpoints", () => {
       expect(respuesta.status).toBe(201);
 
       //Borrar solicitud
-      await SolicitudesCambiarOAnularHorasMedicas.deleteOne({
+      await SolicitudesAnularCambiarCitasPacientes.deleteOne({
         correlativoCita: 20,
       });
 
@@ -410,7 +410,7 @@ describe("Endpoints", () => {
       };
 
       //Crear solicitud
-      await SolicitudesCambiarOAnularHorasMedicas.create(body);
+      await SolicitudesAnularCambiarCitasPacientes.create(body);
 
       const respuesta = await request
         .post(
@@ -422,7 +422,7 @@ describe("Endpoints", () => {
       expect(respuesta.body.respuesta).toBeTruthy();
 
       //Borrar solicitud
-      await SolicitudesCambiarOAnularHorasMedicas.deleteOne({
+      await SolicitudesAnularCambiarCitasPacientes.deleteOne({
         correlativoCita: 26,
       });
 
@@ -439,7 +439,7 @@ describe("Endpoints", () => {
       };
 
       //Crear solicitud
-      await SolicitudesCambiarOAnularHorasMedicas.create(body);
+      await SolicitudesAnularCambiarCitasPacientes.create(body);
 
       const respuesta = await request
         .post(
@@ -451,7 +451,7 @@ describe("Endpoints", () => {
       expect(respuesta.body.respuesta).toBeTruthy();
 
       //Borrar solicitud
-      await SolicitudesCambiarOAnularHorasMedicas.deleteOne({
+      await SolicitudesAnularCambiarCitasPacientes.deleteOne({
         correlativoCita: 27,
       });
 
@@ -468,7 +468,7 @@ describe("Endpoints", () => {
       };
 
       //Crear solicitud
-      await SolicitudesCambiarOAnularHorasMedicas.create(body);
+      await SolicitudesAnularCambiarCitasPacientes.create(body);
 
       body.tipoSolicitud = "CAMBIAR";
 
@@ -482,7 +482,7 @@ describe("Endpoints", () => {
       expect(respuesta.body.respuesta).toBeTruthy();
 
       //Borrar solicitud
-      await SolicitudesCambiarOAnularHorasMedicas.deleteOne({
+      await SolicitudesAnularCambiarCitasPacientes.deleteOne({
         correlativoCita: 26,
       });
 
@@ -499,7 +499,7 @@ describe("Endpoints", () => {
       };
 
       //Crear solicitud
-      await SolicitudesCambiarOAnularHorasMedicas.create(body);
+      await SolicitudesAnularCambiarCitasPacientes.create(body);
 
       body.tipoSolicitud = "ANULAR";
 
@@ -513,7 +513,7 @@ describe("Endpoints", () => {
       expect(respuesta.body.respuesta).toBeTruthy();
 
       //Borrar solicitud
-      await SolicitudesCambiarOAnularHorasMedicas.deleteOne({
+      await SolicitudesAnularCambiarCitasPacientes.deleteOne({
         correlativoCita: 27,
       });
 

@@ -1,6 +1,6 @@
-const SolicitudesCambiarOAnularHorasMedicas = require("../../models/SolicitudesCambiarOAnularHorasMedicas");//SOLO VERSION GRATUITA DE VERCEL
+const SolicitudesAnularCambiarCitasPacientes = require("../../models/SolicitudesAnularCambiarCitasPacientes");//SOLO VERSION GRATUITA DE VERCEL
 const MotivosSolicitudesCitas = require('../../models/MotivosSolicitudesCitas')//SOLO VERSION GRATUITA DE VERCEL
-//const SolicitudesCambiarOAnularHorasMedicas = require("../models/SolicitudesCambiarOAnularHorasMedicas");
+//const SolicitudesAnularCambiarCitasPacientes = require("../models/SolicitudesAnularCambiarCitasPacientes");
 //const MotivosSolicitudesCitas = require('../models/MotivosSolicitudesCitas')
 
 const { mensajes } = require("../config");
@@ -27,7 +27,7 @@ exports.getMotivosSolicitudesCitas = async (req, res) => {
 
 exports.getExisteSolicitudCambiarOAnularHoraMedica = async (req, res) => {
   try {
-    const solicitud = await SolicitudesCambiarOAnularHorasMedicas.findOne({
+    const solicitud = await SolicitudesAnularCambiarCitasPacientes.findOne({
       numeroPaciente: req.numeroPaciente,
       correlativoCita: req.params.correlativoCita,
       tipoSolicitud: { $in: ["ANULAR", "CAMBIAR"] },
@@ -46,7 +46,7 @@ exports.postSolicitudCambiarOAnularHoraMedica = async (req, res) => {
   try {
     req.body.numeroPaciente = req.numeroPaciente;
     const solicitud = req.body;
-    await SolicitudesCambiarOAnularHorasMedicas.create(solicitud);
+    await SolicitudesAnularCambiarCitasPacientes.create(solicitud);
     res.status(201).send({});
   } catch (error) {
     res.status(500).send({ respuesta: mensajes.serverError });
