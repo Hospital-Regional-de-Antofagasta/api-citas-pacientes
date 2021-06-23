@@ -103,7 +103,7 @@ exports.validarFechaSolicitudAnularCambiarHoraMedica = async (
     const cita = await CitasPacientes.findOne({
       numeroPaciente: req.numeroPaciente,
       correlativoCita: solicitud.correlativoCita,
-      codigoAmbito: "01",//Horas médicas
+      codigoAmbito: "01", //Horas médicas
     }).exec();
     if (!cita) {
       return res.status(400).send({

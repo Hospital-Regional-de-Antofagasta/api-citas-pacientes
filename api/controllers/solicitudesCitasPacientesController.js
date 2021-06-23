@@ -1,24 +1,23 @@
-const SolicitudesAnularCambiarCitasPacientes = require("../../models/SolicitudesAnularCambiarCitasPacientes");//SOLO VERSION GRATUITA DE VERCEL
-const MotivosSolicitudesCitas = require('../../models/MotivosSolicitudesCitas')//SOLO VERSION GRATUITA DE VERCEL
+const SolicitudesAnularCambiarCitasPacientes = require("../../models/SolicitudesAnularCambiarCitasPacientes"); //SOLO VERSION GRATUITA DE VERCEL
+const MotivosSolicitudesCitas = require("../../models/MotivosSolicitudesCitas"); //SOLO VERSION GRATUITA DE VERCEL
 //const SolicitudesAnularCambiarCitasPacientes = require("../models/SolicitudesAnularCambiarCitasPacientes");
 //const MotivosSolicitudesCitas = require('../models/MotivosSolicitudesCitas')
 
 const { mensajes } = require("../config");
 
-
 exports.getMotivosSolicitudesCitas = async (req, res) => {
   try {
-    const tipo = req.params.tipoSolicitud
-    if(typeof tipo !== 'string'){
-      console.log('motivo')
+    const tipo = req.params.tipoSolicitud;
+    if (typeof tipo !== "string") {
+      console.log("motivo");
       res.status(400).send({ respuesta: mensajes.badRequest });
-    }      
+    }
     const motivos = await MotivosSolicitudesCitas.find({
       tipoSolicitud: tipo,
-      habilitado: true
+      habilitado: true,
     })
-    .sort({ indice: 1 }) //1 ascendente
-    .exec();
+      .sort({ indice: 1 }) //1 ascendente
+      .exec();
     res.status(200).send(motivos);
   } catch (error) {
     res.status(500).send({ respuesta: mensajes.serverError });
@@ -32,9 +31,9 @@ exports.getExisteSolicitudCambiarOAnularHoraMedica = async (req, res) => {
       correlativoCita: req.params.correlativoCita,
       tipoSolicitud: { $in: ["ANULAR", "CAMBIAR"] },
     }).exec();
-    if(solicitud){
+    if (solicitud) {
       res.status(200).send({ respuesta: true });
-    }else{
+    } else {
       res.status(200).send({ respuesta: false });
     }
   } catch (error) {
@@ -52,5 +51,3 @@ exports.postSolicitudCambiarOAnularHoraMedica = async (req, res) => {
     res.status(500).send({ respuesta: mensajes.serverError });
   }
 };
-
-

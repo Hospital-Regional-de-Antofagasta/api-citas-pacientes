@@ -9,10 +9,10 @@ const solicitudesAnularCambiarCitasPacientesSeeds = require("../api/testSeeds/so
 const motivosSolicitudesCitas = require("../api/testSeeds/motivosSolicitudesCitasSeeds.json");
 const { cargarFeriados } = require("../api/config");
 
-const CitasPacientes = require("../models/CitasPacientes");//SOLO VERSION GRATUITA DE VERCEL
-const DiasFeriados = require("../models/DiasFeriados");//SOLO VERSION GRATUITA DE VERCEL
-const SolicitudesAnularCambiarCitasPacientes = require("../models/SolicitudesAnularCambiarCitasPacientes");//SOLO VERSION GRATUITA DE VERCEL
-const MotivosSolicitudesCitas = require("../models/MotivosSolicitudesCitas");//SOLO VERSION GRATUITA DE VERCEL
+const CitasPacientes = require("../models/CitasPacientes"); //SOLO VERSION GRATUITA DE VERCEL
+const DiasFeriados = require("../models/DiasFeriados"); //SOLO VERSION GRATUITA DE VERCEL
+const SolicitudesAnularCambiarCitasPacientes = require("../models/SolicitudesAnularCambiarCitasPacientes"); //SOLO VERSION GRATUITA DE VERCEL
+const MotivosSolicitudesCitas = require("../models/MotivosSolicitudesCitas"); //SOLO VERSION GRATUITA DE VERCEL
 //const CitasPacientes = require("../api/models/CitasPacientes");
 //const DiasFeriados = require("../api/models/DiasFeriados");
 //const SolicitudesAnularCambiarCitasPacientes = require("../api/models/SolicitudesAnularCambiarCitasPacientes");
@@ -33,7 +33,9 @@ beforeAll(async (done) => {
   //Cargar los seeds a la base de datos.
   await CitasPacientes.create(citasPacientesSeeds);
   await DiasFeriados.create(diasFeriadosSeeds);
-  await SolicitudesAnularCambiarCitasPacientes.create(solicitudesAnularCambiarCitasPacientesSeeds);
+  await SolicitudesAnularCambiarCitasPacientes.create(
+    solicitudesAnularCambiarCitasPacientesSeeds
+  );
   await MotivosSolicitudesCitas.create(motivosSolicitudesCitas);
   //Fechas para preparar escenarios de prueba.
   const fechaHoy = new Date();
@@ -71,14 +73,54 @@ beforeAll(async (done) => {
   if (fechaFeriado.getDate() < 10) diaFeriado = "0" + diaFeriado;
   if (fechaFeriado.getMonth() < 10) mesFeriado = "0" + mesFeriado;
   await DiasFeriados.create({
-      fecha: fechaFeriado.getFullYear() + "-" + mesFeriado + "-" + diaFeriado,
-    });
+    fecha: fechaFeriado.getFullYear() + "-" + mesFeriado + "-" + diaFeriado,
+  });
   cargarFeriados();
-  const fechaAnterior1 = new Date(fechaHoy.getFullYear() - 2, 0, 1, 8, 30, 0, 0)
-  const fechaAnterior2 = new Date(fechaHoy.getFullYear() - 1, 0, 1, 8, 30, 0, 0)
-  const fechaAnterior3 = new Date(fechaHoy.getFullYear() - 1, 1, 2, 8, 30, 0, 0)
-  const fechaPosterior1 = new Date(fechaHoy.getFullYear() + 1, 1, 1, 8, 30, 0, 0);
-  const fechaPosterior2 = new Date(fechaHoy.getFullYear() + 1, 2, 1, 16, 30, 0, 0);
+  const fechaAnterior1 = new Date(
+    fechaHoy.getFullYear() - 2,
+    0,
+    1,
+    8,
+    30,
+    0,
+    0
+  );
+  const fechaAnterior2 = new Date(
+    fechaHoy.getFullYear() - 1,
+    0,
+    1,
+    8,
+    30,
+    0,
+    0
+  );
+  const fechaAnterior3 = new Date(
+    fechaHoy.getFullYear() - 1,
+    1,
+    2,
+    8,
+    30,
+    0,
+    0
+  );
+  const fechaPosterior1 = new Date(
+    fechaHoy.getFullYear() + 1,
+    1,
+    1,
+    8,
+    30,
+    0,
+    0
+  );
+  const fechaPosterior2 = new Date(
+    fechaHoy.getFullYear() + 1,
+    2,
+    1,
+    16,
+    30,
+    0,
+    0
+  );
   //Cambiar fechas de las citas  del seeder para los diferentes escenarios.
   await Promise.all([
     CitasPacientes.updateOne(
@@ -128,14 +170,14 @@ beforeAll(async (done) => {
     CitasPacientes.updateOne(
       { correlativoCita: 25 },
       { fechaCitacion: fechaPosterior1 }
-    ),      
+    ),
     CitasPacientes.updateOne(
       { correlativoCita: 26 },
       { fechaCitacion: fechaPosterior2 }
     ),
     CitasPacientes.updateOne(
       { correlativoCita: 27 },
-      { fechaCitacion: fechaPosterior2}
+      { fechaCitacion: fechaPosterior2 }
     ),
     CitasPacientes.updateOne(
       { correlativoCita: 28 },
@@ -161,7 +203,7 @@ afterAll(async (done) => {
 });
 
 describe("Endpoints", () => {
-  describe("/v1/citas_pacientes/solicitudes/motivos/:tipoSolicitud", ()=>{
+  describe("GET /v1/citas_pacientes/solicitudes/motivos/:tipoSolicitud", () => {
     it("Intenta obtener los motivos sin token", async (done) => {
       const respuesta = await request.get(
         "/v1/citas_pacientes/solicitudes/motivos/ANULAR"
@@ -172,40 +214,42 @@ describe("Endpoints", () => {
     });
     it("Intenta obtener los motivos de un tipo de solicitud que no existe con token", async (done) => {
       token = jwt.sign({ numeroPaciente: 1 }, secreto);
-      const respuesta = await request.get(
-        "/v1/citas_pacientes/solicitudes/motivos/PEDIR"
-      ).set("Authorization", token);
-      const cita = respuesta.body
+      const respuesta = await request
+        .get("/v1/citas_pacientes/solicitudes/motivos/PEDIR")
+        .set("Authorization", token);
+      const cita = respuesta.body;
       expect(respuesta.status).toBe(200);
       expect(cita).toStrictEqual([]);
       done();
     });
     it("Intenta obtener los motivos de un tipo de solicitud ANULAR con token", async (done) => {
       token = jwt.sign({ numeroPaciente: 1 }, secreto);
-      const respuesta = await request.get(
-        "/v1/citas_pacientes/solicitudes/motivos/ANULAR"
-      ).set("Authorization", token);
-      const arregloMotivos = respuesta.body
+      const respuesta = await request
+        .get("/v1/citas_pacientes/solicitudes/motivos/ANULAR")
+        .set("Authorization", token);
+      const arregloMotivos = respuesta.body;
       expect(respuesta.status).toBe(200);
-      expect(arregloMotivos[0].nombre).toStrictEqual('No requiero la hora');
-      expect(arregloMotivos[1].nombre).toStrictEqual('Ya me atendí');
-      expect(arregloMotivos[2].nombre).toStrictEqual('Otro');
+      expect(arregloMotivos[0].nombre).toStrictEqual("No requiero la hora");
+      expect(arregloMotivos[1].nombre).toStrictEqual("Ya me atendí");
+      expect(arregloMotivos[2].nombre).toStrictEqual("Otro");
       done();
     });
     it("Intenta obtener los motivos de un tipo de solicitud CAMBIAR con token", async (done) => {
       token = jwt.sign({ numeroPaciente: 1 }, secreto);
-      const respuesta = await request.get(
-        "/v1/citas_pacientes/solicitudes/motivos/CAMBIAR"
-      ).set("Authorization", token);
-      const arregloMotivos = respuesta.body
+      const respuesta = await request
+        .get("/v1/citas_pacientes/solicitudes/motivos/CAMBIAR")
+        .set("Authorization", token);
+      const arregloMotivos = respuesta.body;
       expect(respuesta.status).toBe(200);
-      expect(arregloMotivos[0].nombre).toStrictEqual('No puedo asistir');
-      expect(arregloMotivos[1].nombre).toStrictEqual('Quiero cambio de profesional');
-      expect(arregloMotivos[2].nombre).toStrictEqual('Otro');
+      expect(arregloMotivos[0].nombre).toStrictEqual("No puedo asistir");
+      expect(arregloMotivos[1].nombre).toStrictEqual(
+        "Quiero cambio de profesional"
+      );
+      expect(arregloMotivos[2].nombre).toStrictEqual("Otro");
       done();
     });
-  })   
-  describe("/v1/citas_pacientes/solicitudes/horas_medicas/anular_cambiar/", () => {
+  });
+  describe("POST /v1/citas_pacientes/solicitudes/horas_medicas/anular_cambiar/", () => {
     it("Solicitud sin token.", async (done) => {
       const respuesta = await request.post(
         "/v1/citas_pacientes/solicitudes/horas_medicas/anular_cambiar/"
@@ -220,9 +264,7 @@ describe("Endpoints", () => {
         correlativoCita: 11,
       };
       const respuesta = await request
-        .post(
-          "/v1/citas_pacientes/solicitudes/horas_medicas/anular_cambiar/"
-        )
+        .post("/v1/citas_pacientes/solicitudes/horas_medicas/anular_cambiar/")
         .set("Authorization", token)
         .send(body);
       expect(respuesta.status).toBe(400);
@@ -234,12 +276,10 @@ describe("Endpoints", () => {
       let body = {
         tipoSolicitud: "ANULAR",
         motivo: 1,
-        detallesMotivo: ""
+        detallesMotivo: "",
       };
       const respuesta = await request
-        .post(
-          "/v1/citas_pacientes/solicitudes/horas_medicas/anular_cambiar/"
-        )
+        .post("/v1/citas_pacientes/solicitudes/horas_medicas/anular_cambiar/")
         .set("Authorization", token)
         .send(body);
       expect(respuesta.status).toBe(400);
@@ -251,12 +291,10 @@ describe("Endpoints", () => {
       let body = {
         tipoSolicitud: "CAMBIAR",
         motivo: 1,
-        detallesMotivo: ""
+        detallesMotivo: "",
       };
       const respuesta = await request
-        .post(
-          "/v1/citas_pacientes/solicitudes/horas_medicas/anular_cambiar/"
-        )
+        .post("/v1/citas_pacientes/solicitudes/horas_medicas/anular_cambiar/")
         .set("Authorization", token)
         .send(body);
       expect(respuesta.status).toBe(400);
@@ -269,12 +307,10 @@ describe("Endpoints", () => {
         correlativoCita: 3,
         tipoSolicitud: "ANULAR",
         motivo: 1,
-        detallesMotivo: ""
+        detallesMotivo: "",
       };
       const respuesta = await request
-        .post(
-          "/v1/citas_pacientes/solicitudes/horas_medicas/anular_cambiar/"
-        )
+        .post("/v1/citas_pacientes/solicitudes/horas_medicas/anular_cambiar/")
         .set("Authorization", token)
         .send(body);
       expect(respuesta.status).toBe(400);
@@ -287,12 +323,10 @@ describe("Endpoints", () => {
         correlativoCita: 3,
         tipoSolicitud: "CAMBIAR",
         motivo: 1,
-        detallesMotivo: ""
+        detallesMotivo: "",
       };
       const respuesta = await request
-        .post(
-          "/v1/citas_pacientes/solicitudes/horas_medicas/anular_cambiar/"
-        )
+        .post("/v1/citas_pacientes/solicitudes/horas_medicas/anular_cambiar/")
         .set("Authorization", token)
         .send(body);
       expect(respuesta.status).toBe(400);
@@ -305,12 +339,10 @@ describe("Endpoints", () => {
         correlativoCita: 17,
         tipoSolicitud: "CAMBIAR",
         motivo: 1,
-        detallesMotivo: ""
+        detallesMotivo: "",
       };
       const respuesta = await request
-        .post(
-          "/v1/citas_pacientes/solicitudes/horas_medicas/anular_cambiar/"
-        )
+        .post("/v1/citas_pacientes/solicitudes/horas_medicas/anular_cambiar/")
         .set("Authorization", token)
         .send(body);
       expect(respuesta.status).toBe(400);
@@ -323,12 +355,10 @@ describe("Endpoints", () => {
         correlativoCita: 20,
         tipoSolicitud: "CAMBIAR",
         motivo: 1,
-        detallesMotivo: ""
+        detallesMotivo: "",
       };
       const respuesta = await request
-        .post(
-          "/v1/citas_pacientes/solicitudes/horas_medicas/anular_cambiar/"
-        )
+        .post("/v1/citas_pacientes/solicitudes/horas_medicas/anular_cambiar/")
         .set("Authorization", token)
         .send(body);
       expect(respuesta.status).toBe(400);
@@ -341,12 +371,10 @@ describe("Endpoints", () => {
         correlativoCita: 17,
         tipoSolicitud: "ANULAR",
         motivo: 1,
-        detallesMotivo: ""
+        detallesMotivo: "",
       };
       const respuesta = await request
-        .post(
-          "/v1/citas_pacientes/solicitudes/horas_medicas/anular_cambiar/"
-        )
+        .post("/v1/citas_pacientes/solicitudes/horas_medicas/anular_cambiar/")
         .set("Authorization", token)
         .send(body);
       expect(respuesta.status).toBe(400);
@@ -359,12 +387,10 @@ describe("Endpoints", () => {
         correlativoCita: 24,
         tipoSolicitud: "CAMBIAR",
         motivo: 1,
-        detallesMotivo: ""
+        detallesMotivo: "",
       };
       const respuesta = await request
-        .post(
-          "/v1/citas_pacientes/solicitudes/horas_medicas/anular_cambiar/"
-        )
+        .post("/v1/citas_pacientes/solicitudes/horas_medicas/anular_cambiar/")
         .set("Authorization", token)
         .send(body);
       expect(respuesta.status).toBe(201);
@@ -382,12 +408,10 @@ describe("Endpoints", () => {
         correlativoCita: 20,
         tipoSolicitud: "ANULAR",
         motivo: 1,
-        detallesMotivo: ""
+        detallesMotivo: "",
       };
       const respuesta = await request
-        .post(
-          "/v1/citas_pacientes/solicitudes/horas_medicas/anular_cambiar/"
-        )
+        .post("/v1/citas_pacientes/solicitudes/horas_medicas/anular_cambiar/")
         .set("Authorization", token)
         .send(body);
       expect(respuesta.status).toBe(201);
@@ -406,16 +430,14 @@ describe("Endpoints", () => {
         correlativoCita: 26,
         tipoSolicitud: "ANULAR",
         motivo: 1,
-        detallesMotivo: ""
+        detallesMotivo: "",
       };
 
       //Crear solicitud
       await SolicitudesAnularCambiarCitasPacientes.create(body);
 
       const respuesta = await request
-        .post(
-          "/v1/citas_pacientes/solicitudes/horas_medicas/anular_cambiar/"
-        )
+        .post("/v1/citas_pacientes/solicitudes/horas_medicas/anular_cambiar/")
         .set("Authorization", token)
         .send(body);
       expect(respuesta.status).toBe(400);
@@ -435,16 +457,14 @@ describe("Endpoints", () => {
         correlativoCita: 27,
         tipoSolicitud: "CAMBIAR",
         motivo: 1,
-        detallesMotivo: ""
+        detallesMotivo: "",
       };
 
       //Crear solicitud
       await SolicitudesAnularCambiarCitasPacientes.create(body);
 
       const respuesta = await request
-        .post(
-          "/v1/citas_pacientes/solicitudes/horas_medicas/anular_cambiar/"
-        )
+        .post("/v1/citas_pacientes/solicitudes/horas_medicas/anular_cambiar/")
         .set("Authorization", token)
         .send(body);
       expect(respuesta.status).toBe(400);
@@ -464,7 +484,7 @@ describe("Endpoints", () => {
         correlativoCita: 26,
         tipoSolicitud: "ANULAR",
         motivo: 1,
-        detallesMotivo: ""
+        detallesMotivo: "",
       };
 
       //Crear solicitud
@@ -473,9 +493,7 @@ describe("Endpoints", () => {
       body.tipoSolicitud = "CAMBIAR";
 
       const respuesta = await request
-        .post(
-          "/v1/citas_pacientes/solicitudes/horas_medicas/anular_cambiar/"
-        )
+        .post("/v1/citas_pacientes/solicitudes/horas_medicas/anular_cambiar/")
         .set("Authorization", token)
         .send(body);
       expect(respuesta.status).toBe(400);
@@ -495,7 +513,7 @@ describe("Endpoints", () => {
         correlativoCita: 27,
         tipoSolicitud: "CAMBIAR",
         motivo: 1,
-        detallesMotivo: ""
+        detallesMotivo: "",
       };
 
       //Crear solicitud
@@ -504,9 +522,7 @@ describe("Endpoints", () => {
       body.tipoSolicitud = "ANULAR";
 
       const respuesta = await request
-        .post(
-          "/v1/citas_pacientes/solicitudes/horas_medicas/anular_cambiar/"
-        )
+        .post("/v1/citas_pacientes/solicitudes/horas_medicas/anular_cambiar/")
         .set("Authorization", token)
         .send(body);
       expect(respuesta.status).toBe(400);
@@ -520,7 +536,7 @@ describe("Endpoints", () => {
       done();
     });
   });
-  describe("/v1/citas_pacientes/solicitudes/horas_medicas/anular_cambiar/:correlativoCita", ()=>{
+  describe("GET /v1/citas_pacientes/solicitudes/horas_medicas/anular_cambiar/:correlativoCita", () => {
     it("Intenta averiguar si existe una solicitud para una cita sin token", async (done) => {
       const respuesta = await request.get(
         "/v1/citas_pacientes/solicitudes/horas_medicas/anular_cambiar/11"
@@ -531,33 +547,33 @@ describe("Endpoints", () => {
     });
     it("Intenta averiguar si existe una solicitud para una cita que no existe con token", async (done) => {
       token = jwt.sign({ numeroPaciente: 1 }, secreto);
-      const respuesta = await request.get(
-        "/v1/citas_pacientes/solicitudes/horas_medicas/anular_cambiar/1"
-      ).set("Authorization", token);
-      const existencia = respuesta.body.respuesta
+      const respuesta = await request
+        .get("/v1/citas_pacientes/solicitudes/horas_medicas/anular_cambiar/1")
+        .set("Authorization", token);
+      const existencia = respuesta.body.respuesta;
       expect(respuesta.status).toBe(200);
       expect(existencia).toStrictEqual(false);
       done();
     });
     it("Intenta averiguar si existe una solicitud para una cita con token (No existe la solicitud).", async (done) => {
       token = jwt.sign({ numeroPaciente: 1 }, secreto);
-      const respuesta = await request.get(
-        "/v1/citas_pacientes/solicitudes/horas_medicas/anular_cambiar/11"
-      ).set("Authorization", token);
-      const existencia = respuesta.body.respuesta
+      const respuesta = await request
+        .get("/v1/citas_pacientes/solicitudes/horas_medicas/anular_cambiar/11")
+        .set("Authorization", token);
+      const existencia = respuesta.body.respuesta;
       expect(respuesta.status).toBe(200);
       expect(existencia).toStrictEqual(false);
       done();
     });
     it("Intenta averiguar si existe una solicitud para una cita con token (Existe la solicitud).", async (done) => {
       token = jwt.sign({ numeroPaciente: 1 }, secreto);
-      const respuesta = await request.get(
-        "/v1/citas_pacientes/solicitudes/horas_medicas/anular_cambiar/10"
-      ).set("Authorization", token);
-      const existencia = respuesta.body.respuesta
+      const respuesta = await request
+        .get("/v1/citas_pacientes/solicitudes/horas_medicas/anular_cambiar/10")
+        .set("Authorization", token);
+      const existencia = respuesta.body.respuesta;
       expect(respuesta.status).toBe(200);
       expect(existencia).toStrictEqual(true);
       done();
     });
-  })
+  });
 });
