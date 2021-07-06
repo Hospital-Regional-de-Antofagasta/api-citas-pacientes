@@ -194,7 +194,7 @@ afterAll(async (done) => {
 });
 
 describe("Endpoints", () => {
-  describe("/v1/citas_pacientes/:correlativoCita", () => {
+  describe("GET /v1/citas_pacientes/:correlativoCita", () => {
     it("Intenta obtener una cita sin token", async (done) => {
       const respuesta = await request.get("/v1/citas_pacientes/20");
       expect(respuesta.status).toBe(401);
@@ -222,7 +222,7 @@ describe("Endpoints", () => {
       done();
     });
   });
-  describe("/v1/citas_pacientes/tipo/horas_medicas", () => {
+  describe("GET /v1/citas_pacientes/tipo/horas_medicas", () => {
     it("Intenta obtener las horas médicas históricas de un paciente sin token", async (done) => {
       const respuesta = await request.get(
         "/v1/citas_pacientes/tipo/horas_medicas"
@@ -304,7 +304,7 @@ describe("Endpoints", () => {
       done();
     });
   });
-  describe("/v1/citas_pacientes/tipo/horas_medicas/proximas/:timeZone", () => {
+  describe("GET /v1/citas_pacientes/tipo/horas_medicas/proximas/:timeZone", () => {
     it("Intenta obtener las horas médicas posteriores a hoy de un paciente sin token", async (done) => {
       const respuesta = await request.get(
         `/v1/citas_pacientes/tipo/horas_medicas/proximas/${encodeURIComponent(
@@ -393,7 +393,7 @@ describe("Endpoints", () => {
       done();
     });
   });
-  describe("/v1/citas_pacientes/tipo/horas_medicas/historico/:timeZone", () => {
+  describe("GET /v1/citas_pacientes/tipo/horas_medicas/historico/:timeZone", () => {
     it("Intenta obtener las horas médicas anteriores a hoy de un paciente sin token", async (done) => {
       const respuesta = await request.get(
         `/v1/citas_pacientes/tipo/horas_medicas/historico/${encodeURIComponent(
@@ -444,7 +444,7 @@ describe("Endpoints", () => {
       done();
     });
   });
-  describe("/v1/citas_pacientes/tipo/horas_examenes", () => {
+  describe("GET /v1/citas_pacientes/tipo/horas_examenes", () => {
     it("Intenta obtener las horas de exámenes históricas de un paciente sin token", async (done) => {
       const respuesta = await request.get(
         "/v1/citas_pacientes/tipo/horas_examenes"
@@ -494,7 +494,7 @@ describe("Endpoints", () => {
       done();
     });
   });
-  describe("/v1/citas_pacientes/tipo/horas_examenes/proximas/:timeZone", () => {
+  describe("GET /v1/citas_pacientes/tipo/horas_examenes/proximas/:timeZone", () => {
     it("Intenta obtener las horas de exámenes posteriores a hoy de un paciente sin token", async (done) => {
       const respuesta = await request.get(
         `/v1/citas_pacientes/tipo/horas_examenes/proximas/${encodeURIComponent(
@@ -556,7 +556,7 @@ describe("Endpoints", () => {
       done();
     });
   });
-  describe("/v1/citas_pacientes/tipo/horas_examenes/historico/:timeZone", () => {
+  describe("GET /v1/citas_pacientes/tipo/horas_examenes/historico/:timeZone", () => {
     it("Intenta obtener las horas de exámenes anteriores a hoy de un paciente sin token", async (done) => {
       const respuesta = await request.get(
         `/v1/citas_pacientes/tipo/horas_examenes/historico/${encodeURIComponent(

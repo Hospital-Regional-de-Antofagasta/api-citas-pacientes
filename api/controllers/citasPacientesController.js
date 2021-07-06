@@ -1,22 +1,19 @@
 const moment = require("moment-timezone");
 
-const CitasPacientes = require("../../models/CitasPacientes");//SOLO VERSION GRATUITA DE VERCEL
+const CitasPacientes = require("../../models/CitasPacientes"); //SOLO VERSION GRATUITA DE VERCEL
 //const CitasPacientes = require("../models/CitasPacientes");
 
 const { mensajes } = require("../config");
 
-
-
 exports.getCita = async (req, res) => {
   try {
-    const correlativo = req.params.correlativoCita
-    if(typeof correlativo !== 'string'){
+    const correlativo = req.params.correlativoCita;
+    if (typeof correlativo !== "string") {
       res.status(400).send({ respuesta: mensajes.badRequest });
     }
     const cita = await CitasPacientes.findOne({
-      correlativoCita: correlativo
-    })
-    .exec();
+      correlativoCita: correlativo,
+    }).exec();
     res.status(200).send(cita);
   } catch (error) {
     res.status(500).send({ respuesta: mensajes.serverError });
@@ -24,32 +21,32 @@ exports.getCita = async (req, res) => {
 };
 
 exports.getHorasMedicasPaciente = async (req, res) => {
-  const ambitos = ["01"];//ambito 01 son horas médicas.
+  const ambitos = ["01"]; //ambito 01 son horas médicas.
   await citas(req, res, ambitos);
 };
 
 exports.getHorasMedicasPacienteProximas = async (req, res) => {
-  const ambitos = ["01"];//ambito 01 son horas médicas.
+  const ambitos = ["01"]; //ambito 01 son horas médicas.
   await citasProximas(req, res, ambitos);
 };
 
 exports.getHorasMedicasPacienteHistorico = async (req, res) => {
-  const ambitos = ["01"];//ambito 01 son horas médicas.
+  const ambitos = ["01"]; //ambito 01 son horas médicas.
   await citasHistorico(req, res, ambitos);
 };
 
 exports.getHorasExamenesPaciente = async (req, res) => {
-  const ambitos = ["04", "06"];//ambito 04 son horas de laboratorio y 06 horas de imagenología.
+  const ambitos = ["04", "06"]; //ambito 04 son horas de laboratorio y 06 horas de imagenología.
   await citas(req, res, ambitos);
 };
 
 exports.getHorasExamenesPacienteProximas = async (req, res) => {
-  const ambitos = ["04", "06"];//ambito 04 son horas de laboratorio y 06 horas de imagenología.
+  const ambitos = ["04", "06"]; //ambito 04 son horas de laboratorio y 06 horas de imagenología.
   await citasProximas(req, res, ambitos);
 };
 
 exports.getHorasExamenesPacienteHistorico = async (req, res) => {
-  const ambitos = ["04", "06"];//ambito 04 son horas de laboratorio y 06 horas de imagenología.
+  const ambitos = ["04", "06"]; //ambito 04 son horas de laboratorio y 06 horas de imagenología.
   await citasHistorico(req, res, ambitos);
 };
 
@@ -70,9 +67,9 @@ const citas = async (req, res, codigoAmbito) => {
 const citasProximas = async (req, res, codigoAmbito) => {
   try {
     const timeZone = req.params.timeZone;
-    if(typeof timeZone !== 'string'){
+    if (typeof timeZone !== "string") {
       res.status(400).send({ respuesta: mensajes.badRequest });
-    }      
+    }
     const fechaHoy = new Date();
     // sumarle un dia a la fecha de hoy para obtener la de maniana
     // const fechaManiana = new Date()
@@ -107,15 +104,15 @@ const citasProximas = async (req, res, codigoAmbito) => {
 const citasHistorico = async (req, res, codigoAmbito) => {
   try {
     const timeZone = req.params.timeZone;
-    if(typeof timeZone !== 'string'){
+    if (typeof timeZone !== "string") {
       res.status(400).send({ respuesta: mensajes.badRequest });
-    }   
+    }
     const fechaHoy = new Date();
     const hoy = moment.tz(fechaHoy, timeZone).startOf("day");
     const arregloCitasPaciente = await CitasPacientes.find({
       numeroPaciente: req.numeroPaciente,
       codigoAmbito: { $in: codigoAmbito },
-      fechaCitacion: {$lt: hoy}
+      fechaCitacion: { $lt: hoy },
     })
       .sort({ fechaCitacion: -1 }) //-1 descendente
       .exec();

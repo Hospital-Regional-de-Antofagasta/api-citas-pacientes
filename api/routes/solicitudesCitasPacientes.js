@@ -4,7 +4,7 @@ const estaAutenticado = require("../middleware/auth");
 const {
   validarFechaSolicitudAnularCambiarHoraMedica,
   validarBodySolicitudAnularCambiarHoraMedica,
-  validarExistenciaSolicitudAnularCambiarHoraMedica
+  validarExistenciaSolicitudAnularCambiarHoraMedica,
 } = require("../middleware/validaciones");
 const router = express.Router();
 
