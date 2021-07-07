@@ -12,7 +12,10 @@ const CitasPacientes = mongoose.model(
     nombreProfesional: String,
     fechaCitacion: Date,
     horaCitacion: String,
-    numeroPaciente: Number,
+    numeroPaciente: {
+      type: Number,
+      select: false,
+    },
     codigoAmbito: String,
     tipoCita: String,
     alta: {
