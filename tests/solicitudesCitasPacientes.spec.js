@@ -426,7 +426,6 @@ describe("Endpoints", () => {
     it("Solicitud ANULAR, que ya fue solicitada previamente.", async (done) => {
       token = jwt.sign({ numeroPaciente: 1 }, secreto);
       let body = {
-        numeroPaciente: 1,
         correlativoCita: 26,
         tipoSolicitud: "ANULAR",
         motivo: 1,
@@ -434,7 +433,13 @@ describe("Endpoints", () => {
       };
 
       //Crear solicitud
-      await SolicitudesAnularCambiarCitasPacientes.create(body);
+      await SolicitudesAnularCambiarCitasPacientes.create({
+        numeroPaciente: 1,
+        correlativoCita: 26,
+        tipoSolicitud: "ANULAR",
+        motivo: 1,
+        detallesMotivo: "",
+      });
 
       const respuesta = await request
         .post("/v1/citas_pacientes/solicitudes/horas_medicas/anular_cambiar/")
@@ -453,7 +458,6 @@ describe("Endpoints", () => {
     it("Solicitud CAMBIAR, que ya fue solicitada previamente.", async (done) => {
       token = jwt.sign({ numeroPaciente: 1 }, secreto);
       let body = {
-        numeroPaciente: 1,
         correlativoCita: 27,
         tipoSolicitud: "CAMBIAR",
         motivo: 1,
@@ -461,7 +465,13 @@ describe("Endpoints", () => {
       };
 
       //Crear solicitud
-      await SolicitudesAnularCambiarCitasPacientes.create(body);
+      await SolicitudesAnularCambiarCitasPacientes.create({
+        numeroPaciente: 1,
+        correlativoCita: 27,
+        tipoSolicitud: "ANULAR",
+        motivo: 1,
+        detallesMotivo: "",
+      });
 
       const respuesta = await request
         .post("/v1/citas_pacientes/solicitudes/horas_medicas/anular_cambiar/")
@@ -480,7 +490,6 @@ describe("Endpoints", () => {
     it("Solicitud CAMBIAR, que ya fue solicitada ANULAR previamente.", async (done) => {
       token = jwt.sign({ numeroPaciente: 1 }, secreto);
       let body = {
-        numeroPaciente: 1,
         correlativoCita: 26,
         tipoSolicitud: "ANULAR",
         motivo: 1,
@@ -488,7 +497,13 @@ describe("Endpoints", () => {
       };
 
       //Crear solicitud
-      await SolicitudesAnularCambiarCitasPacientes.create(body);
+      await SolicitudesAnularCambiarCitasPacientes.create({
+        numeroPaciente: 1,
+        correlativoCita: 26,
+        tipoSolicitud: "ANULAR",
+        motivo: 1,
+        detallesMotivo: "",
+      });
 
       body.tipoSolicitud = "CAMBIAR";
 
@@ -509,7 +524,6 @@ describe("Endpoints", () => {
     it("Solicitud ANULAR, que ya fue solicitada CAMBIAR previamente.", async (done) => {
       token = jwt.sign({ numeroPaciente: 1 }, secreto);
       let body = {
-        numeroPaciente: 1,
         correlativoCita: 27,
         tipoSolicitud: "CAMBIAR",
         motivo: 1,
@@ -517,7 +531,13 @@ describe("Endpoints", () => {
       };
 
       //Crear solicitud
-      await SolicitudesAnularCambiarCitasPacientes.create(body);
+      await SolicitudesAnularCambiarCitasPacientes.create({
+        numeroPaciente: 1,
+        correlativoCita: 27,
+        tipoSolicitud: "ANULAR",
+        motivo: 1,
+        detallesMotivo: "",
+      });
 
       body.tipoSolicitud = "ANULAR";
 

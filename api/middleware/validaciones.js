@@ -12,10 +12,11 @@ const { mensajes } = require("../config");
 
 exports.validarAlta = async (req, res, next) => {
   try {
+    const numeroPaciente = req.numeroPaciente;
     const solicitud = req.body;
     if (solicitud.tipoSolicitud === "AGENDAR") {
       const cita = await CitasPacientes.findOne({
-        numeroPaciente: solicitud.numeroPaciente,
+        numeroPaciente,
         codigoServicio: solicitud.codigoServicio,
         codigoProfesional: solicitud.codigoProfesional,
         codigoAmbito: "01",
@@ -73,10 +74,11 @@ exports.validarExistenciaSolicitudAnularCambiarHoraMedica = async (
   next
 ) => {
   try {
+    const numeroPaciente = req.numeroPaciente;
     const solicitud = req.body;
     const solicitudExistente =
       await SolicitudesAnularCambiarCitasPacientes.findOne({
-        numeroPaciente: solicitud.numeroPaciente,
+        numeroPaciente,
         correlativoCita: solicitud.correlativoCita,
         tipoSolicitud: { $in: ["ANULAR", "CAMBIAR"] },
       }).exec();
@@ -99,9 +101,10 @@ exports.validarFechaSolicitudAnularCambiarHoraMedica = async (
   next
 ) => {
   try {
+    const numeroPaciente = req.numeroPaciente;
     const solicitud = req.body;
     const cita = await CitasPacientes.findOne({
-      numeroPaciente: req.numeroPaciente,
+      numeroPaciente,
       correlativoCita: solicitud.correlativoCita,
       codigoAmbito: "01", //Horas médicas
     }).exec();
