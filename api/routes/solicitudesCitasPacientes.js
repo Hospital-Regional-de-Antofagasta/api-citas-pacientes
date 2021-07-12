@@ -24,7 +24,7 @@ router.post(
 );
 
 router.get(
-  "/horas_medicas/anular_cambiar/:correlativoCita",
+  "/horas_medicas/anular_cambiar/existe/:correlativoCita",
   estaAutenticado,
   solicitudesCitasPacientesController.getExisteSolicitudCambiarOAnularHoraMedica
 );

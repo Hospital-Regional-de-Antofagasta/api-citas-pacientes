@@ -3,20 +3,52 @@ const DiasFeriados = require("../models/DiasFeriados"); //SOLO VERSION GRATUITA 
 //const ConfigApiCitasPacientes = require("./models/ConfigApiCitasPacientes");
 //const DiasFeriados = require("./models/DiasFeriados");
 
-let mensajes = {
-  forbiddenAccess: "No tiene la autorización para realizar esta acción.",
-  serverError: "Se produjo un error.",
-  badRequest: "La petición no está bien formada.",
+const mensajesPorDefecto = {
+  forbiddenAccess: {
+    titulo: "Alerta",
+    mensaje: "Su sesión ha expirado.",
+    color: "",
+    icono: "",
+  },
+  serverError: {
+    titulo: "Alerta",
+    mensaje: "Ocurrió un error inesperado.",
+    color: "",
+    icono: "",
+  },
+  badRequest: {
+    titulo: "Alerta",
+    mensaje: "La solicitud no está bien formada.",
+    color: "",
+    icono: "",
+  },
+  solicitudCreada: {
+    titulo: "Éxito",
+    mensaje: "La solicitud fue creada con éxito.",
+    color: "",
+    icono: "",
+  },
+  solicitudDuplicada: {
+    titulo: "Alerta",
+    mensaje: "La solicitud ya existe.",
+    color: "",
+    icono: "",
+  },
 };
 
-const loadConfig = async () => {
+exports.getMensajes = async (tipo) => {
   try {
-    const config = await ConfigApiCitasPacientes.findOne({ version: 1 }).exec();
-    mensajes = config.mensajes;
+    const { mensajes } = await ConfigApiCitasPacientes.findOne({
+      version: 1,
+    }).exec();
+    if (mensajes) {
+      return mensajes[tipo];
+    }
+    return mensajesPorDefecto[tipo];
   } catch (error) {}
 };
 
-const cargarFeriados = async () => {
+exports.cargarFeriados = async () => {
   try {
     const feriados = await DiasFeriados.find()
       .select("fecha -_id") //quitar el _id
@@ -31,10 +63,4 @@ const cargarFeriados = async () => {
       workingWeekdays: [1, 2, 3, 4, 5],
     });
   } catch (error) {}
-};
-
-module.exports = {
-  loadConfig,
-  mensajes,
-  cargarFeriados,
 };

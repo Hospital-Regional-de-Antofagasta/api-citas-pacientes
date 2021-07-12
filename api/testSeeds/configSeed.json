@@ -1,0 +1,37 @@
+[
+  {
+    "mensajes": {
+      "forbiddenAccess": {
+        "titulo": "Alerta -test",
+        "mensaje": "Su sesión ha expirado. -test",
+        "color": " -test",
+        "icono": " -test"
+      },
+      "serverError": {
+        "titulo": "Alerta -test",
+        "mensaje": "Ocurrió un error inesperado. -test",
+        "color": " -test",
+        "icono": " -test"
+      },
+      "badRequest": {
+        "titulo": "Alerta -test",
+        "mensaje": "La petición no está bien formada. -test",
+        "color": " -test",
+        "icono": " -test"
+      },
+      "solicitudCreada": {
+        "titulo": "Éxito -test",
+        "mensaje": "La solicitud fue creada con éxito. -test",
+        "color": " -test",
+        "icono": " -test"
+      },
+      "solicitudDuplicada": {
+        "titulo": "Alerta -test",
+        "mensaje": "La solicitud ya existe. -test",
+        "color": " -test",
+        "icono": " -test"
+      }
+    },
+    "version": 1
+  }
+]

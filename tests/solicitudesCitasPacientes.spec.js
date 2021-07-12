@@ -18,6 +18,10 @@ const MotivosSolicitudesCitas = require("../models/MotivosSolicitudesCitas"); //
 //const SolicitudesAnularCambiarCitasPacientes = require("../api/models/SolicitudesAnularCambiarCitasPacientes");
 //const MotivosSolicitudesCitas = require("../api/models/MotivosSolicitudesCitas");
 
+const { getMensajes } = require("../api/config");
+const ConfigApiCitasPacientes = require("../models/ConfigApiCitasPacientes");
+const configSeed = require("../api/testSeeds/configSeed.json");
+
 const request = supertest(app);
 const secreto = process.env.JWT_SECRET;
 let token;
@@ -33,6 +37,7 @@ beforeAll(async (done) => {
   //Cargar los seeds a la base de datos.
   await CitasPacientes.create(citasPacientesSeeds);
   await DiasFeriados.create(diasFeriadosSeeds);
+  await ConfigApiCitasPacientes.create(configSeed);
   await SolicitudesAnularCambiarCitasPacientes.create(
     solicitudesAnularCambiarCitasPacientesSeeds
   );
@@ -195,6 +200,7 @@ afterAll(async (done) => {
   //Borrar el contenido de la colección en la base de datos despues de la pruebas.
   await CitasPacientes.deleteMany();
   await DiasFeriados.deleteMany();
+  await ConfigApiCitasPacientes.deleteMany();
   await SolicitudesAnularCambiarCitasPacientes.deleteMany();
   await MotivosSolicitudesCitas.deleteMany();
   //Cerrar la conexión a la base de datos despues de la pruebas.
@@ -208,8 +214,19 @@ describe("Endpoints", () => {
       const respuesta = await request.get(
         "/v1/citas_pacientes/solicitudes/motivos/ANULAR"
       );
+
+      const mensaje = await getMensajes("forbiddenAccess");
+
       expect(respuesta.status).toBe(401);
-      expect(respuesta.body.respuesta).toBeTruthy();
+      expect(respuesta.body).toEqual({
+        respuesta: {
+          titulo: mensaje.titulo,
+          mensaje: mensaje.mensaje,
+          color: mensaje.color,
+          icono: mensaje.icono,
+        },
+      });
+
       done();
     });
     it("Intenta obtener los motivos de un tipo de solicitud que no existe con token", async (done) => {
@@ -217,9 +234,12 @@ describe("Endpoints", () => {
       const respuesta = await request
         .get("/v1/citas_pacientes/solicitudes/motivos/PEDIR")
         .set("Authorization", token);
+
       const cita = respuesta.body;
+
       expect(respuesta.status).toBe(200);
       expect(cita).toStrictEqual([]);
+
       done();
     });
     it("Intenta obtener los motivos de un tipo de solicitud ANULAR con token", async (done) => {
@@ -227,11 +247,14 @@ describe("Endpoints", () => {
       const respuesta = await request
         .get("/v1/citas_pacientes/solicitudes/motivos/ANULAR")
         .set("Authorization", token);
+
       const arregloMotivos = respuesta.body;
+
       expect(respuesta.status).toBe(200);
       expect(arregloMotivos[0].nombre).toStrictEqual("No requiero la hora");
       expect(arregloMotivos[1].nombre).toStrictEqual("Ya me atendí");
       expect(arregloMotivos[2].nombre).toStrictEqual("Otro");
+
       done();
     });
     it("Intenta obtener los motivos de un tipo de solicitud CAMBIAR con token", async (done) => {
@@ -239,13 +262,16 @@ describe("Endpoints", () => {
       const respuesta = await request
         .get("/v1/citas_pacientes/solicitudes/motivos/CAMBIAR")
         .set("Authorization", token);
+
       const arregloMotivos = respuesta.body;
+
       expect(respuesta.status).toBe(200);
       expect(arregloMotivos[0].nombre).toStrictEqual("No puedo asistir");
       expect(arregloMotivos[1].nombre).toStrictEqual(
         "Quiero cambio de profesional"
       );
       expect(arregloMotivos[2].nombre).toStrictEqual("Otro");
+
       done();
     });
   });
@@ -254,8 +280,19 @@ describe("Endpoints", () => {
       const respuesta = await request.post(
         "/v1/citas_pacientes/solicitudes/horas_medicas/anular_cambiar/"
       );
+
+      const mensaje = await getMensajes("forbiddenAccess");
+
       expect(respuesta.status).toBe(401);
-      expect(respuesta.body.respuesta).toBeTruthy();
+      expect(respuesta.body).toEqual({
+        respuesta: {
+          titulo: mensaje.titulo,
+          mensaje: mensaje.mensaje,
+          color: mensaje.color,
+          icono: mensaje.icono,
+        },
+      });
+
       done();
     });
     it("Solicitud sin tipoSolicitud.", async (done) => {
@@ -267,8 +304,19 @@ describe("Endpoints", () => {
         .post("/v1/citas_pacientes/solicitudes/horas_medicas/anular_cambiar/")
         .set("Authorization", token)
         .send(body);
+
+      const mensaje = await getMensajes("badRequest");
+
       expect(respuesta.status).toBe(400);
-      expect(respuesta.body.respuesta).toBeTruthy();
+      expect(respuesta.body).toEqual({
+        respuesta: {
+          titulo: mensaje.titulo,
+          mensaje: mensaje.mensaje,
+          color: mensaje.color,
+          icono: mensaje.icono,
+        },
+      });
+
       done();
     });
     it("Solicitud ANULAR sin correlativoCita.", async (done) => {
@@ -282,8 +330,19 @@ describe("Endpoints", () => {
         .post("/v1/citas_pacientes/solicitudes/horas_medicas/anular_cambiar/")
         .set("Authorization", token)
         .send(body);
+
+      const mensaje = await getMensajes("badRequest");
+
       expect(respuesta.status).toBe(400);
-      expect(respuesta.body.respuesta).toBeTruthy();
+      expect(respuesta.body).toEqual({
+        respuesta: {
+          titulo: mensaje.titulo,
+          mensaje: mensaje.mensaje,
+          color: mensaje.color,
+          icono: mensaje.icono,
+        },
+      });
+
       done();
     });
     it("Solicitud CAMBIAR sin correlativoCita.", async (done) => {
@@ -297,8 +356,19 @@ describe("Endpoints", () => {
         .post("/v1/citas_pacientes/solicitudes/horas_medicas/anular_cambiar/")
         .set("Authorization", token)
         .send(body);
+
+      const mensaje = await getMensajes("badRequest");
+
       expect(respuesta.status).toBe(400);
-      expect(respuesta.body.respuesta).toBeTruthy();
+      expect(respuesta.body).toEqual({
+        respuesta: {
+          titulo: mensaje.titulo,
+          mensaje: mensaje.mensaje,
+          color: mensaje.color,
+          icono: mensaje.icono,
+        },
+      });
+
       done();
     });
     it("Solicitud ANULAR hora médica inexistente.", async (done) => {
@@ -313,8 +383,19 @@ describe("Endpoints", () => {
         .post("/v1/citas_pacientes/solicitudes/horas_medicas/anular_cambiar/")
         .set("Authorization", token)
         .send(body);
+
+      const mensaje = await getMensajes("badRequest");
+
       expect(respuesta.status).toBe(400);
-      expect(respuesta.body.respuesta).toBeTruthy();
+      expect(respuesta.body).toEqual({
+        respuesta: {
+          titulo: mensaje.titulo,
+          mensaje: mensaje.mensaje,
+          color: mensaje.color,
+          icono: mensaje.icono,
+        },
+      });
+
       done();
     });
     it("Solicitud CAMBIAR hora médica inexistente.", async (done) => {
@@ -329,8 +410,19 @@ describe("Endpoints", () => {
         .post("/v1/citas_pacientes/solicitudes/horas_medicas/anular_cambiar/")
         .set("Authorization", token)
         .send(body);
+
+      const mensaje = await getMensajes("badRequest");
+
       expect(respuesta.status).toBe(400);
-      expect(respuesta.body.respuesta).toBeTruthy();
+      expect(respuesta.body).toEqual({
+        respuesta: {
+          titulo: mensaje.titulo,
+          mensaje: mensaje.mensaje,
+          color: mensaje.color,
+          icono: mensaje.icono,
+        },
+      });
+
       done();
     });
     it("Solicitud CAMBIAR con menos de 3 días hábiles antes de la hora médica (hoy).", async (done) => {
@@ -345,8 +437,19 @@ describe("Endpoints", () => {
         .post("/v1/citas_pacientes/solicitudes/horas_medicas/anular_cambiar/")
         .set("Authorization", token)
         .send(body);
+
+      const mensaje = await getMensajes("badRequest");
+
       expect(respuesta.status).toBe(400);
-      expect(respuesta.body.respuesta).toBeTruthy();
+      expect(respuesta.body).toEqual({
+        respuesta: {
+          titulo: mensaje.titulo,
+          mensaje: mensaje.mensaje,
+          color: mensaje.color,
+          icono: mensaje.icono,
+        },
+      });
+
       done();
     });
     it("Solicitud CAMBIAR con menos de 3 días hábiles antes de la hora médica (próxima).", async (done) => {
@@ -361,8 +464,19 @@ describe("Endpoints", () => {
         .post("/v1/citas_pacientes/solicitudes/horas_medicas/anular_cambiar/")
         .set("Authorization", token)
         .send(body);
+
+      const mensaje = await getMensajes("badRequest");
+
       expect(respuesta.status).toBe(400);
-      expect(respuesta.body.respuesta).toBeTruthy();
+      expect(respuesta.body).toEqual({
+        respuesta: {
+          titulo: mensaje.titulo,
+          mensaje: mensaje.mensaje,
+          color: mensaje.color,
+          icono: mensaje.icono,
+        },
+      });
+
       done();
     });
     it("Solicitud ANULAR con menos de 1 día hábil antes de la hora médica (hoy).", async (done) => {
@@ -377,8 +491,19 @@ describe("Endpoints", () => {
         .post("/v1/citas_pacientes/solicitudes/horas_medicas/anular_cambiar/")
         .set("Authorization", token)
         .send(body);
+
+      const mensaje = await getMensajes("badRequest");
+
       expect(respuesta.status).toBe(400);
-      expect(respuesta.body.respuesta).toBeTruthy();
+      expect(respuesta.body).toEqual({
+        respuesta: {
+          titulo: mensaje.titulo,
+          mensaje: mensaje.mensaje,
+          color: mensaje.color,
+          icono: mensaje.icono,
+        },
+      });
+
       done();
     });
     it("Solicitud CAMBIAR con más de 3 días hábiles antes de la hora médica.", async (done) => {
@@ -393,7 +518,18 @@ describe("Endpoints", () => {
         .post("/v1/citas_pacientes/solicitudes/horas_medicas/anular_cambiar/")
         .set("Authorization", token)
         .send(body);
+
+      const mensaje = await getMensajes("solicitudCreada");
+
       expect(respuesta.status).toBe(201);
+      expect(respuesta.body).toEqual({
+        respuesta: {
+          titulo: mensaje.titulo,
+          mensaje: mensaje.mensaje,
+          color: mensaje.color,
+          icono: mensaje.icono,
+        },
+      });
 
       //Borrar solicitud
       await SolicitudesAnularCambiarCitasPacientes.deleteOne({
@@ -414,7 +550,18 @@ describe("Endpoints", () => {
         .post("/v1/citas_pacientes/solicitudes/horas_medicas/anular_cambiar/")
         .set("Authorization", token)
         .send(body);
+
+      const mensaje = await getMensajes("solicitudCreada");
+
       expect(respuesta.status).toBe(201);
+      expect(respuesta.body).toEqual({
+        respuesta: {
+          titulo: mensaje.titulo,
+          mensaje: mensaje.mensaje,
+          color: mensaje.color,
+          icono: mensaje.icono,
+        },
+      });
 
       //Borrar solicitud
       await SolicitudesAnularCambiarCitasPacientes.deleteOne({
@@ -445,8 +592,18 @@ describe("Endpoints", () => {
         .post("/v1/citas_pacientes/solicitudes/horas_medicas/anular_cambiar/")
         .set("Authorization", token)
         .send(body);
+
+      const mensaje = await getMensajes("badRequest");
+
       expect(respuesta.status).toBe(400);
-      expect(respuesta.body.respuesta).toBeTruthy();
+      expect(respuesta.body).toEqual({
+        respuesta: {
+          titulo: mensaje.titulo,
+          mensaje: mensaje.mensaje,
+          color: mensaje.color,
+          icono: mensaje.icono,
+        },
+      });
 
       //Borrar solicitud
       await SolicitudesAnularCambiarCitasPacientes.deleteOne({
@@ -477,8 +634,18 @@ describe("Endpoints", () => {
         .post("/v1/citas_pacientes/solicitudes/horas_medicas/anular_cambiar/")
         .set("Authorization", token)
         .send(body);
+
+      const mensaje = await getMensajes("badRequest");
+
       expect(respuesta.status).toBe(400);
-      expect(respuesta.body.respuesta).toBeTruthy();
+      expect(respuesta.body).toEqual({
+        respuesta: {
+          titulo: mensaje.titulo,
+          mensaje: mensaje.mensaje,
+          color: mensaje.color,
+          icono: mensaje.icono,
+        },
+      });
 
       //Borrar solicitud
       await SolicitudesAnularCambiarCitasPacientes.deleteOne({
@@ -511,8 +678,18 @@ describe("Endpoints", () => {
         .post("/v1/citas_pacientes/solicitudes/horas_medicas/anular_cambiar/")
         .set("Authorization", token)
         .send(body);
+
+      const mensaje = await getMensajes("badRequest");
+
       expect(respuesta.status).toBe(400);
-      expect(respuesta.body.respuesta).toBeTruthy();
+      expect(respuesta.body).toEqual({
+        respuesta: {
+          titulo: mensaje.titulo,
+          mensaje: mensaje.mensaje,
+          color: mensaje.color,
+          icono: mensaje.icono,
+        },
+      });
 
       //Borrar solicitud
       await SolicitudesAnularCambiarCitasPacientes.deleteOne({
@@ -545,8 +722,18 @@ describe("Endpoints", () => {
         .post("/v1/citas_pacientes/solicitudes/horas_medicas/anular_cambiar/")
         .set("Authorization", token)
         .send(body);
+
+      const mensaje = await getMensajes("badRequest");
+
       expect(respuesta.status).toBe(400);
-      expect(respuesta.body.respuesta).toBeTruthy();
+      expect(respuesta.body).toEqual({
+        respuesta: {
+          titulo: mensaje.titulo,
+          mensaje: mensaje.mensaje,
+          color: mensaje.color,
+          icono: mensaje.icono,
+        },
+      });
 
       //Borrar solicitud
       await SolicitudesAnularCambiarCitasPacientes.deleteOne({
@@ -556,43 +743,67 @@ describe("Endpoints", () => {
       done();
     });
   });
-  describe("GET /v1/citas_pacientes/solicitudes/horas_medicas/anular_cambiar/:correlativoCita", () => {
+  describe("GET /v1/citas_pacientes/solicitudes/horas_medicas/anular_cambiar/existe/:correlativoCita", () => {
     it("Intenta averiguar si existe una solicitud para una cita sin token", async (done) => {
       const respuesta = await request.get(
-        "/v1/citas_pacientes/solicitudes/horas_medicas/anular_cambiar/11"
+        "/v1/citas_pacientes/solicitudes/horas_medicas/anular_cambiar/existe/11"
       );
+
+      const mensaje = await getMensajes("forbiddenAccess");
+
       expect(respuesta.status).toBe(401);
-      expect(respuesta.body.respuesta).toBeTruthy();
+      expect(respuesta.body).toEqual({
+        respuesta: {
+          titulo: mensaje.titulo,
+          mensaje: mensaje.mensaje,
+          color: mensaje.color,
+          icono: mensaje.icono,
+        },
+      });
+
       done();
     });
     it("Intenta averiguar si existe una solicitud para una cita que no existe con token", async (done) => {
       token = jwt.sign({ numeroPaciente: 1 }, secreto);
       const respuesta = await request
-        .get("/v1/citas_pacientes/solicitudes/horas_medicas/anular_cambiar/1")
+        .get("/v1/citas_pacientes/solicitudes/horas_medicas/anular_cambiar/existe/1")
         .set("Authorization", token);
-      const existencia = respuesta.body.respuesta;
+
       expect(respuesta.status).toBe(200);
-      expect(existencia).toStrictEqual(false);
+      expect(respuesta.body).toEqual({ existeSolicitud: false });
+
       done();
     });
     it("Intenta averiguar si existe una solicitud para una cita con token (No existe la solicitud).", async (done) => {
       token = jwt.sign({ numeroPaciente: 1 }, secreto);
       const respuesta = await request
-        .get("/v1/citas_pacientes/solicitudes/horas_medicas/anular_cambiar/11")
+        .get("/v1/citas_pacientes/solicitudes/horas_medicas/anular_cambiar/existe/11")
         .set("Authorization", token);
-      const existencia = respuesta.body.respuesta;
+
       expect(respuesta.status).toBe(200);
-      expect(existencia).toStrictEqual(false);
+      expect(respuesta.body).toEqual({ existeSolicitud: false });
+
       done();
     });
     it("Intenta averiguar si existe una solicitud para una cita con token (Existe la solicitud).", async (done) => {
       token = jwt.sign({ numeroPaciente: 1 }, secreto);
       const respuesta = await request
-        .get("/v1/citas_pacientes/solicitudes/horas_medicas/anular_cambiar/10")
+        .get("/v1/citas_pacientes/solicitudes/horas_medicas/anular_cambiar/existe/10")
         .set("Authorization", token);
-      const existencia = respuesta.body.respuesta;
+
+      const mensaje = await getMensajes("solicitudDuplicada");
+
       expect(respuesta.status).toBe(200);
-      expect(existencia).toStrictEqual(true);
+      expect(respuesta.body).toEqual({
+        existeSolicitud: true,
+        respuesta: {
+          titulo: mensaje.titulo,
+          mensaje: mensaje.mensaje,
+          color: mensaje.color,
+          icono: mensaje.icono,
+        },
+      });
+
       done();
     });
   });
