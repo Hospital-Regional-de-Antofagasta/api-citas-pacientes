@@ -46,7 +46,9 @@ exports.getMensajes = async (tipo) => {
       return mensajes[tipo];
     }
     return mensajesPorDefecto[tipo];
-  } catch (error) {}
+  } catch (error) {
+    return mensajesPorDefecto[tipo];
+  }
 };
 
 exports.cargarFeriados = async () => {

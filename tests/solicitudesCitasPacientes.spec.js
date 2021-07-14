@@ -30,7 +30,7 @@ beforeAll(async (done) => {
   //Cerrar la conexión que se crea en el index.
   await mongoose.disconnect();
   //Conectar a la base de datos de prueba.
-  await mongoose.connect(`${process.env.MONGO_URI_TEST}citas_pacientes_test`, {
+  await mongoose.connect(`${process.env.MONGO_URI_TEST}solicitudes_citas_pacientes_test`, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   });
