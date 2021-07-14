@@ -9,7 +9,6 @@ exports.getMotivosSolicitudesCitas = async (req, res) => {
   try {
     const tipo = req.params.tipoSolicitud;
     if (typeof tipo !== "string") {
-      console.log("motivo");
       res.status(400).send({ respuesta: await getMensajes("badRequest") });
     }
     const motivos = await MotivosSolicitudesCitas.find({
