@@ -23,14 +23,15 @@ const mensajesPorDefecto = {
     icono: "",
   },
   solicitudCreada: {
-    titulo: "Éxito",
-    mensaje: "La solicitud fue creada con éxito.",
+    titulo: "!Todo ha salido bien¡",
+    mensaje:
+      "Su solicitud ha sido creada con éxito, pronto nos comunicaremos con usted.",
     color: "",
     icono: "",
   },
   solicitudDuplicada: {
-    titulo: "Alerta",
-    mensaje: "La solicitud ya existe.",
+    titulo: "Solicitud Pendiente",
+    mensaje: "Ya tiene una solicitud en curso.",
     color: "",
     icono: "",
   },
