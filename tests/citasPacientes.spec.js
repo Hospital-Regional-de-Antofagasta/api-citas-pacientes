@@ -200,9 +200,9 @@ afterAll(async (done) => {
 });
 
 describe("Endpoints", () => {
-  describe("GET /v1/citas_pacientes/:correlativoCita", () => {
+  describe("GET /v1/citas-pacientes/:correlativoCita", () => {
     it("Intenta obtener una cita sin token", async (done) => {
-      const respuesta = await request.get("/v1/citas_pacientes/20");
+      const respuesta = await request.get("/v1/citas-pacientes/20");
 
       const mensaje = await getMensajes("forbiddenAccess");
 
@@ -221,7 +221,7 @@ describe("Endpoints", () => {
     it("Intenta obtener una cita que no existe con token", async (done) => {
       token = jwt.sign({ numeroPaciente: 1 }, secreto);
       const respuesta = await request
-        .get("/v1/citas_pacientes/10")
+        .get("/v1/citas-pacientes/10")
         .set("Authorization", token);
       const cita = respuesta.body;
 
@@ -233,7 +233,7 @@ describe("Endpoints", () => {
     it("Intenta obtener una cita con token", async (done) => {
       token = jwt.sign({ numeroPaciente: 1 }, secreto);
       const respuesta = await request
-        .get("/v1/citas_pacientes/11")
+        .get("/v1/citas-pacientes/11")
         .set("Authorization", token);
       const cita = respuesta.body;
 
@@ -243,10 +243,10 @@ describe("Endpoints", () => {
       done();
     });
   });
-  describe("GET /v1/citas_pacientes/tipo/horas_medicas", () => {
+  describe("GET /v1/citas-pacientes/tipo/horas-medicas", () => {
     it("Intenta obtener las horas médicas históricas de un paciente sin token", async (done) => {
       const respuesta = await request.get(
-        "/v1/citas_pacientes/tipo/horas_medicas"
+        "/v1/citas-pacientes/tipo/horas-medicas"
       );
 
       const mensaje = await getMensajes("forbiddenAccess");
@@ -266,7 +266,7 @@ describe("Endpoints", () => {
     it("Intenta obtener las horas médicas históricas de un paciente con token (Arreglo sin horas médicas)", async (done) => {
       token = jwt.sign({ numeroPaciente: 2 }, secreto);
       const respuesta = await request
-        .get("/v1/citas_pacientes/tipo/horas_medicas")
+        .get("/v1/citas-pacientes/tipo/horas-medicas")
         .set("Authorization", token);
       expect(respuesta.status).toBe(200);
       //Probar que el arreglo está vacío.
@@ -280,7 +280,7 @@ describe("Endpoints", () => {
     it("Intenta obtener las horas médicas históricas de un paciente con token (Arreglo con horas médicas)", async (done) => {
       token = jwt.sign({ numeroPaciente: 1 }, secreto);
       const respuesta = await request
-        .get("/v1/citas_pacientes/tipo/horas_medicas")
+        .get("/v1/citas-pacientes/tipo/horas-medicas")
         .set("Authorization", token);
       expect(respuesta.status).toBe(200);
       //Probar que el arreglo tiene 11 horas médicas y que todas son del mismo paciente.
@@ -339,10 +339,10 @@ describe("Endpoints", () => {
       done();
     });
   });
-  describe("GET /v1/citas_pacientes/tipo/horas_medicas/proximas/:timeZone", () => {
+  describe("GET /v1/citas-pacientes/tipo/horas-medicas/proximas/:timeZone", () => {
     it("Intenta obtener las horas médicas posteriores a hoy de un paciente sin token", async (done) => {
       const respuesta = await request.get(
-        `/v1/citas_pacientes/tipo/horas_medicas/proximas/${encodeURIComponent(
+        `/v1/citas-pacientes/tipo/horas-medicas/proximas/${encodeURIComponent(
           "America/Santiago"
         )}`
       );
@@ -365,7 +365,7 @@ describe("Endpoints", () => {
       token = jwt.sign({ numeroPaciente: 2 }, secreto);
       const respuesta = await request
         .get(
-          `/v1/citas_pacientes/tipo/horas_medicas/proximas/${encodeURIComponent(
+          `/v1/citas-pacientes/tipo/horas-medicas/proximas/${encodeURIComponent(
             "America/Santiago"
           )}`
         )
@@ -386,7 +386,7 @@ describe("Endpoints", () => {
       token = jwt.sign({ numeroPaciente: 1 }, secreto);
       const respuesta = await request
         .get(
-          `/v1/citas_pacientes/tipo/horas_medicas/proximas/${encodeURIComponent(
+          `/v1/citas-pacientes/tipo/horas-medicas/proximas/${encodeURIComponent(
             "America/Santiago"
           )}`
         )
@@ -446,10 +446,10 @@ describe("Endpoints", () => {
       done();
     });
   });
-  describe("GET /v1/citas_pacientes/tipo/horas_medicas/historico/:timeZone", () => {
+  describe("GET /v1/citas-pacientes/tipo/horas-medicas/historico/:timeZone", () => {
     it("Intenta obtener las horas médicas anteriores a hoy de un paciente sin token", async (done) => {
       const respuesta = await request.get(
-        `/v1/citas_pacientes/tipo/horas_medicas/historico/${encodeURIComponent(
+        `/v1/citas-pacientes/tipo/horas-medicas/historico/${encodeURIComponent(
           "America/Santiago"
         )}`
       );
@@ -472,7 +472,7 @@ describe("Endpoints", () => {
       token = jwt.sign({ numeroPaciente: 2 }, secreto);
       const respuesta = await request
         .get(
-          `/v1/citas_pacientes/tipo/horas_medicas/historico/${encodeURIComponent(
+          `/v1/citas-pacientes/tipo/horas-medicas/historico/${encodeURIComponent(
             "America/Santiago"
           )}`
         )
@@ -490,7 +490,7 @@ describe("Endpoints", () => {
       token = jwt.sign({ numeroPaciente: 1 }, secreto);
       const respuesta = await request
         .get(
-          `/v1/citas_pacientes/tipo/horas_medicas/historico/${encodeURIComponent(
+          `/v1/citas-pacientes/tipo/horas-medicas/historico/${encodeURIComponent(
             "America/Santiago"
           )}`
         )
@@ -513,10 +513,10 @@ describe("Endpoints", () => {
       done();
     });
   });
-  describe("GET /v1/citas_pacientes/tipo/horas_examenes", () => {
+  describe("GET /v1/citas-pacientes/tipo/horas-examenes", () => {
     it("Intenta obtener las horas de exámenes históricas de un paciente sin token", async (done) => {
       const respuesta = await request.get(
-        "/v1/citas_pacientes/tipo/horas_examenes"
+        "/v1/citas-pacientes/tipo/horas-examenes"
       );
 
       const mensaje = await getMensajes("forbiddenAccess");
@@ -536,7 +536,7 @@ describe("Endpoints", () => {
     it("Intenta obtener las horas de exámenes históricas de un paciente con token (Arreglo sin horas de exámenes)", async (done) => {
       token = jwt.sign({ numeroPaciente: 2 }, secreto);
       const respuesta = await request
-        .get("/v1/citas_pacientes/tipo/horas_examenes")
+        .get("/v1/citas-pacientes/tipo/horas-examenes")
         .set("Authorization", token);
 
       expect(respuesta.status).toBe(200);
@@ -551,7 +551,7 @@ describe("Endpoints", () => {
     it("Intenta obtener las horas de exámenes históricas de un paciente con token (Arreglo con horas de exámenes)", async (done) => {
       token = jwt.sign({ numeroPaciente: 1 }, secreto);
       const respuesta = await request
-        .get("/v1/citas_pacientes/tipo/horas_examenes")
+        .get("/v1/citas-pacientes/tipo/horas-examenes")
         .set("Authorization", token);
 
       expect(respuesta.status).toBe(200);
@@ -579,10 +579,10 @@ describe("Endpoints", () => {
       done();
     });
   });
-  describe("GET /v1/citas_pacientes/tipo/horas_examenes/proximas/:timeZone", () => {
+  describe("GET /v1/citas-pacientes/tipo/horas-examenes/proximas/:timeZone", () => {
     it("Intenta obtener las horas de exámenes posteriores a hoy de un paciente sin token", async (done) => {
       const respuesta = await request.get(
-        `/v1/citas_pacientes/tipo/horas_examenes/proximas/${encodeURIComponent(
+        `/v1/citas-pacientes/tipo/horas-examenes/proximas/${encodeURIComponent(
           "America/Santiago"
         )}`
       );
@@ -605,7 +605,7 @@ describe("Endpoints", () => {
       token = jwt.sign({ numeroPaciente: 2 }, secreto);
       const respuesta = await request
         .get(
-          `/v1/citas_pacientes/tipo/horas_examenes/proximas/${encodeURIComponent(
+          `/v1/citas-pacientes/tipo/horas-examenes/proximas/${encodeURIComponent(
             "America/Santiago"
           )}`
         )
@@ -626,7 +626,7 @@ describe("Endpoints", () => {
       token = jwt.sign({ numeroPaciente: 1 }, secreto);
       const respuesta = await request
         .get(
-          `/v1/citas_pacientes/tipo/horas_examenes/proximas/${encodeURIComponent(
+          `/v1/citas-pacientes/tipo/horas-examenes/proximas/${encodeURIComponent(
             "America/Santiago"
           )}`
         )
@@ -658,10 +658,10 @@ describe("Endpoints", () => {
       done();
     });
   });
-  describe("GET /v1/citas_pacientes/tipo/horas_examenes/historico/:timeZone", () => {
+  describe("GET /v1/citas-pacientes/tipo/horas-examenes/historico/:timeZone", () => {
     it("Intenta obtener las horas de exámenes anteriores a hoy de un paciente sin token", async (done) => {
       const respuesta = await request.get(
-        `/v1/citas_pacientes/tipo/horas_examenes/historico/${encodeURIComponent(
+        `/v1/citas-pacientes/tipo/horas-examenes/historico/${encodeURIComponent(
           "America/Santiago"
         )}`
       );
@@ -684,7 +684,7 @@ describe("Endpoints", () => {
       token = jwt.sign({ numeroPaciente: 2 }, secreto);
       const respuesta = await request
         .get(
-          `/v1/citas_pacientes/tipo/horas_examenes/historico/${encodeURIComponent(
+          `/v1/citas-pacientes/tipo/horas-examenes/historico/${encodeURIComponent(
             "America/Santiago"
           )}`
         )
@@ -703,7 +703,7 @@ describe("Endpoints", () => {
       token = jwt.sign({ numeroPaciente: 1 }, secreto);
       const respuesta = await request
         .get(
-          `/v1/citas_pacientes/tipo/horas_examenes/historico/${encodeURIComponent(
+          `/v1/citas-pacientes/tipo/horas-examenes/historico/${encodeURIComponent(
             "America/Santiago"
           )}`
         )

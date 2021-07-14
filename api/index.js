@@ -18,10 +18,10 @@ mongoose.connect(process.env.MONGO_URI, {
 
 cargarFeriados();
 
-app.use("/v1/citas_pacientes", citasPacientes);
+app.use("/v1/citas-pacientes", citasPacientes);
 
-app.use("/v1/citas_pacientes/tipo", citasPacientesPorTipo);
+app.use("/v1/citas-pacientes/tipo", citasPacientesPorTipo);
 
-app.use("/v1/citas_pacientes/solicitudes", solicitudesCitasPacientes);
+app.use("/v1/citas-pacientes/solicitudes", solicitudesCitasPacientes);
 
 module.exports = app;

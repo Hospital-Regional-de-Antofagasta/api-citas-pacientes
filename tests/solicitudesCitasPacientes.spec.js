@@ -209,10 +209,10 @@ afterAll(async (done) => {
 });
 
 describe("Endpoints", () => {
-  describe("GET /v1/citas_pacientes/solicitudes/motivos/:tipoSolicitud", () => {
+  describe("GET /v1/citas-pacientes/solicitudes/motivos/:tipoSolicitud", () => {
     it("Intenta obtener los motivos sin token", async (done) => {
       const respuesta = await request.get(
-        "/v1/citas_pacientes/solicitudes/motivos/ANULAR"
+        "/v1/citas-pacientes/solicitudes/motivos/ANULAR"
       );
 
       const mensaje = await getMensajes("forbiddenAccess");
@@ -232,7 +232,7 @@ describe("Endpoints", () => {
     it("Intenta obtener los motivos de un tipo de solicitud que no existe con token", async (done) => {
       token = jwt.sign({ numeroPaciente: 1 }, secreto);
       const respuesta = await request
-        .get("/v1/citas_pacientes/solicitudes/motivos/PEDIR")
+        .get("/v1/citas-pacientes/solicitudes/motivos/PEDIR")
         .set("Authorization", token);
 
       const cita = respuesta.body;
@@ -245,7 +245,7 @@ describe("Endpoints", () => {
     it("Intenta obtener los motivos de un tipo de solicitud ANULAR con token", async (done) => {
       token = jwt.sign({ numeroPaciente: 1 }, secreto);
       const respuesta = await request
-        .get("/v1/citas_pacientes/solicitudes/motivos/ANULAR")
+        .get("/v1/citas-pacientes/solicitudes/motivos/ANULAR")
         .set("Authorization", token);
 
       const arregloMotivos = respuesta.body;
@@ -260,7 +260,7 @@ describe("Endpoints", () => {
     it("Intenta obtener los motivos de un tipo de solicitud CAMBIAR con token", async (done) => {
       token = jwt.sign({ numeroPaciente: 1 }, secreto);
       const respuesta = await request
-        .get("/v1/citas_pacientes/solicitudes/motivos/CAMBIAR")
+        .get("/v1/citas-pacientes/solicitudes/motivos/CAMBIAR")
         .set("Authorization", token);
 
       const arregloMotivos = respuesta.body;
@@ -275,10 +275,10 @@ describe("Endpoints", () => {
       done();
     });
   });
-  describe("POST /v1/citas_pacientes/solicitudes/horas_medicas/anular_cambiar/", () => {
+  describe("POST /v1/citas-pacientes/solicitudes/horas-medicas/anular-cambiar/", () => {
     it("Solicitud sin token.", async (done) => {
       const respuesta = await request.post(
-        "/v1/citas_pacientes/solicitudes/horas_medicas/anular_cambiar/"
+        "/v1/citas-pacientes/solicitudes/horas-medicas/anular-cambiar/"
       );
 
       const mensaje = await getMensajes("forbiddenAccess");
@@ -301,7 +301,7 @@ describe("Endpoints", () => {
         correlativoCita: 11,
       };
       const respuesta = await request
-        .post("/v1/citas_pacientes/solicitudes/horas_medicas/anular_cambiar/")
+        .post("/v1/citas-pacientes/solicitudes/horas-medicas/anular-cambiar/")
         .set("Authorization", token)
         .send(body);
 
@@ -327,7 +327,7 @@ describe("Endpoints", () => {
         detallesMotivo: "",
       };
       const respuesta = await request
-        .post("/v1/citas_pacientes/solicitudes/horas_medicas/anular_cambiar/")
+        .post("/v1/citas-pacientes/solicitudes/horas-medicas/anular-cambiar/")
         .set("Authorization", token)
         .send(body);
 
@@ -353,7 +353,7 @@ describe("Endpoints", () => {
         detallesMotivo: "",
       };
       const respuesta = await request
-        .post("/v1/citas_pacientes/solicitudes/horas_medicas/anular_cambiar/")
+        .post("/v1/citas-pacientes/solicitudes/horas-medicas/anular-cambiar/")
         .set("Authorization", token)
         .send(body);
 
@@ -380,7 +380,7 @@ describe("Endpoints", () => {
         detallesMotivo: "",
       };
       const respuesta = await request
-        .post("/v1/citas_pacientes/solicitudes/horas_medicas/anular_cambiar/")
+        .post("/v1/citas-pacientes/solicitudes/horas-medicas/anular-cambiar/")
         .set("Authorization", token)
         .send(body);
 
@@ -407,7 +407,7 @@ describe("Endpoints", () => {
         detallesMotivo: "",
       };
       const respuesta = await request
-        .post("/v1/citas_pacientes/solicitudes/horas_medicas/anular_cambiar/")
+        .post("/v1/citas-pacientes/solicitudes/horas-medicas/anular-cambiar/")
         .set("Authorization", token)
         .send(body);
 
@@ -434,7 +434,7 @@ describe("Endpoints", () => {
         detallesMotivo: "",
       };
       const respuesta = await request
-        .post("/v1/citas_pacientes/solicitudes/horas_medicas/anular_cambiar/")
+        .post("/v1/citas-pacientes/solicitudes/horas-medicas/anular-cambiar/")
         .set("Authorization", token)
         .send(body);
 
@@ -461,7 +461,7 @@ describe("Endpoints", () => {
         detallesMotivo: "",
       };
       const respuesta = await request
-        .post("/v1/citas_pacientes/solicitudes/horas_medicas/anular_cambiar/")
+        .post("/v1/citas-pacientes/solicitudes/horas-medicas/anular-cambiar/")
         .set("Authorization", token)
         .send(body);
 
@@ -488,7 +488,7 @@ describe("Endpoints", () => {
         detallesMotivo: "",
       };
       const respuesta = await request
-        .post("/v1/citas_pacientes/solicitudes/horas_medicas/anular_cambiar/")
+        .post("/v1/citas-pacientes/solicitudes/horas-medicas/anular-cambiar/")
         .set("Authorization", token)
         .send(body);
 
@@ -515,7 +515,7 @@ describe("Endpoints", () => {
         detallesMotivo: "",
       };
       const respuesta = await request
-        .post("/v1/citas_pacientes/solicitudes/horas_medicas/anular_cambiar/")
+        .post("/v1/citas-pacientes/solicitudes/horas-medicas/anular-cambiar/")
         .set("Authorization", token)
         .send(body);
 
@@ -547,7 +547,7 @@ describe("Endpoints", () => {
         detallesMotivo: "",
       };
       const respuesta = await request
-        .post("/v1/citas_pacientes/solicitudes/horas_medicas/anular_cambiar/")
+        .post("/v1/citas-pacientes/solicitudes/horas-medicas/anular-cambiar/")
         .set("Authorization", token)
         .send(body);
 
@@ -589,7 +589,7 @@ describe("Endpoints", () => {
       });
 
       const respuesta = await request
-        .post("/v1/citas_pacientes/solicitudes/horas_medicas/anular_cambiar/")
+        .post("/v1/citas-pacientes/solicitudes/horas-medicas/anular-cambiar/")
         .set("Authorization", token)
         .send(body);
 
@@ -631,7 +631,7 @@ describe("Endpoints", () => {
       });
 
       const respuesta = await request
-        .post("/v1/citas_pacientes/solicitudes/horas_medicas/anular_cambiar/")
+        .post("/v1/citas-pacientes/solicitudes/horas-medicas/anular-cambiar/")
         .set("Authorization", token)
         .send(body);
 
@@ -675,7 +675,7 @@ describe("Endpoints", () => {
       body.tipoSolicitud = "CAMBIAR";
 
       const respuesta = await request
-        .post("/v1/citas_pacientes/solicitudes/horas_medicas/anular_cambiar/")
+        .post("/v1/citas-pacientes/solicitudes/horas-medicas/anular-cambiar/")
         .set("Authorization", token)
         .send(body);
 
@@ -719,7 +719,7 @@ describe("Endpoints", () => {
       body.tipoSolicitud = "ANULAR";
 
       const respuesta = await request
-        .post("/v1/citas_pacientes/solicitudes/horas_medicas/anular_cambiar/")
+        .post("/v1/citas-pacientes/solicitudes/horas-medicas/anular-cambiar/")
         .set("Authorization", token)
         .send(body);
 
@@ -743,10 +743,10 @@ describe("Endpoints", () => {
       done();
     });
   });
-  describe("GET /v1/citas_pacientes/solicitudes/horas_medicas/anular_cambiar/existe/:correlativoCita", () => {
+  describe("GET /v1/citas-pacientes/solicitudes/horas-medicas/anular-cambiar/existe/:correlativoCita", () => {
     it("Intenta averiguar si existe una solicitud para una cita sin token", async (done) => {
       const respuesta = await request.get(
-        "/v1/citas_pacientes/solicitudes/horas_medicas/anular_cambiar/existe/11"
+        "/v1/citas-pacientes/solicitudes/horas-medicas/anular-cambiar/existe/11"
       );
 
       const mensaje = await getMensajes("forbiddenAccess");
@@ -766,7 +766,7 @@ describe("Endpoints", () => {
     it("Intenta averiguar si existe una solicitud para una cita que no existe con token", async (done) => {
       token = jwt.sign({ numeroPaciente: 1 }, secreto);
       const respuesta = await request
-        .get("/v1/citas_pacientes/solicitudes/horas_medicas/anular_cambiar/existe/1")
+        .get("/v1/citas-pacientes/solicitudes/horas-medicas/anular-cambiar/existe/1")
         .set("Authorization", token);
 
       expect(respuesta.status).toBe(200);
@@ -777,7 +777,7 @@ describe("Endpoints", () => {
     it("Intenta averiguar si existe una solicitud para una cita con token (No existe la solicitud).", async (done) => {
       token = jwt.sign({ numeroPaciente: 1 }, secreto);
       const respuesta = await request
-        .get("/v1/citas_pacientes/solicitudes/horas_medicas/anular_cambiar/existe/11")
+        .get("/v1/citas-pacientes/solicitudes/horas-medicas/anular-cambiar/existe/11")
         .set("Authorization", token);
 
       expect(respuesta.status).toBe(200);
@@ -788,7 +788,7 @@ describe("Endpoints", () => {
     it("Intenta averiguar si existe una solicitud para una cita con token (Existe la solicitud).", async (done) => {
       token = jwt.sign({ numeroPaciente: 1 }, secreto);
       const respuesta = await request
-        .get("/v1/citas_pacientes/solicitudes/horas_medicas/anular_cambiar/existe/10")
+        .get("/v1/citas-pacientes/solicitudes/horas-medicas/anular-cambiar/existe/10")
         .set("Authorization", token);
 
       const mensaje = await getMensajes("solicitudDuplicada");
