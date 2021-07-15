@@ -8,7 +8,7 @@ const MotivosSolicitudesCitas = require("../../models/MotivosSolicitudesCitas");
 //const SolicitudesAnularCambiarCitasPacientes = require("../models/SolicitudesAnularCambiarCitasPacientes");
 //const MotivosSolicitudesCitas = require("../models/MotivosSolicitudesCitas");
 
-const { mensajes } = require("../config");
+const { getMensajes } = require("../config");
 
 exports.validarAlta = async (req, res, next) => {
   try {
@@ -22,11 +22,13 @@ exports.validarAlta = async (req, res, next) => {
         codigoAmbito: "01",
       }).exec();
       if (!cita || cita.alta === true)
-        return res.status(400).send({ respuesta: mensajes.badRequest });
+        return res
+          .status(400)
+          .send({ respuesta: await getMensajes("badRequest") });
     }
     next();
   } catch (error) {
-    res.status(500).send({ respuesta: mensajes.serverError });
+    res.status(500).send({ respuesta: await getMensajes("serverError") });
   }
 };
 
@@ -46,8 +48,7 @@ exports.validarBodySolicitudAnularCambiarHoraMedica = async (
       typeof solicitud.detallesMotivo !== "string"
     ) {
       return res.status(400).send({
-        respuesta: mensajes.badRequest,
-        detalles_error: "Algun dato es incorrecto",
+        respuesta: await getMensajes("badRequest"),
       });
     }
     const motivo = await MotivosSolicitudesCitas.findOne({
@@ -56,15 +57,14 @@ exports.validarBodySolicitudAnularCambiarHoraMedica = async (
     }).exec();
     if (!motivo) {
       return res.status(400).send({
-        respuesta: mensajes.badRequest,
-        detalles_error: "El motivo no existe",
+        respuesta: await getMensajes("badRequest"),
       });
     } else {
       req.body.motivo = motivo.nombre;
     }
     next();
   } catch (error) {
-    res.status(500).send({ respuesta: mensajes.serverError });
+    res.status(500).send({ respuesta: await getMensajes("serverError") });
   }
 };
 
@@ -85,13 +85,12 @@ exports.validarExistenciaSolicitudAnularCambiarHoraMedica = async (
 
     if (solicitudExistente) {
       return res.status(400).send({
-        respuesta: mensajes.badRequest,
-        detalles_error: "La solicitud ya existe",
+        respuesta: await getMensajes("badRequest"),
       });
     }
     next();
   } catch (error) {
-    res.status(500).send({ respuesta: mensajes.serverError });
+    res.status(500).send({ respuesta: await getMensajes("serverError") });
   }
 };
 
@@ -110,8 +109,7 @@ exports.validarFechaSolicitudAnularCambiarHoraMedica = async (
     }).exec();
     if (!cita) {
       return res.status(400).send({
-        respuesta: mensajes.badRequest,
-        detalles_error: "La cita no existe",
+        respuesta: await getMensajes("badRequest"),
       });
     }
     const fechaActual = moment().startOf("day");
@@ -123,22 +121,18 @@ exports.validarFechaSolicitudAnularCambiarHoraMedica = async (
     if (solicitud.tipoSolicitud === "CAMBIAR") {
       if (diferencia < 3) {
         return res.status(400).send({
-          respuesta: mensajes.badRequest,
-          detalles_error:
-            "La fecha es incorrecta para poder realizar esta acción",
+          respuesta: await getMensajes("badRequest"),
         });
       }
     } else {
       if (diferencia < 1) {
         return res.status(400).send({
-          respuesta: mensajes.badRequest,
-          detalles_error:
-            "La fecha es incorrecta para poder realizar esta acción",
+          respuesta: await getMensajes("badRequest"),
         });
       }
     }
     next();
   } catch (error) {
-    res.status(500).send({ respuesta: mensajes.serverError });
+    res.status(500).send({ respuesta: await getMensajes("serverError") });
   }
 };

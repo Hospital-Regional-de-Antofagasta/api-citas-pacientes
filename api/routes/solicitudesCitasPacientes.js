@@ -6,6 +6,7 @@ const {
   validarBodySolicitudAnularCambiarHoraMedica,
   validarExistenciaSolicitudAnularCambiarHoraMedica,
 } = require("../middleware/validaciones");
+
 const router = express.Router();
 
 router.get(
@@ -15,7 +16,7 @@ router.get(
 );
 
 router.post(
-  "/horas_medicas/anular_cambiar",
+  "/horas-medicas/anular-cambiar",
   estaAutenticado,
   validarBodySolicitudAnularCambiarHoraMedica,
   validarExistenciaSolicitudAnularCambiarHoraMedica,
@@ -24,7 +25,7 @@ router.post(
 );
 
 router.get(
-  "/horas_medicas/anular_cambiar/:correlativoCita",
+  "/horas-medicas/anular-cambiar/existe/:correlativoCita",
   estaAutenticado,
   solicitudesCitasPacientesController.getExisteSolicitudCambiarOAnularHoraMedica
 );

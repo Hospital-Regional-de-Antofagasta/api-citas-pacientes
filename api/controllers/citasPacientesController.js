@@ -3,20 +3,20 @@ const moment = require("moment-timezone");
 const CitasPacientes = require("../../models/CitasPacientes"); //SOLO VERSION GRATUITA DE VERCEL
 //const CitasPacientes = require("../models/CitasPacientes");
 
-const { mensajes } = require("../config");
+const { getMensajes } = require("../config");
 
 exports.getCita = async (req, res) => {
   try {
     const correlativo = req.params.correlativoCita;
     if (typeof correlativo !== "string") {
-      res.status(400).send({ respuesta: mensajes.badRequest });
+      res.status(400).send({ respuesta: await getMensajes("badRequest") });
     }
     const cita = await CitasPacientes.findOne({
       correlativoCita: correlativo,
     }).exec();
     res.status(200).send(cita);
   } catch (error) {
-    res.status(500).send({ respuesta: mensajes.serverError });
+    res.status(500).send({ respuesta: await getMensajes("serverError") });
   }
 };
 
@@ -60,7 +60,7 @@ const citas = async (req, res, codigoAmbito) => {
       .exec();
     res.status(200).send(arregloCitasPaciente);
   } catch (error) {
-    res.status(500).send({ respuesta: mensajes.serverError });
+    res.status(500).send({ respuesta: getmensajes("serverError") });
   }
 };
 
@@ -68,7 +68,7 @@ const citasProximas = async (req, res, codigoAmbito) => {
   try {
     const timeZone = req.params.timeZone;
     if (typeof timeZone !== "string") {
-      res.status(400).send({ respuesta: mensajes.badRequest });
+      res.status(400).send({ respuesta: getmensajes("badRequest") });
     }
     const fechaHoy = new Date();
     // sumarle un dia a la fecha de hoy para obtener la de maniana
@@ -97,7 +97,7 @@ const citasProximas = async (req, res, codigoAmbito) => {
     ]);
     res.status(200).send(arregloDeArreglosCitasPaciente);
   } catch (error) {
-    res.status(500).send({ respuesta: mensajes.serverError });
+    res.status(500).send({ respuesta: await getMensajes("serverError") });
   }
 };
 
@@ -105,7 +105,7 @@ const citasHistorico = async (req, res, codigoAmbito) => {
   try {
     const timeZone = req.params.timeZone;
     if (typeof timeZone !== "string") {
-      res.status(400).send({ respuesta: mensajes.badRequest });
+      res.status(400).send({ respuesta: await getMensajes("badRequest") });
     }
     const fechaHoy = new Date();
     const hoy = moment.tz(fechaHoy, timeZone).startOf("day");
@@ -118,6 +118,6 @@ const citasHistorico = async (req, res, codigoAmbito) => {
       .exec();
     res.status(200).send(arregloCitasPaciente);
   } catch (error) {
-    res.status(500).send({ respuesta: mensajes.serverError });
+    res.status(500).send({ respuesta: await getMensajes("serverError") });
   }
 };

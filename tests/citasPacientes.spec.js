@@ -12,6 +12,10 @@ const DiasFeriados = require("../models/DiasFeriados"); //SOLO VERSION GRATUITA 
 //const CitasPacientes = require("../api/models/CitasPacientes");
 //const DiasFeriados = require("../api/models/DiasFeriados");
 
+const { getMensajes } = require("../api/config");
+const ConfigApiCitasPacientes = require("../models/ConfigApiCitasPacientes");
+const configSeed = require("../api/testSeeds/configSeed.json");
+
 const request = supertest(app);
 const secreto = process.env.JWT_SECRET;
 let token;
@@ -21,7 +25,7 @@ beforeAll(async (done) => {
   await mongoose.disconnect();
   //Conectar a la base de datos de prueba.
   await mongoose.connect(
-    `${process.env.MONGO_URI_TEST}solicitudes_citas_pacientes_test`,
+    `${process.env.MONGO_URI_TEST}citas_pacientes_test`,
     {
       useNewUrlParser: true,
       useUnifiedTopology: true,
@@ -30,6 +34,7 @@ beforeAll(async (done) => {
   //Cargar los seeds a la base de datos.
   await CitasPacientes.create(citasPacientesSeeds);
   await DiasFeriados.create(diasFeriadosSeeds);
+  await ConfigApiCitasPacientes.create(configSeed);
   //Fechas para preparar escenarios de prueba.
   const fechaHoy = new Date();
   const fechaHoy1 = new Date(
@@ -188,65 +193,94 @@ afterAll(async (done) => {
   //Borrar el contenido de la colección en la base de datos despues de la pruebas.
   await CitasPacientes.deleteMany();
   await DiasFeriados.deleteMany();
+  await ConfigApiCitasPacientes.deleteMany();
   //Cerrar la conexión a la base de datos despues de la pruebas.
   await mongoose.connection.close();
   done();
 });
 
 describe("Endpoints", () => {
-  describe("GET /v1/citas_pacientes/:correlativoCita", () => {
+  describe("GET /v1/citas-pacientes/:correlativoCita", () => {
     it("Intenta obtener una cita sin token", async (done) => {
-      const respuesta = await request.get("/v1/citas_pacientes/20");
+      const respuesta = await request.get("/v1/citas-pacientes/20");
+
+      const mensaje = await getMensajes("forbiddenAccess");
+
       expect(respuesta.status).toBe(401);
-      expect(respuesta.body.respuesta).toBeTruthy();
+      expect(respuesta.body).toEqual({
+        respuesta: {
+          titulo: mensaje.titulo,
+          mensaje: mensaje.mensaje,
+          color: mensaje.color,
+          icono: mensaje.icono,
+        },
+      });
+
       done();
     });
     it("Intenta obtener una cita que no existe con token", async (done) => {
       token = jwt.sign({ numeroPaciente: 1 }, secreto);
       const respuesta = await request
-        .get("/v1/citas_pacientes/10")
+        .get("/v1/citas-pacientes/10")
         .set("Authorization", token);
       const cita = respuesta.body;
+
       expect(respuesta.status).toBe(200);
       expect(cita).toStrictEqual({});
+
       done();
     });
     it("Intenta obtener una cita con token", async (done) => {
       token = jwt.sign({ numeroPaciente: 1 }, secreto);
       const respuesta = await request
-        .get("/v1/citas_pacientes/11")
+        .get("/v1/citas-pacientes/11")
         .set("Authorization", token);
       const cita = respuesta.body;
+
       expect(respuesta.status).toBe(200);
       expect(cita.correlativoCita).toStrictEqual(11);
+
       done();
     });
   });
-  describe("GET /v1/citas_pacientes/tipo/horas_medicas", () => {
+  describe("GET /v1/citas-pacientes/tipo/horas-medicas", () => {
     it("Intenta obtener las horas médicas históricas de un paciente sin token", async (done) => {
       const respuesta = await request.get(
-        "/v1/citas_pacientes/tipo/horas_medicas"
+        "/v1/citas-pacientes/tipo/horas-medicas"
       );
+
+      const mensaje = await getMensajes("forbiddenAccess");
+
       expect(respuesta.status).toBe(401);
-      expect(respuesta.body.respuesta).toBeTruthy();
+      expect(respuesta.body).toEqual({
+        respuesta: {
+          titulo: mensaje.titulo,
+          mensaje: mensaje.mensaje,
+          color: mensaje.color,
+          icono: mensaje.icono,
+        },
+      });
+
       done();
     });
     it("Intenta obtener las horas médicas históricas de un paciente con token (Arreglo sin horas médicas)", async (done) => {
       token = jwt.sign({ numeroPaciente: 2 }, secreto);
       const respuesta = await request
-        .get("/v1/citas_pacientes/tipo/horas_medicas")
+        .get("/v1/citas-pacientes/tipo/horas-medicas")
         .set("Authorization", token);
       expect(respuesta.status).toBe(200);
       //Probar que el arreglo está vacío.
       const arregloHorasMedicas = respuesta.body;
+
       expect(arregloHorasMedicas).toStrictEqual([]);
       expect(arregloHorasMedicas.length).toStrictEqual(0);
+
       done();
     });
     it("Intenta obtener las horas médicas históricas de un paciente con token (Arreglo con horas médicas)", async (done) => {
       token = jwt.sign({ numeroPaciente: 1 }, secreto);
       const respuesta = await request
-        .get("/v1/citas_pacientes/tipo/horas_medicas")
+        .get("/v1/citas-pacientes/tipo/horas-medicas")
         .set("Authorization", token);
       expect(respuesta.status).toBe(200);
       //Probar que el arreglo tiene 11 horas médicas y que todas son del mismo paciente.
@@ -301,42 +335,58 @@ describe("Endpoints", () => {
       expect(arregloHoras[11].numeroPaciente).toBeFalsy();
       expect(arregloHoras[11].correlativoCita).toStrictEqual(29);
       expect(arregloHoras[11].codigoAmbito).toStrictEqual("01");
+
       done();
     });
   });
-  describe("GET /v1/citas_pacientes/tipo/horas_medicas/proximas/:timeZone", () => {
+  describe("GET /v1/citas-pacientes/tipo/horas-medicas/proximas/:timeZone", () => {
     it("Intenta obtener las horas médicas posteriores a hoy de un paciente sin token", async (done) => {
       const respuesta = await request.get(
-        `/v1/citas_pacientes/tipo/horas_medicas/proximas/${encodeURIComponent(
+        `/v1/citas-pacientes/tipo/horas-medicas/proximas/${encodeURIComponent(
           "America/Santiago"
         )}`
       );
+
+      const mensaje = await getMensajes("forbiddenAccess");
+
       expect(respuesta.status).toBe(401);
-      expect(respuesta.body.respuesta).toBeTruthy();
+      expect(respuesta.body).toEqual({
+        respuesta: {
+          titulo: mensaje.titulo,
+          mensaje: mensaje.mensaje,
+          color: mensaje.color,
+          icono: mensaje.icono,
+        },
+      });
+
       done();
     });
     it("Intenta obtener las horas médicas posteriores a hoy de un paciente con token (Arreglo sin horas médicas)", async (done) => {
       token = jwt.sign({ numeroPaciente: 2 }, secreto);
       const respuesta = await request
         .get(
-          `/v1/citas_pacientes/tipo/horas_medicas/proximas/${encodeURIComponent(
+          `/v1/citas-pacientes/tipo/horas-medicas/proximas/${encodeURIComponent(
             "America/Santiago"
           )}`
         )
         .set("Authorization", token);
+
       expect(respuesta.status).toBe(200);
+
       const arregloHorasMedicas = respuesta.body;
+
       expect(arregloHorasMedicas).toStrictEqual([[], []]);
       expect(arregloHorasMedicas.length).toStrictEqual(2);
       expect(arregloHorasMedicas[0].length).toStrictEqual(0);
       expect(arregloHorasMedicas[1].length).toStrictEqual(0);
+
       done();
     });
     it("Intenta obtener las horas médicas posteriores a hoy de un paciente con token (Arreglo con horas médicas)", async (done) => {
       token = jwt.sign({ numeroPaciente: 1 }, secreto);
       const respuesta = await request
         .get(
-          `/v1/citas_pacientes/tipo/horas_medicas/proximas/${encodeURIComponent(
+          `/v1/citas-pacientes/tipo/horas-medicas/proximas/${encodeURIComponent(
             "America/Santiago"
           )}`
         )
@@ -346,6 +396,7 @@ describe("Endpoints", () => {
       const arregloDeArreglosHoras = respuesta.body;
 
       const arregloHorasHoy = arregloDeArreglosHoras[0];
+
       expect(arregloHorasHoy.length).toStrictEqual(3);
 
       expect(arregloHorasHoy[0].numeroPaciente).toBeFalsy();
@@ -361,6 +412,7 @@ describe("Endpoints", () => {
       expect(arregloHorasHoy[2].codigoAmbito).toStrictEqual("01");
 
       const arregloHorasProximas = arregloDeArreglosHoras[1];
+
       expect(arregloHorasProximas.length).toStrictEqual(7);
 
       expect(arregloHorasProximas[0].numeroPaciente).toBeFalsy();
@@ -390,44 +442,60 @@ describe("Endpoints", () => {
       expect(arregloHorasProximas[6].numeroPaciente).toBeFalsy();
       expect(arregloHorasProximas[6].correlativoCita).toStrictEqual(29);
       expect(arregloHorasProximas[6].codigoAmbito).toStrictEqual("01");
+
       done();
     });
   });
-  describe("GET /v1/citas_pacientes/tipo/horas_medicas/historico/:timeZone", () => {
+  describe("GET /v1/citas-pacientes/tipo/horas-medicas/historico/:timeZone", () => {
     it("Intenta obtener las horas médicas anteriores a hoy de un paciente sin token", async (done) => {
       const respuesta = await request.get(
-        `/v1/citas_pacientes/tipo/horas_medicas/historico/${encodeURIComponent(
+        `/v1/citas-pacientes/tipo/horas-medicas/historico/${encodeURIComponent(
           "America/Santiago"
         )}`
       );
+
+      const mensaje = await getMensajes("forbiddenAccess");
+
       expect(respuesta.status).toBe(401);
-      expect(respuesta.body.respuesta).toBeTruthy();
+      expect(respuesta.body).toEqual({
+        respuesta: {
+          titulo: mensaje.titulo,
+          mensaje: mensaje.mensaje,
+          color: mensaje.color,
+          icono: mensaje.icono,
+        },
+      });
+
       done();
     });
     it("Intenta obtener las horas médicas anteriores a hoy de un paciente con token (Arreglo sin horas médicas)", async (done) => {
       token = jwt.sign({ numeroPaciente: 2 }, secreto);
       const respuesta = await request
         .get(
-          `/v1/citas_pacientes/tipo/horas_medicas/historico/${encodeURIComponent(
+          `/v1/citas-pacientes/tipo/horas-medicas/historico/${encodeURIComponent(
             "America/Santiago"
           )}`
         )
         .set("Authorization", token);
       expect(respuesta.status).toBe(200);
+
       const arregloHorasMedicas = respuesta.body;
+
       expect(arregloHorasMedicas).toStrictEqual([]);
       expect(arregloHorasMedicas.length).toStrictEqual(0);
+
       done();
     });
     it("Intenta obtener las horas médicas anteriores a hoy de un paciente con token (Arreglo con horas médicas)", async (done) => {
       token = jwt.sign({ numeroPaciente: 1 }, secreto);
       const respuesta = await request
         .get(
-          `/v1/citas_pacientes/tipo/horas_medicas/historico/${encodeURIComponent(
+          `/v1/citas-pacientes/tipo/horas-medicas/historico/${encodeURIComponent(
             "America/Santiago"
           )}`
         )
         .set("Authorization", token);
+
       expect(respuesta.status).toBe(200);
 
       const arreglosHoras = respuesta.body;
@@ -441,35 +509,51 @@ describe("Endpoints", () => {
       expect(arreglosHoras[1].numeroPaciente).toBeFalsy();
       expect(arreglosHoras[1].correlativoCita).toStrictEqual(11);
       expect(arreglosHoras[1].codigoAmbito).toStrictEqual("01");
+
       done();
     });
   });
-  describe("GET /v1/citas_pacientes/tipo/horas_examenes", () => {
+  describe("GET /v1/citas-pacientes/tipo/horas-examenes", () => {
     it("Intenta obtener las horas de exámenes históricas de un paciente sin token", async (done) => {
       const respuesta = await request.get(
-        "/v1/citas_pacientes/tipo/horas_examenes"
+        "/v1/citas-pacientes/tipo/horas-examenes"
       );
+
+      const mensaje = await getMensajes("forbiddenAccess");
+
       expect(respuesta.status).toBe(401);
-      expect(respuesta.body.respuesta).toBeTruthy();
+      expect(respuesta.body).toEqual({
+        respuesta: {
+          titulo: mensaje.titulo,
+          mensaje: mensaje.mensaje,
+          color: mensaje.color,
+          icono: mensaje.icono,
+        },
+      });
+
       done();
     });
     it("Intenta obtener las horas de exámenes históricas de un paciente con token (Arreglo sin horas de exámenes)", async (done) => {
       token = jwt.sign({ numeroPaciente: 2 }, secreto);
       const respuesta = await request
-        .get("/v1/citas_pacientes/tipo/horas_examenes")
+        .get("/v1/citas-pacientes/tipo/horas-examenes")
         .set("Authorization", token);
+
       expect(respuesta.status).toBe(200);
       //Probar que el arreglo está vacío.
       const arregloHorasMedicas = respuesta.body;
+
       expect(arregloHorasMedicas).toStrictEqual([]);
       expect(arregloHorasMedicas.length).toStrictEqual(0);
+
       done();
     });
     it("Intenta obtener las horas de exámenes históricas de un paciente con token (Arreglo con horas de exámenes)", async (done) => {
       token = jwt.sign({ numeroPaciente: 1 }, secreto);
       const respuesta = await request
-        .get("/v1/citas_pacientes/tipo/horas_examenes")
+        .get("/v1/citas-pacientes/tipo/horas-examenes")
         .set("Authorization", token);
+
       expect(respuesta.status).toBe(200);
       //Probar que el arreglo tiene cinco horas médicas y que todas son del mismo paciente.
       const arregloHoras = respuesta.body;
@@ -491,52 +575,68 @@ describe("Endpoints", () => {
       expect(arregloHoras[3].numeroPaciente).toBeFalsy();
       expect(arregloHoras[3].correlativoCita).toStrictEqual(21);
       expect(arregloHoras[3].codigoAmbito).toStrictEqual("04");
+
       done();
     });
   });
-  describe("GET /v1/citas_pacientes/tipo/horas_examenes/proximas/:timeZone", () => {
+  describe("GET /v1/citas-pacientes/tipo/horas-examenes/proximas/:timeZone", () => {
     it("Intenta obtener las horas de exámenes posteriores a hoy de un paciente sin token", async (done) => {
       const respuesta = await request.get(
-        `/v1/citas_pacientes/tipo/horas_examenes/proximas/${encodeURIComponent(
+        `/v1/citas-pacientes/tipo/horas-examenes/proximas/${encodeURIComponent(
           "America/Santiago"
         )}`
       );
+
+      const mensaje = await getMensajes("forbiddenAccess");
+
       expect(respuesta.status).toBe(401);
-      expect(respuesta.body.respuesta).toBeTruthy();
+      expect(respuesta.body).toEqual({
+        respuesta: {
+          titulo: mensaje.titulo,
+          mensaje: mensaje.mensaje,
+          color: mensaje.color,
+          icono: mensaje.icono,
+        },
+      });
+
       done();
     });
     it("Intenta obtener las horas de exámenes posteriores a hoy de un paciente con token (Arreglo sin horas de exámenes)", async (done) => {
       token = jwt.sign({ numeroPaciente: 2 }, secreto);
       const respuesta = await request
         .get(
-          `/v1/citas_pacientes/tipo/horas_examenes/proximas/${encodeURIComponent(
+          `/v1/citas-pacientes/tipo/horas-examenes/proximas/${encodeURIComponent(
             "America/Santiago"
           )}`
         )
         .set("Authorization", token);
+
       expect(respuesta.status).toBe(200);
       //Probar que el arreglo está vacío.
       const arregloHorasMedicas = respuesta.body;
+
       expect(arregloHorasMedicas).toStrictEqual([[], []]);
       expect(arregloHorasMedicas.length).toStrictEqual(2);
       expect(arregloHorasMedicas[0].length).toStrictEqual(0);
       expect(arregloHorasMedicas[1].length).toStrictEqual(0);
+
       done();
     });
     it("Intenta obtener las horas de exámenes posteriores a hoy de un paciente con token (Arreglo con horas de exámenes)", async (done) => {
       token = jwt.sign({ numeroPaciente: 1 }, secreto);
       const respuesta = await request
         .get(
-          `/v1/citas_pacientes/tipo/horas_examenes/proximas/${encodeURIComponent(
+          `/v1/citas-pacientes/tipo/horas-examenes/proximas/${encodeURIComponent(
             "America/Santiago"
           )}`
         )
         .set("Authorization", token);
+
       expect(respuesta.status).toBe(200);
       //Probar que el arreglo tiene dos arreglos de hora médicas y que todas son del mismo paciente.
       const arregloDeArreglosHoras = respuesta.body;
-
       const arregloHorasHoy = arregloDeArreglosHoras[0];
+
       expect(arregloHorasHoy.length).toStrictEqual(2);
 
       expect(arregloHorasHoy[0].numeroPaciente).toBeFalsy();
@@ -548,49 +648,67 @@ describe("Endpoints", () => {
       expect(arregloHorasHoy[1].codigoAmbito).toStrictEqual("06");
 
       const arregloHorasProximas = arregloDeArreglosHoras[1];
+
       expect(arregloHorasProximas.length).toStrictEqual(1);
 
       expect(arregloHorasProximas[0].numeroPaciente).toBeFalsy();
       expect(arregloHorasProximas[0].correlativoCita).toStrictEqual(21);
       expect(arregloHorasProximas[0].codigoAmbito).toStrictEqual("04");
+
       done();
     });
   });
-  describe("GET /v1/citas_pacientes/tipo/horas_examenes/historico/:timeZone", () => {
+  describe("GET /v1/citas-pacientes/tipo/horas-examenes/historico/:timeZone", () => {
     it("Intenta obtener las horas de exámenes anteriores a hoy de un paciente sin token", async (done) => {
       const respuesta = await request.get(
-        `/v1/citas_pacientes/tipo/horas_examenes/historico/${encodeURIComponent(
+        `/v1/citas-pacientes/tipo/horas-examenes/historico/${encodeURIComponent(
           "America/Santiago"
         )}`
       );
+
+      const mensaje = await getMensajes("forbiddenAccess");
+
       expect(respuesta.status).toBe(401);
-      expect(respuesta.body.respuesta).toBeTruthy();
+      expect(respuesta.body).toEqual({
+        respuesta: {
+          titulo: mensaje.titulo,
+          mensaje: mensaje.mensaje,
+          color: mensaje.color,
+          icono: mensaje.icono,
+        },
+      });
+
       done();
     });
     it("Intenta obtener las horas de exámenes anteriores a hoy de un paciente con token (Arreglo sin horas de exámenes)", async (done) => {
       token = jwt.sign({ numeroPaciente: 2 }, secreto);
       const respuesta = await request
         .get(
-          `/v1/citas_pacientes/tipo/horas_examenes/historico/${encodeURIComponent(
+          `/v1/citas-pacientes/tipo/horas-examenes/historico/${encodeURIComponent(
             "America/Santiago"
           )}`
         )
         .set("Authorization", token);
+
       expect(respuesta.status).toBe(200);
+
       const arregloHorasMedicas = respuesta.body;
+
       expect(arregloHorasMedicas).toStrictEqual([]);
       expect(arregloHorasMedicas.length).toStrictEqual(0);
+
       done();
     });
     it("Intenta obtener las horas de exámenes anteriores a hoy de un paciente con token (Arreglo con horas de exámenes)", async (done) => {
       token = jwt.sign({ numeroPaciente: 1 }, secreto);
       const respuesta = await request
         .get(
-          `/v1/citas_pacientes/tipo/horas_examenes/historico/${encodeURIComponent(
+          `/v1/citas-pacientes/tipo/horas-examenes/historico/${encodeURIComponent(
             "America/Santiago"
           )}`
         )
         .set("Authorization", token);
+
       expect(respuesta.status).toBe(200);
 
       const arreglosHoras = respuesta.body;
@@ -600,6 +718,7 @@ describe("Endpoints", () => {
       expect(arreglosHoras[0].numeroPaciente).toBeFalsy();
       expect(arreglosHoras[0].correlativoCita).toStrictEqual(13);
       expect(arreglosHoras[0].codigoAmbito).toStrictEqual("04");
+
       done();
     });
   });
