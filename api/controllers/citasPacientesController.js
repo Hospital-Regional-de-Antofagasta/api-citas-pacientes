@@ -60,7 +60,7 @@ const citas = async (req, res, codigoAmbito) => {
       .exec();
     res.status(200).send(arregloCitasPaciente);
   } catch (error) {
-    res.status(500).send({ respuesta: getmensajes("serverError") });
+    res.status(500).send({ respuesta: getMensajes("serverError") });
   }
 };
 
@@ -68,7 +68,7 @@ const citasProximas = async (req, res, codigoAmbito) => {
   try {
     const timeZone = req.params.timeZone;
     if (typeof timeZone !== "string") {
-      res.status(400).send({ respuesta: getmensajes("badRequest") });
+      res.status(400).send({ respuesta: getMensajes("badRequest") });
     }
     const fechaHoy = new Date();
     // sumarle un dia a la fecha de hoy para obtener la de maniana
