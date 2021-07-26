@@ -49,4 +49,6 @@ Thumbs.db
 *.wmv
 
 
-.vercel
+
+# Environmental variables
+.env

@@ -1,26 +1,23 @@
-const app = require("../api/index");
+const app = require("../app");
 const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
 const supertest = require("supertest");
 const moment = require("moment");
-const citasPacientesSeeds = require("../api/testSeeds/citasPacientesSeeds.json");
-const diasFeriadosSeeds = require("../api/testSeeds/diasFeriadosSeeds.json");
-const solicitudesAnularCambiarCitasPacientesSeeds = require("../api/testSeeds/solicitudesAnularCambiarCitasPacientesSeeds.json");
-const motivosSolicitudesCitas = require("../api/testSeeds/motivosSolicitudesCitasSeeds.json");
-const { cargarFeriados } = require("../api/config");
+const citasPacientesSeeds = require("../testSeeds/citasPacientesSeeds.json");
+const diasFeriadosSeeds = require("../testSeeds/diasFeriadosSeeds.json");
+const solicitudesAnularCambiarCitasPacientesSeeds = require("../testSeeds/solicitudesAnularCambiarCitasPacientesSeeds.json");
+const motivosSolicitudesCitas = require("../testSeeds/motivosSolicitudesCitasSeeds.json");
+const { cargarFeriados } = require("../config");
 
-const CitasPacientes = require("../models/CitasPacientes"); //SOLO VERSION GRATUITA DE VERCEL
-const DiasFeriados = require("../models/DiasFeriados"); //SOLO VERSION GRATUITA DE VERCEL
-const SolicitudesAnularCambiarCitasPacientes = require("../models/SolicitudesAnularCambiarCitasPacientes"); //SOLO VERSION GRATUITA DE VERCEL
-const MotivosSolicitudesCitas = require("../models/MotivosSolicitudesCitas"); //SOLO VERSION GRATUITA DE VERCEL
-//const CitasPacientes = require("../api/models/CitasPacientes");
-//const DiasFeriados = require("../api/models/DiasFeriados");
-//const SolicitudesAnularCambiarCitasPacientes = require("../api/models/SolicitudesAnularCambiarCitasPacientes");
-//const MotivosSolicitudesCitas = require("../api/models/MotivosSolicitudesCitas");
 
-const { getMensajes } = require("../api/config");
+const CitasPacientes = require("../models/CitasPacientes");
+const DiasFeriados = require("../models/DiasFeriados");
+const SolicitudesAnularCambiarCitasPacientes = require("../models/SolicitudesAnularCambiarCitasPacientes");
+const MotivosSolicitudesCitas = require("../models/MotivosSolicitudesCitas");
+
+const { getMensajes } = require("../config");
 const ConfigApiCitasPacientes = require("../models/ConfigApiCitasPacientes");
-const configSeed = require("../api/testSeeds/configSeed.json");
+const configSeed = require("../testSeeds/configSeed.json");
 
 const request = supertest(app);
 const secreto = process.env.JWT_SECRET;

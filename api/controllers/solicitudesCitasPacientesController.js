@@ -1,7 +1,6 @@
-const SolicitudesAnularCambiarCitasPacientes = require("../../models/SolicitudesAnularCambiarCitasPacientes"); //SOLO VERSION GRATUITA DE VERCEL
-const MotivosSolicitudesCitas = require("../../models/MotivosSolicitudesCitas"); //SOLO VERSION GRATUITA DE VERCEL
-//const SolicitudesAnularCambiarCitasPacientes = require("../models/SolicitudesAnularCambiarCitasPacientes");
-//const MotivosSolicitudesCitas = require('../models/MotivosSolicitudesCitas')
+
+const SolicitudesAnularCambiarCitasPacientes = require("../models/SolicitudesAnularCambiarCitasPacientes");
+const MotivosSolicitudesCitas = require('../models/MotivosSolicitudesCitas')
 
 const { getMensajes } = require("../config");
 
