@@ -7,7 +7,8 @@
     "motivo": "Quiero cambio de profesional",
     "detallesMotivo": "",
     "respondida": true,
-    "enviadaHospital": false
+    "enviadaHospital": false,
+    "codigoEstablecimiento": "HRA" 
   },
   {
     "correlativoSolicitud": 14,
@@ -17,7 +18,8 @@
     "motivo": "Ya me atendí",
     "detallesMotivo": "",
     "respondida": true,
-    "enviadaHospital": false
+    "enviadaHospital": false,
+    "codigoEstablecimiento": "OTRO" 
   },
   {
     "correlativoSolicitud": 15,
@@ -27,7 +29,8 @@
     "motivo": "Quiero cambio de profesional",
     "detallesMotivo": "",
     "respondida": true,
-    "enviadaHospital": false
+    "enviadaHospital": false,
+    "codigoEstablecimiento": "HRA" 
   },
   {
     "correlativoSolicitud": 16,
@@ -37,6 +40,7 @@
     "motivo": "Ya me atendí",
     "detallesMotivo": "",
     "respondida": true,
-    "enviadaHospital": false
+    "enviadaHospital": false,
+    "codigoEstablecimiento": "OTRO" 
   }
 ]

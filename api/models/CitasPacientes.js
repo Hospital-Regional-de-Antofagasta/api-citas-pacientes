@@ -23,6 +23,7 @@ const CitasPacientes = mongoose.model(
       default: false,
     },
     blockedAt: Date,
+    codigoEstablecimiento: String,
   })
 );
 module.exports = CitasPacientes;

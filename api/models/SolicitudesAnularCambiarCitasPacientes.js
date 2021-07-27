@@ -25,6 +25,7 @@ const SolicitudesAnularCambiarCitasPacientes = mongoose.model(
         type: Boolean,
         default: false,
       },
+      codigoEstablecimiento: String,
     },
     { timestamps: true }
   ),

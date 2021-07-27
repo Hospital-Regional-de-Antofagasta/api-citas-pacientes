@@ -11,7 +11,8 @@
         "numeroPaciente": 1,
         "codigoAmbito": "01",
         "tipoCita": "C",
-        "alta": false     
+        "alta": false,
+        "codigoEstablecimiento": "HRA"     
     },
     {
         "correlativoCita":12,
@@ -25,7 +26,8 @@
         "numeroPaciente": 1,
         "codigoAmbito": "01",
         "tipoCita": "C",
-        "alta": false     
+        "alta": false,
+        "codigoEstablecimiento": "HRA"     
     },
     {
         "correlativoCita":13,
@@ -39,7 +41,8 @@
         "numeroPaciente": 1,
         "codigoAmbito": "04",
         "tipoCita": "C",
-        "alta": false         
+        "alta": false,
+        "codigoEstablecimiento": "HRA"         
     },
     {
         "correlativoCita":14,
@@ -53,7 +56,8 @@
         "numeroPaciente": 1,
         "codigoAmbito": "06",
         "tipoCita": "C",
-        "alta": false        
+        "alta": false,
+        "codigoEstablecimiento": "HRA"        
     },
     {
         "correlativoCita":15,
@@ -67,7 +71,8 @@
         "numeroPaciente": 1,
         "codigoAmbito": "06",
         "tipoCita": "C",
-        "alta": false        
+        "alta": false,
+        "codigoEstablecimiento": "HRA"        
     },
     {
         "correlativoCita":17,
@@ -81,7 +86,8 @@
         "numeroPaciente": 1,
         "codigoAmbito": "01",
         "tipoCita": "C",
-        "alta": false      
+        "alta": false,
+        "codigoEstablecimiento": "OTRO"      
     },
     {
         "correlativoCita":18,
@@ -95,7 +101,8 @@
         "numeroPaciente": 1,
         "codigoAmbito": "01",
         "tipoCita": "C",
-        "alta": false      
+        "alta": false,
+        "codigoEstablecimiento": "HRA"      
     },
     {
         "correlativoCita":19,
@@ -109,7 +116,8 @@
         "numeroPaciente": 1,
         "codigoAmbito": "01",
         "tipoCita": "C",
-        "alta": false       
+        "alta": false,
+        "codigoEstablecimiento": "HRA"       
     },
     {
         "correlativoCita":20,
@@ -123,7 +131,8 @@
         "numeroPaciente": 1,
         "codigoAmbito": "01",
         "tipoCita": "C",
-        "alta": false       
+        "alta": false,
+        "codigoEstablecimiento": "HRA"       
     },
     {
         "correlativoCita":21,
@@ -137,7 +146,8 @@
         "numeroPaciente": 1,
         "codigoAmbito": "04",
         "tipoCita": "C",
-        "alta": false       
+        "alta": false,
+        "codigoEstablecimiento": "HRA"       
     },
     {
         "correlativoCita":24,
@@ -151,7 +161,8 @@
         "numeroPaciente": 1,
         "codigoAmbito": "01",
         "tipoCita": "C",
-        "alta": false      
+        "alta": false,
+        "codigoEstablecimiento": "OTRO"      
      },
      {
         "correlativoCita":25,
@@ -165,7 +176,8 @@
         "numeroPaciente": 1,
         "codigoAmbito": "01",
         "tipoCita": "C",
-        "alta": true     
+        "alta": true,
+        "codigoEstablecimiento": "HRA"     
     },
     {
         "correlativoCita":26,
@@ -179,7 +191,8 @@
         "numeroPaciente": 1,
         "codigoAmbito": "01",
         "tipoCita": "C",
-        "alta": false         
+        "alta": false,
+        "codigoEstablecimiento": "HRA"         
     },
     {
         "correlativoCita":27,
@@ -193,7 +206,8 @@
         "numeroPaciente": 1,
         "codigoAmbito": "01",
         "tipoCita": "C",
-        "alta": false        
+        "alta": false,
+        "codigoEstablecimiento": "OTRO"        
     },
     {
         "correlativoCita":28,
@@ -207,7 +221,8 @@
         "numeroPaciente": 1,
         "codigoAmbito": "01",
         "tipoCita": "C",
-        "alta": false      
+        "alta": false,
+        "codigoEstablecimiento": "HRA"      
     },
     {
         "correlativoCita":29,
@@ -221,6 +236,7 @@
         "numeroPaciente": 1,
         "codigoAmbito": "01",
         "tipoCita": "C",
-        "alta": false      
+        "alta": false,
+        "codigoEstablecimiento": "HRA"      
     }
 ]
