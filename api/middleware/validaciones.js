@@ -24,6 +24,14 @@ exports.validarAlta = async (req, res, next) => {
     }
     next();
   } catch (error) {
+    if (process.env.NODE_ENV === "dev")
+      return res.status(500).send({
+        respuesta: await getMensajes("serverError"),
+        detalles_error: {
+          nombre: error.name,
+          mensaje: error.message,
+        },
+      });
     res.status(500).send({ respuesta: await getMensajes("serverError") });
   }
 };
@@ -60,6 +68,14 @@ exports.validarBodySolicitudAnularCambiarHoraMedica = async (
     }
     next();
   } catch (error) {
+    if (process.env.NODE_ENV === "dev")
+      return res.status(500).send({
+        respuesta: await getMensajes("serverError"),
+        detalles_error: {
+          nombre: error.name,
+          mensaje: error.message,
+        },
+      });
     res.status(500).send({ respuesta: await getMensajes("serverError") });
   }
 };
@@ -86,6 +102,14 @@ exports.validarExistenciaSolicitudAnularCambiarHoraMedica = async (
     }
     next();
   } catch (error) {
+    if (process.env.NODE_ENV === "dev")
+      return res.status(500).send({
+        respuesta: await getMensajes("serverError"),
+        detalles_error: {
+          nombre: error.name,
+          mensaje: error.message,
+        },
+      });
     res.status(500).send({ respuesta: await getMensajes("serverError") });
   }
 };
@@ -129,6 +153,14 @@ exports.validarFechaSolicitudAnularCambiarHoraMedica = async (
     }
     next();
   } catch (error) {
+    if (process.env.NODE_ENV === "dev")
+      return res.status(500).send({
+        respuesta: await getMensajes("serverError"),
+        detalles_error: {
+          nombre: error.name,
+          mensaje: error.message,
+        },
+      });
     res.status(500).send({ respuesta: await getMensajes("serverError") });
   }
 };
