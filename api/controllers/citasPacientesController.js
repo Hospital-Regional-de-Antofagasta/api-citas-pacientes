@@ -16,6 +16,14 @@ exports.getCita = async (req, res) => {
     }).exec();
     res.status(200).send(cita);
   } catch (error) {
+    if (process.env.NODE_ENV === "dev")
+      return res.status(500).send({
+        respuesta: await getMensajes("serverError"),
+        detalles_error: {
+          nombre: error.name,
+          mensaje: error.message,
+        },
+      });
     res.status(500).send({ respuesta: await getMensajes("serverError") });
   }
 };
@@ -97,6 +105,14 @@ const citasProximas = async (req, res, codigoAmbito) => {
     ]);
     res.status(200).send(arregloDeArreglosCitasPaciente);
   } catch (error) {
+    if (process.env.NODE_ENV === "dev")
+      return res.status(500).send({
+        respuesta: await getMensajes("serverError"),
+        detalles_error: {
+          nombre: error.name,
+          mensaje: error.message,
+        },
+      });
     res.status(500).send({ respuesta: await getMensajes("serverError") });
   }
 };
@@ -118,6 +134,14 @@ const citasHistorico = async (req, res, codigoAmbito) => {
       .exec();
     res.status(200).send(arregloCitasPaciente);
   } catch (error) {
+    if (process.env.NODE_ENV === "dev")
+      return res.status(500).send({
+        respuesta: await getMensajes("serverError"),
+        detalles_error: {
+          nombre: error.name,
+          mensaje: error.message,
+        },
+      });
     res.status(500).send({ respuesta: await getMensajes("serverError") });
   }
 };

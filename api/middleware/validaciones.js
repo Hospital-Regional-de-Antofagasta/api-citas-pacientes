@@ -19,7 +19,7 @@ exports.validarBodySolicitudAnularCambiarHoraMedica = async (
       typeof solicitud.correlativoCita !== "number" ||
       typeof solicitud.motivo !== "number" ||
       typeof solicitud.detallesMotivo !== "string" ||
-      typeof solicitud.idCita !== "string" 
+      typeof solicitud.idCita !== "string"
     ) {
       return res.status(400).send({
         respuesta: await getMensajes("badRequest"),
@@ -38,6 +38,14 @@ exports.validarBodySolicitudAnularCambiarHoraMedica = async (
     }
     next();
   } catch (error) {
+    if (process.env.NODE_ENV === "dev")
+      return res.status(500).send({
+        respuesta: await getMensajes("serverError"),
+        detalles_error: {
+          nombre: error.name,
+          mensaje: error.message,
+        },
+      });
     res.status(500).send({ respuesta: await getMensajes("serverError") });
   }
 };
@@ -58,7 +66,7 @@ exports.validarFechaSolicitudAnularCambiarHoraMedica = async (
         respuesta: await getMensajes("badRequest"),
       });
     }
-    req.cita = cita
+    req.cita = cita;
     const fechaActual = moment().startOf("day");
     const fechaCita = moment(cita.fechaCitacion).startOf("day");
     const diferencia = momentBussinessDays(
@@ -80,21 +88,26 @@ exports.validarFechaSolicitudAnularCambiarHoraMedica = async (
     }
     next();
   } catch (error) {
+    if (process.env.NODE_ENV === "dev")
+      return res.status(500).send({
+        respuesta: await getMensajes("serverError"),
+        detalles_error: {
+          nombre: error.name,
+          mensaje: error.message,
+        },
+      });
     res.status(500).send({ respuesta: await getMensajes("serverError") });
   }
 };
 
-exports.validarSinSolicitudAnularCambiarHoraMedica = async (
-  req,
-  res,
-  next
-) => {
+exports.validarSinSolicitudAnularCambiarHoraMedica = async (req, res, next) => {
   try {
-    const solicitudExistente = await SolicitudesAnularCambiarCitasPacientes.findOne({
-      numeroPaciente: req.cita.numeroPaciente,
-      correlativoCita: req.cita.correlativoCita,
-      tipoSolicitud: { $in: ["ANULAR", "CAMBIAR"] },
-    }).exec();
+    const solicitudExistente =
+      await SolicitudesAnularCambiarCitasPacientes.findOne({
+        numeroPaciente: req.cita.numeroPaciente,
+        correlativoCita: req.cita.correlativoCita,
+        tipoSolicitud: { $in: ["ANULAR", "CAMBIAR"] },
+      }).exec();
     if (solicitudExistente) {
       return res.status(400).send({
         respuesta: await getMensajes("badRequest"),

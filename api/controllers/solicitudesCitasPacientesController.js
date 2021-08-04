@@ -18,6 +18,14 @@ exports.getMotivosSolicitudesCitas = async (req, res) => {
       .exec();
     res.status(200).send(motivos);
   } catch (error) {
+    if (process.env.NODE_ENV === "dev")
+      return res.status(500).send({
+        respuesta: await getMensajes("serverError"),
+        detalles_error: {
+          nombre: error.name,
+          mensaje: error.message,
+        },
+      });
     res.status(500).send({ respuesta: await getMensajes("serverError") });
   }
 };
@@ -46,6 +54,14 @@ exports.checkExisteSolicitudCambiarOAnularHoraMedica = async (req, res) => {
       res.status(200).send({ existeSolicitud: false });
     }
   } catch (error) {
+    if (process.env.NODE_ENV === "dev")
+      return res.status(500).send({
+        respuesta: await getMensajes("serverError"),
+        detalles_error: {
+          nombre: error.name,
+          mensaje: error.message,
+        },
+      });
     res.status(500).send({ respuesta: await getMensajes("serverError") });
   }
 };
@@ -58,6 +74,14 @@ exports.createSolicitudCambiarOAnularHoraMedica = async (req, res) => {
     await SolicitudesAnularCambiarCitasPacientes.create(solicitud);
     res.status(201).send({ respuesta: await getMensajes("solicitudCreada") });
   } catch (error) {
+    if (process.env.NODE_ENV === "dev")
+      return res.status(500).send({
+        respuesta: await getMensajes("serverError"),
+        detalles_error: {
+          nombre: error.name,
+          mensaje: error.message,
+        },
+      });
     res.status(500).send({ respuesta: await getMensajes("serverError") });
   }
 };
