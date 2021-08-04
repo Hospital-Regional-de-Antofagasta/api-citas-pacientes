@@ -6,42 +6,20 @@ const MotivosSolicitudesCitas = require("../models/MotivosSolicitudesCitas");
 
 const { getMensajes } = require("../config");
 
-exports.validarAlta = async (req, res, next) => {
-  try {
-    const numeroPaciente = req.numeroPaciente;
-    const solicitud = req.body;
-    if (solicitud.tipoSolicitud === "AGENDAR") {
-      const cita = await CitasPacientes.findOne({
-        numeroPaciente,
-        codigoServicio: solicitud.codigoServicio,
-        codigoProfesional: solicitud.codigoProfesional,
-        codigoAmbito: "01",
-      }).exec();
-      if (!cita || cita.alta === true)
-        return res
-          .status(400)
-          .send({ respuesta: await getMensajes("badRequest") });
-    }
-    next();
-  } catch (error) {
-    res.status(500).send({ respuesta: await getMensajes("serverError") });
-  }
-};
-
 exports.validarBodySolicitudAnularCambiarHoraMedica = async (
   req,
   res,
   next
 ) => {
   try {
-    req.body.numeroPaciente = req.numeroPaciente;
     const solicitud = req.body;
     if (
       (solicitud.tipoSolicitud !== "ANULAR" &&
         solicitud.tipoSolicitud !== "CAMBIAR") ||
       typeof solicitud.correlativoCita !== "number" ||
       typeof solicitud.motivo !== "number" ||
-      typeof solicitud.detallesMotivo !== "string"
+      typeof solicitud.detallesMotivo !== "string" ||
+      typeof solicitud.idCita !== "string" 
     ) {
       return res.status(400).send({
         respuesta: await getMensajes("badRequest"),
@@ -64,57 +42,30 @@ exports.validarBodySolicitudAnularCambiarHoraMedica = async (
   }
 };
 
-exports.validarExistenciaSolicitudAnularCambiarHoraMedica = async (
-  req,
-  res,
-  next
-) => {
-  try {
-    const numeroPaciente = req.numeroPaciente;
-    const solicitud = req.body;
-    const solicitudExistente =
-      await SolicitudesAnularCambiarCitasPacientes.findOne({
-        numeroPaciente,
-        correlativoCita: solicitud.correlativoCita,
-        tipoSolicitud: { $in: ["ANULAR", "CAMBIAR"] },
-      }).exec();
-
-    if (solicitudExistente) {
-      return res.status(400).send({
-        respuesta: await getMensajes("badRequest"),
-      });
-    }
-    next();
-  } catch (error) {
-    res.status(500).send({ respuesta: await getMensajes("serverError") });
-  }
-};
-
 exports.validarFechaSolicitudAnularCambiarHoraMedica = async (
   req,
   res,
   next
 ) => {
   try {
-    const numeroPaciente = req.numeroPaciente;
-    const solicitud = req.body;
-    const cita = await CitasPacientes.findOne({
-      numeroPaciente,
-      correlativoCita: solicitud.correlativoCita,
-      codigoAmbito: "01", //Horas médicas
-    }).exec();
+    const cita = await CitasPacientes.findById(req.body.idCita)
+      .select(
+        "numeroPaciente.numero numeroPaciente.codigoEstablecimiento numeroPaciente.nombreEstablecimiento correlativoCita fechaCitacion"
+      )
+      .exec();
     if (!cita) {
       return res.status(400).send({
         respuesta: await getMensajes("badRequest"),
       });
     }
+    req.cita = cita
     const fechaActual = moment().startOf("day");
     const fechaCita = moment(cita.fechaCitacion).startOf("day");
     const diferencia = momentBussinessDays(
       fechaActual,
       "MM-DD-YYYY"
     ).businessDiff(momentBussinessDays(fechaCita, "MM-DD-YYYY"));
-    if (solicitud.tipoSolicitud === "CAMBIAR") {
+    if (req.body.tipoSolicitud === "CAMBIAR") {
       if (diferencia < 3) {
         return res.status(400).send({
           respuesta: await getMensajes("badRequest"),
@@ -126,6 +77,28 @@ exports.validarFechaSolicitudAnularCambiarHoraMedica = async (
           respuesta: await getMensajes("badRequest"),
         });
       }
+    }
+    next();
+  } catch (error) {
+    res.status(500).send({ respuesta: await getMensajes("serverError") });
+  }
+};
+
+exports.validarSinSolicitudAnularCambiarHoraMedica = async (
+  req,
+  res,
+  next
+) => {
+  try {
+    const solicitudExistente = await SolicitudesAnularCambiarCitasPacientes.findOne({
+      numeroPaciente: req.cita.numeroPaciente,
+      correlativoCita: req.cita.correlativoCita,
+      tipoSolicitud: { $in: ["ANULAR", "CAMBIAR"] },
+    }).exec();
+    if (solicitudExistente) {
+      return res.status(400).send({
+        respuesta: await getMensajes("badRequest"),
+      });
     }
     next();
   } catch (error) {

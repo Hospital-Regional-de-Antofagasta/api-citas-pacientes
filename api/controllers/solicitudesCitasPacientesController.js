@@ -1,8 +1,8 @@
-
 const SolicitudesAnularCambiarCitasPacientes = require("../models/SolicitudesAnularCambiarCitasPacientes");
-const MotivosSolicitudesCitas = require('../models/MotivosSolicitudesCitas')
+const MotivosSolicitudesCitas = require("../models/MotivosSolicitudesCitas");
 
 const { getMensajes } = require("../config");
+const CitasPacientes = require("../models/CitasPacientes");
 
 exports.getMotivosSolicitudesCitas = async (req, res) => {
   try {
@@ -22,11 +22,19 @@ exports.getMotivosSolicitudesCitas = async (req, res) => {
   }
 };
 
-exports.getExisteSolicitudCambiarOAnularHoraMedica = async (req, res) => {
+exports.checkExisteSolicitudCambiarOAnularHoraMedica = async (req, res) => {
   try {
+    const cita = await CitasPacientes.findById(req.params.idCita)
+      .select(
+        "numeroPaciente.numero numeroPaciente.codigoEstablecimiento numeroPaciente.nombreEstablecimiento correlativoCita"
+      )
+      .exec();
+      if (!cita) {
+        return res.status(400).send({ respuesta: await getMensajes("badRequest") });
+      }
     const solicitud = await SolicitudesAnularCambiarCitasPacientes.findOne({
-      numeroPaciente: req.numeroPaciente,
-      correlativoCita: req.params.correlativoCita,
+      numeroPaciente: cita.numeroPaciente,
+      correlativoCita: cita.correlativoCita,
       tipoSolicitud: { $in: ["ANULAR", "CAMBIAR"] },
     }).exec();
     if (solicitud) {
@@ -42,10 +50,11 @@ exports.getExisteSolicitudCambiarOAnularHoraMedica = async (req, res) => {
   }
 };
 
-exports.postSolicitudCambiarOAnularHoraMedica = async (req, res) => {
+exports.createSolicitudCambiarOAnularHoraMedica = async (req, res) => {
   try {
-    req.body.numeroPaciente = req.numeroPaciente;
+    const cita = req.cita
     const solicitud = req.body;
+    solicitud.numeroPaciente = cita.numeroPaciente;
     await SolicitudesAnularCambiarCitasPacientes.create(solicitud);
     res.status(201).send({ respuesta: await getMensajes("solicitudCreada") });
   } catch (error) {

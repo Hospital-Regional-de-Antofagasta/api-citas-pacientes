@@ -1,41 +1,41 @@
 const express = require("express");
 const citasPacientesController = require("../controllers/citasPacientesController");
-const estaAutenticado = require("../middleware/auth");
+const isAuthenticated = require("../middleware/auth");
 const router = express.Router();
 
 router.get(
   "/horas-medicas",
-  estaAutenticado,
+  isAuthenticated,
   citasPacientesController.getHorasMedicasPaciente
 );
 
 router.get(
   "/horas-medicas/proximas/:timeZone",
-  estaAutenticado,
+  isAuthenticated,
   citasPacientesController.getHorasMedicasPacienteProximas
 );
 
 router.get(
   "/horas-medicas/historico/:timeZone",
-  estaAutenticado,
+  isAuthenticated,
   citasPacientesController.getHorasMedicasPacienteHistorico
 );
 
 router.get(
   "/horas-examenes",
-  estaAutenticado,
+  isAuthenticated,
   citasPacientesController.getHorasExamenesPaciente
 );
 
 router.get(
   "/horas-examenes/proximas/:timeZone",
-  estaAutenticado,
+  isAuthenticated,
   citasPacientesController.getHorasExamenesPacienteProximas
 );
 
 router.get(
   "/horas-examenes/historico/:timeZone",
-  estaAutenticado,
+  isAuthenticated,
   citasPacientesController.getHorasExamenesPacienteHistorico
 );
 

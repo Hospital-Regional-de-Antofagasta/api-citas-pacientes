@@ -1,33 +1,33 @@
 const express = require("express");
 const solicitudesCitasPacientesController = require("../controllers/solicitudesCitasPacientesController");
-const estaAutenticado = require("../middleware/auth");
+const isAuthenticated = require("../middleware/auth");
 const {
   validarFechaSolicitudAnularCambiarHoraMedica,
   validarBodySolicitudAnularCambiarHoraMedica,
-  validarExistenciaSolicitudAnularCambiarHoraMedica,
+  validarSinSolicitudAnularCambiarHoraMedica,
 } = require("../middleware/validaciones");
 
 const router = express.Router();
 
 router.get(
   "/motivos/:tipoSolicitud",
-  estaAutenticado,
+  isAuthenticated,
   solicitudesCitasPacientesController.getMotivosSolicitudesCitas
 );
 
 router.post(
   "/horas-medicas/anular-cambiar",
-  estaAutenticado,
+  isAuthenticated,
   validarBodySolicitudAnularCambiarHoraMedica,
-  validarExistenciaSolicitudAnularCambiarHoraMedica,
   validarFechaSolicitudAnularCambiarHoraMedica,
-  solicitudesCitasPacientesController.postSolicitudCambiarOAnularHoraMedica
+  validarSinSolicitudAnularCambiarHoraMedica,
+  solicitudesCitasPacientesController.createSolicitudCambiarOAnularHoraMedica
 );
 
 router.get(
-  "/horas-medicas/anular-cambiar/existe/:correlativoCita",
-  estaAutenticado,
-  solicitudesCitasPacientesController.getExisteSolicitudCambiarOAnularHoraMedica
+  "/horas-medicas/anular-cambiar/existe/:idCita",
+  isAuthenticated,
+  solicitudesCitasPacientesController.checkExisteSolicitudCambiarOAnularHoraMedica
 );
 
 module.exports = router;

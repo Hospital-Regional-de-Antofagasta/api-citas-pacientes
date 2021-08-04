@@ -3,7 +3,7 @@ const { getMensajes } = require("../config");
 
 const secreto = process.env.JWT_SECRET;
 
-const estaAutenticado = async (req, res, next) => {
+const isAuthenticated = async (req, res, next) => {
   const token = req.headers.authorization;
   if (!token) {
     return res
@@ -16,11 +16,11 @@ const estaAutenticado = async (req, res, next) => {
         .status(401)
         .send({ respuesta: await getMensajes("forbiddenAccess") });
     }
-    const { _id, numeroPaciente } = decoded;
+    const { _id, numerosPaciente } = decoded;
     req.idPaciente = _id;
-    req.numeroPaciente = numeroPaciente;
+    req.numerosPaciente = numerosPaciente;
     next();
   });
 };
 
-module.exports = estaAutenticado;
+module.exports = isAuthenticated;

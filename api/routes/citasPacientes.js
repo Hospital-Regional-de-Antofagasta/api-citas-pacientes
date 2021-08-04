@@ -1,11 +1,11 @@
 const express = require("express");
 const citasPacientesController = require("../controllers/citasPacientesController");
-const estaAutenticado = require("../middleware/auth");
+const isAuthenticated = require("../middleware/auth");
 const router = express.Router();
 
 router.get(
   "/:correlativoCita",
-  estaAutenticado,
+  isAuthenticated,
   citasPacientesController.getCita
 );
 

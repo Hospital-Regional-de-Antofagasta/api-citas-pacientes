@@ -1,5 +1,6 @@
 [
     {
+        "_id":"000000000011",
         "correlativoCita":11,
         "nombreLugar":"HORAS IMAGENOLOGIA",
         "codigoServicio":"3000-4",
@@ -8,13 +9,19 @@
         "nombreProfesional":"TECNOLOGO MEDICO IMAGENOLOGIA",
         "fechaCitacion":"2019-01-02T14:21:01.643Z",
         "horaCitacion":"08:30",
-        "numeroPaciente": 1,
+        "numeroPaciente": 
+            {
+                "numero": 1,
+                "codigoEstablecimiento": "E01",
+                "nombreEstablecimiento": "Hospital Regional de Antofagasta"
+            },
         "codigoAmbito": "01",
         "tipoCita": "C",
         "alta": false,
         "codigoEstablecimiento": "HRA"     
     },
     {
+        "_id":"000000000012",
         "correlativoCita":12,
         "nombreLugar":"HORAS IMAGENOLOGIA",
         "codigoServicio":"3000-4",
@@ -23,13 +30,19 @@
         "nombreProfesional":"TECNOLOGO MEDICO IMAGENOLOGIA",
         "fechaCitacion":"2019-01-02T14:21:01.643Z",
         "horaCitacion":"08:30",
-        "numeroPaciente": 1,
+        "numeroPaciente": 
+            {
+                "numero": 1,
+                "codigoEstablecimiento": "E01",
+                "nombreEstablecimiento": "Hospital Regional de Antofagasta"
+            },
         "codigoAmbito": "01",
         "tipoCita": "C",
         "alta": false,
         "codigoEstablecimiento": "HRA"     
     },
     {
+        "_id":"000000000013",
         "correlativoCita":13,
         "nombreLugar":"HORAS IMAGENOLOGIA",
         "codigoServicio":"3000-4",
@@ -38,13 +51,19 @@
         "nombreProfesional":"TECNOLOGO MEDICO IMAGENOLOGIA",
         "fechaCitacion":"2021-01-02T14:21:01.643Z",
         "horaCitacion":"08:30",
-        "numeroPaciente": 1,
+        "numeroPaciente": 
+            {
+                "numero": 1,
+                "codigoEstablecimiento": "E01",
+                "nombreEstablecimiento": "Hospital Regional de Antofagasta"
+            },
         "codigoAmbito": "04",
         "tipoCita": "C",
         "alta": false,
         "codigoEstablecimiento": "HRA"         
     },
     {
+        "_id":"000000000014",
         "correlativoCita":14,
         "nombreLugar":"HORAS IMAGENOLOGIA",
         "codigoServicio":"3000-4",
@@ -53,13 +72,19 @@
         "nombreProfesional":"TECNOLOGO MEDICO IMAGENOLOGIA",
         "fechaCitacion":"2021-01-02T14:21:01.643Z",
         "horaCitacion":"08:30",
-        "numeroPaciente": 1,
+        "numeroPaciente": 
+            {
+                "numero": 1,
+                "codigoEstablecimiento": "E01",
+                "nombreEstablecimiento": "Hospital Regional de Antofagasta"
+            },
         "codigoAmbito": "06",
         "tipoCita": "C",
         "alta": false,
         "codigoEstablecimiento": "HRA"        
     },
     {
+        "_id":"000000000015",
         "correlativoCita":15,
         "nombreLugar":"HORAS IMAGENOLOGIA",
         "codigoServicio":"3000-4",
@@ -68,13 +93,19 @@
         "nombreProfesional":"TECNOLOGO MEDICO IMAGENOLOGIA",
         "fechaCitacion":"2021-01-02T14:21:01.643Z",
         "horaCitacion":"08:30",
-        "numeroPaciente": 1,
+        "numeroPaciente": 
+            {
+                "numero": 1,
+                "codigoEstablecimiento": "E01",
+                "nombreEstablecimiento": "Hospital Regional de Antofagasta"
+            },
         "codigoAmbito": "06",
         "tipoCita": "C",
         "alta": false,
         "codigoEstablecimiento": "HRA"        
     },
     {
+        "_id":"000000000017",
         "correlativoCita":17,
         "nombreLugar":"HORAS IMAGENOLOGIA",
         "codigoServicio":"3000-4",
@@ -83,13 +114,19 @@
         "nombreProfesional":"TECNOLOGO MEDICO IMAGENOLOGIA",
         "fechaCitacion":"2021-04-19T14:21:01.643Z",
         "horaCitacion":"10:00",
-        "numeroPaciente": 1,
+        "numeroPaciente": 
+            {
+                "numero": 1,
+                "codigoEstablecimiento": "E01",
+                "nombreEstablecimiento": "Hospital Regional de Antofagasta"
+            },
         "codigoAmbito": "01",
         "tipoCita": "C",
         "alta": false,
         "codigoEstablecimiento": "OTRO"      
     },
     {
+        "_id":"000000000018",
         "correlativoCita":18,
         "nombreLugar":"URGENCIA",
         "codigoServicio":"3000-4",
@@ -98,13 +135,19 @@
         "nombreProfesional":"JOSE EDUARDO VERGARA LLANOS",
         "fechaCitacion":"2021-04-19T19:25:00.000Z",
         "horaCitacion":"9:00",
-        "numeroPaciente": 1,
+        "numeroPaciente": 
+            {
+                "numero": 1,
+                "codigoEstablecimiento": "E01",
+                "nombreEstablecimiento": "Hospital Regional de Antofagasta"
+            },
         "codigoAmbito": "01",
         "tipoCita": "C",
         "alta": false,
         "codigoEstablecimiento": "HRA"      
     },
     {
+        "_id":"000000000019",
         "correlativoCita":19,
         "nombreLugar":"URGENCIA",
         "codigoServicio":"3000-4",
@@ -113,13 +156,19 @@
         "nombreProfesional":"TECNOLOGO MEDICO IMAGENOLOGIA",
         "fechaCitacion":"2021-05-19T19:25:00.000Z",
         "horaCitacion":"9:00",
-        "numeroPaciente": 1,
+        "numeroPaciente": 
+            {
+                "numero": 1,
+                "codigoEstablecimiento": "E01",
+                "nombreEstablecimiento": "Hospital Regional de Antofagasta"
+            },
         "codigoAmbito": "01",
         "tipoCita": "C",
         "alta": false,
         "codigoEstablecimiento": "HRA"       
     },
     {
+        "_id":"000000000020",
         "correlativoCita":20,
         "nombreLugar":"URGENCIA",
         "codigoServicio":"3000-4",
@@ -128,13 +177,19 @@
         "nombreProfesional":"TECNOLOGO MEDICO IMAGENOLOGIA",
         "fechaCitacion":"2021-05-19T19:25:00.000Z",
         "horaCitacion":"9:00",
-        "numeroPaciente": 1,
+        "numeroPaciente": 
+            {
+                "numero": 1,
+                "codigoEstablecimiento": "E01",
+                "nombreEstablecimiento": "Hospital Regional de Antofagasta"
+            },
         "codigoAmbito": "01",
         "tipoCita": "C",
         "alta": false,
         "codigoEstablecimiento": "HRA"       
     },
     {
+        "_id":"000000000021",
         "correlativoCita":21,
         "nombreLugar":"URGENCIA",        
         "codigoServicio":"3000-4",
@@ -143,13 +198,19 @@
         "nombreProfesional":"TECNOLOGO MEDICO IMAGENOLOGIA",
         "fechaCitacion":"2021-05-19T19:25:00.000Z",
         "horaCitacion":"9:00",
-        "numeroPaciente": 1,
+        "numeroPaciente": 
+            {
+                "numero": 1,
+                "codigoEstablecimiento": "E01",
+                "nombreEstablecimiento": "Hospital Regional de Antofagasta"
+            },
         "codigoAmbito": "04",
         "tipoCita": "C",
         "alta": false,
         "codigoEstablecimiento": "HRA"       
     },
     {
+        "_id":"000000000024",
         "correlativoCita":24,
         "nombreLugar":"URGENCIA",
         "codigoServicio":"3000-4",
@@ -158,13 +219,19 @@
         "nombreProfesional":"JOSE EDUARDO VERGARA LLANOS",
         "fechaCitacion":"2021-05-20T14:21:01.643Z",
         "horaCitacion":"9:00",
-        "numeroPaciente": 1,
+        "numeroPaciente": 
+            {
+                "numero": 1,
+                "codigoEstablecimiento": "E01",
+                "nombreEstablecimiento": "Hospital Regional de Antofagasta"
+            },
         "codigoAmbito": "01",
         "tipoCita": "C",
         "alta": false,
         "codigoEstablecimiento": "OTRO"      
      },
      {
+        "_id":"000000000025",
         "correlativoCita":25,
         "nombreLugar":"HORAS IMAGENOLOGIA",
         "codigoServicio":"3000-4",
@@ -173,13 +240,19 @@
         "nombreProfesional":"TECNOLOGO MEDICO IMAGENOLOGIA",
         "fechaCitacion":"2021-01-02T14:21:01.643Z",
         "horaCitacion":"08:30",
-        "numeroPaciente": 1,
+        "numeroPaciente": 
+            {
+                "numero": 1,
+                "codigoEstablecimiento": "E01",
+                "nombreEstablecimiento": "Hospital Regional de Antofagasta"
+            },
         "codigoAmbito": "01",
         "tipoCita": "C",
         "alta": true,
         "codigoEstablecimiento": "HRA"     
     },
     {
+        "_id":"000000000026",
         "correlativoCita":26,
         "nombreLugar":"HORAS IMAGENOLOGIA",
         "codigoServicio":"3000-6",
@@ -188,13 +261,19 @@
         "nombreProfesional":"TECNOLOGO MEDICO IMAGENOLOGIA",
         "fechaCitacion":"2021-01-02T14:21:01.643Z",
         "horaCitacion":"08:30",
-        "numeroPaciente": 1,
+        "numeroPaciente": 
+            {
+                "numero": 1,
+                "codigoEstablecimiento": "E01",
+                "nombreEstablecimiento": "Hospital Regional de Antofagasta"
+            },
         "codigoAmbito": "01",
         "tipoCita": "C",
         "alta": false,
         "codigoEstablecimiento": "HRA"         
     },
     {
+        "_id":"000000000027",
         "correlativoCita":27,
         "nombreLugar":"HORAS IMAGENOLOGIA",
         "codigoServicio":"3000-7",
@@ -203,13 +282,19 @@
         "nombreProfesional":"TECNOLOGO MEDICO IMAGENOLOGIA",
         "fechaCitacion":"2021-01-02T14:21:01.643Z",
         "horaCitacion":"08:30",
-        "numeroPaciente": 1,
+        "numeroPaciente": 
+            {
+                "numero": 1,
+                "codigoEstablecimiento": "E01",
+                "nombreEstablecimiento": "Hospital Regional de Antofagasta"
+            },
         "codigoAmbito": "01",
         "tipoCita": "C",
         "alta": false,
         "codigoEstablecimiento": "OTRO"        
     },
     {
+        "_id":"000000000028",
         "correlativoCita":28,
         "nombreLugar":"HORAS IMAGENOLOGIA",
         "codigoServicio":"3000-8",
@@ -218,13 +303,19 @@
         "nombreProfesional":"TECNOLOGO MEDICO IMAGENOLOGIA",
         "fechaCitacion":"2021-04-19T14:21:01.643Z",
         "horaCitacion":"10:00",
-        "numeroPaciente": 1,
+        "numeroPaciente": 
+            {
+                "numero": 1,
+                "codigoEstablecimiento": "E01",
+                "nombreEstablecimiento": "Hospital Regional de Antofagasta"
+            },
         "codigoAmbito": "01",
         "tipoCita": "C",
         "alta": false,
         "codigoEstablecimiento": "HRA"      
     },
     {
+        "_id":"000000000029",
         "correlativoCita":29,
         "nombreLugar":"URGENCIA",
         "codigoServicio":"3000-9",
@@ -233,7 +324,12 @@
         "nombreProfesional":"JOSE EDUARDO VERGARA LLANOS",
         "fechaCitacion":"2021-04-19T19:25:00.000Z",
         "horaCitacion":"9:00",
-        "numeroPaciente": 1,
+        "numeroPaciente": 
+            {
+                "numero": 1,
+                "codigoEstablecimiento": "E01",
+                "nombreEstablecimiento": "Hospital Regional de Antofagasta"
+            },
         "codigoAmbito": "01",
         "tipoCita": "C",
         "alta": false,

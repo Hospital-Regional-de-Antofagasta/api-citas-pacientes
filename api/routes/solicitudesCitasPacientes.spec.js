@@ -9,7 +9,6 @@ const solicitudesAnularCambiarCitasPacientesSeeds = require("../testSeeds/solici
 const motivosSolicitudesCitas = require("../testSeeds/motivosSolicitudesCitasSeeds.json");
 const { cargarFeriados } = require("../config");
 
-
 const CitasPacientes = require("../models/CitasPacientes");
 const DiasFeriados = require("../models/DiasFeriados");
 const SolicitudesAnularCambiarCitasPacientes = require("../models/SolicitudesAnularCambiarCitasPacientes");
@@ -27,10 +26,13 @@ beforeAll(async (done) => {
   //Cerrar la conexión que se crea en el index.
   await mongoose.disconnect();
   //Conectar a la base de datos de prueba.
-  await mongoose.connect(`${process.env.MONGO_URI_TEST}solicitudes_citas_pacientes_test`, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  });
+  await mongoose.connect(
+    `${process.env.MONGO_URI_TEST}solicitudes_citas_pacientes_test`,
+    {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    }
+  );
   //Cargar los seeds a la base de datos.
   await CitasPacientes.create(citasPacientesSeeds);
   await DiasFeriados.create(diasFeriadosSeeds);
@@ -227,20 +229,54 @@ describe("Endpoints", () => {
       done();
     });
     it("Intenta obtener los motivos de un tipo de solicitud que no existe con token", async (done) => {
-      token = jwt.sign({ numeroPaciente: 1 }, secreto);
+      token = jwt.sign(
+        {
+          _id: "000000000000",
+          numerosPaciente: [
+            {
+              numero: 1,
+              codigoEstablecimiento: "E01",
+              nombreEstablecimiento: "Hospital Regional de Antofagasta",
+            },
+            {
+              numero: 5,
+              codigoEstablecimiento: "E02",
+              nombreEstablecimiento: "Hospital de Calama",
+            },
+          ],
+        },
+        secreto
+      );
       const respuesta = await request
         .get("/v1/citas-pacientes/solicitudes/motivos/PEDIR")
         .set("Authorization", token);
 
-      const cita = respuesta.body;
+      const arregloMotivos = respuesta.body;
 
       expect(respuesta.status).toBe(200);
-      expect(cita).toStrictEqual([]);
+      expect(arregloMotivos).toStrictEqual([]);
 
       done();
     });
     it("Intenta obtener los motivos de un tipo de solicitud ANULAR con token", async (done) => {
-      token = jwt.sign({ numeroPaciente: 1 }, secreto);
+      token = jwt.sign(
+        {
+          _id: "000000000000",
+          numerosPaciente: [
+            {
+              numero: 1,
+              codigoEstablecimiento: "E01",
+              nombreEstablecimiento: "Hospital Regional de Antofagasta",
+            },
+            {
+              numero: 5,
+              codigoEstablecimiento: "E02",
+              nombreEstablecimiento: "Hospital de Calama",
+            },
+          ],
+        },
+        secreto
+      );
       const respuesta = await request
         .get("/v1/citas-pacientes/solicitudes/motivos/ANULAR")
         .set("Authorization", token);
@@ -255,7 +291,24 @@ describe("Endpoints", () => {
       done();
     });
     it("Intenta obtener los motivos de un tipo de solicitud CAMBIAR con token", async (done) => {
-      token = jwt.sign({ numeroPaciente: 1 }, secreto);
+      token = jwt.sign(
+        {
+          _id: "000000000000",
+          numerosPaciente: [
+            {
+              numero: 1,
+              codigoEstablecimiento: "E01",
+              nombreEstablecimiento: "Hospital Regional de Antofagasta",
+            },
+            {
+              numero: 5,
+              codigoEstablecimiento: "E02",
+              nombreEstablecimiento: "Hospital de Calama",
+            },
+          ],
+        },
+        secreto
+      );
       const respuesta = await request
         .get("/v1/citas-pacientes/solicitudes/motivos/CAMBIAR")
         .set("Authorization", token);
@@ -293,8 +346,26 @@ describe("Endpoints", () => {
       done();
     });
     it("Solicitud sin tipoSolicitud.", async (done) => {
-      token = jwt.sign({ numeroPaciente: 1 }, secreto);
+      token = jwt.sign(
+        {
+          _id: "000000000000",
+          numerosPaciente: [
+            {
+              numero: 1,
+              codigoEstablecimiento: "E01",
+              nombreEstablecimiento: "Hospital Regional de Antofagasta",
+            },
+            {
+              numero: 5,
+              codigoEstablecimiento: "E02",
+              nombreEstablecimiento: "Hospital de Calama",
+            },
+          ],
+        },
+        secreto
+      );
       let body = {
+        idCita: "000000000000",
         correlativoCita: 11,
       };
       const respuesta = await request
@@ -317,8 +388,26 @@ describe("Endpoints", () => {
       done();
     });
     it("Solicitud ANULAR sin correlativoCita.", async (done) => {
-      token = jwt.sign({ numeroPaciente: 1 }, secreto);
+      token = jwt.sign(
+        {
+          _id: "000000000000",
+          numerosPaciente: [
+            {
+              numero: 1,
+              codigoEstablecimiento: "E01",
+              nombreEstablecimiento: "Hospital Regional de Antofagasta",
+            },
+            {
+              numero: 5,
+              codigoEstablecimiento: "E02",
+              nombreEstablecimiento: "Hospital de Calama",
+            },
+          ],
+        },
+        secreto
+      );
       let body = {
+        idCita: "000000000000",
         tipoSolicitud: "ANULAR",
         motivo: 1,
         detallesMotivo: "",
@@ -343,8 +432,114 @@ describe("Endpoints", () => {
       done();
     });
     it("Solicitud CAMBIAR sin correlativoCita.", async (done) => {
-      token = jwt.sign({ numeroPaciente: 1 }, secreto);
+      token = jwt.sign(
+        {
+          _id: "000000000000",
+          numerosPaciente: [
+            {
+              numero: 1,
+              codigoEstablecimiento: "E01",
+              nombreEstablecimiento: "Hospital Regional de Antofagasta",
+            },
+            {
+              numero: 5,
+              codigoEstablecimiento: "E02",
+              nombreEstablecimiento: "Hospital de Calama",
+            },
+          ],
+        },
+        secreto
+      );
       let body = {
+        idCita: "000000000000",
+        tipoSolicitud: "CAMBIAR",
+        motivo: 1,
+        detallesMotivo: "",
+      };
+      const respuesta = await request
+        .post("/v1/citas-pacientes/solicitudes/horas-medicas/anular-cambiar/")
+        .set("Authorization", token)
+        .send(body);
+
+      const mensaje = await getMensajes("badRequest");
+
+      expect(respuesta.status).toBe(400);
+      expect(respuesta.body).toEqual({
+        respuesta: {
+          titulo: mensaje.titulo,
+          mensaje: mensaje.mensaje,
+          color: mensaje.color,
+          icono: mensaje.icono,
+        },
+      });
+
+      done();
+    });
+    it("Solicitud ANULAR sin idCita.", async (done) => {
+      token = jwt.sign(
+        {
+          _id: "000000000000",
+          numerosPaciente: [
+            {
+              numero: 1,
+              codigoEstablecimiento: "E01",
+              nombreEstablecimiento: "Hospital Regional de Antofagasta",
+            },
+            {
+              numero: 5,
+              codigoEstablecimiento: "E02",
+              nombreEstablecimiento: "Hospital de Calama",
+            },
+          ],
+        },
+        secreto
+      );
+      let body = {
+        correlativoCita: 3,
+        tipoSolicitud: "ANULAR",
+        motivo: 1,
+        detallesMotivo: "",
+      };
+      const respuesta = await request
+        .post("/v1/citas-pacientes/solicitudes/horas-medicas/anular-cambiar/")
+        .set("Authorization", token)
+        .send(body);
+
+      const mensaje = await getMensajes("badRequest");
+
+      expect(respuesta.status).toBe(400);
+      expect(respuesta.body).toEqual({
+        respuesta: {
+          titulo: mensaje.titulo,
+          mensaje: mensaje.mensaje,
+          color: mensaje.color,
+          icono: mensaje.icono,
+        },
+      });
+
+      done();
+    });
+    it("Solicitud CAMBIAR sin idCita.", async (done) => {
+      token = jwt.sign(
+        {
+          _id: "000000000000",
+          numerosPaciente: [
+            {
+              numero: 1,
+              codigoEstablecimiento: "E01",
+              nombreEstablecimiento: "Hospital Regional de Antofagasta",
+            },
+            {
+              numero: 5,
+              codigoEstablecimiento: "E02",
+              nombreEstablecimiento: "Hospital de Calama",
+            },
+          ],
+        },
+        secreto
+      );
+      let body = {
+        correlativoCita: 3,
         tipoSolicitud: "CAMBIAR",
         motivo: 1,
         detallesMotivo: "",
@@ -369,8 +564,26 @@ describe("Endpoints", () => {
       done();
     });
     it("Solicitud ANULAR hora médica inexistente.", async (done) => {
-      token = jwt.sign({ numeroPaciente: 1 }, secreto);
+      token = jwt.sign(
+        {
+          _id: "000000000000",
+          numerosPaciente: [
+            {
+              numero: 1,
+              codigoEstablecimiento: "E01",
+              nombreEstablecimiento: "Hospital Regional de Antofagasta",
+            },
+            {
+              numero: 5,
+              codigoEstablecimiento: "E02",
+              nombreEstablecimiento: "Hospital de Calama",
+            },
+          ],
+        },
+        secreto
+      );
       let body = {
+        idCita: "000000000000",
         correlativoCita: 3,
         tipoSolicitud: "ANULAR",
         motivo: 1,
@@ -396,8 +609,26 @@ describe("Endpoints", () => {
       done();
     });
     it("Solicitud CAMBIAR hora médica inexistente.", async (done) => {
-      token = jwt.sign({ numeroPaciente: 1 }, secreto);
+      token = jwt.sign(
+        {
+          _id: "000000000000",
+          numerosPaciente: [
+            {
+              numero: 1,
+              codigoEstablecimiento: "E01",
+              nombreEstablecimiento: "Hospital Regional de Antofagasta",
+            },
+            {
+              numero: 5,
+              codigoEstablecimiento: "E02",
+              nombreEstablecimiento: "Hospital de Calama",
+            },
+          ],
+        },
+        secreto
+      );
       let body = {
+        idCita: "000000000000",
         correlativoCita: 3,
         tipoSolicitud: "CAMBIAR",
         motivo: 1,
@@ -423,8 +654,26 @@ describe("Endpoints", () => {
       done();
     });
     it("Solicitud CAMBIAR con menos de 3 días hábiles antes de la hora médica (hoy).", async (done) => {
-      token = jwt.sign({ numeroPaciente: 1 }, secreto);
+      token = jwt.sign(
+        {
+          _id: "000000000000",
+          numerosPaciente: [
+            {
+              numero: 1,
+              codigoEstablecimiento: "E01",
+              nombreEstablecimiento: "Hospital Regional de Antofagasta",
+            },
+            {
+              numero: 5,
+              codigoEstablecimiento: "E02",
+              nombreEstablecimiento: "Hospital de Calama",
+            },
+          ],
+        },
+        secreto
+      );
       let body = {
+        idCita: "000000000017",
         correlativoCita: 17,
         tipoSolicitud: "CAMBIAR",
         motivo: 1,
@@ -450,8 +699,26 @@ describe("Endpoints", () => {
       done();
     });
     it("Solicitud CAMBIAR con menos de 3 días hábiles antes de la hora médica (próxima).", async (done) => {
-      token = jwt.sign({ numeroPaciente: 1 }, secreto);
+      token = jwt.sign(
+        {
+          _id: "000000000000",
+          numerosPaciente: [
+            {
+              numero: 1,
+              codigoEstablecimiento: "E01",
+              nombreEstablecimiento: "Hospital Regional de Antofagasta",
+            },
+            {
+              numero: 5,
+              codigoEstablecimiento: "E02",
+              nombreEstablecimiento: "Hospital de Calama",
+            },
+          ],
+        },
+        secreto
+      );
       let body = {
+        idCita: "000000000020",
         correlativoCita: 20,
         tipoSolicitud: "CAMBIAR",
         motivo: 1,
@@ -477,8 +744,26 @@ describe("Endpoints", () => {
       done();
     });
     it("Solicitud ANULAR con menos de 1 día hábil antes de la hora médica (hoy).", async (done) => {
-      token = jwt.sign({ numeroPaciente: 1 }, secreto);
+      token = jwt.sign(
+        {
+          _id: "000000000000",
+          numerosPaciente: [
+            {
+              numero: 1,
+              codigoEstablecimiento: "E01",
+              nombreEstablecimiento: "Hospital Regional de Antofagasta",
+            },
+            {
+              numero: 5,
+              codigoEstablecimiento: "E02",
+              nombreEstablecimiento: "Hospital de Calama",
+            },
+          ],
+        },
+        secreto
+      );
       let body = {
+        idCita: "000000000017",
         correlativoCita: 17,
         tipoSolicitud: "ANULAR",
         motivo: 1,
@@ -504,8 +789,26 @@ describe("Endpoints", () => {
       done();
     });
     it("Solicitud CAMBIAR con más de 3 días hábiles antes de la hora médica.", async (done) => {
-      token = jwt.sign({ numeroPaciente: 1 }, secreto);
+      token = jwt.sign(
+        {
+          _id: "000000000000",
+          numerosPaciente: [
+            {
+              numero: 1,
+              codigoEstablecimiento: "E01",
+              nombreEstablecimiento: "Hospital Regional de Antofagasta",
+            },
+            {
+              numero: 5,
+              codigoEstablecimiento: "E02",
+              nombreEstablecimiento: "Hospital de Calama",
+            },
+          ],
+        },
+        secreto
+      );
       let body = {
+        idCita: "000000000024",
         correlativoCita: 24,
         tipoSolicitud: "CAMBIAR",
         motivo: 1,
@@ -536,8 +839,26 @@ describe("Endpoints", () => {
       done();
     });
     it("Solicitud ANULAR con más de 1 día hábil antes de la hora médica.", async (done) => {
-      token = jwt.sign({ numeroPaciente: 1 }, secreto);
+      token = jwt.sign(
+        {
+          _id: "000000000000",
+          numerosPaciente: [
+            {
+              numero: 1,
+              codigoEstablecimiento: "E01",
+              nombreEstablecimiento: "Hospital Regional de Antofagasta",
+            },
+            {
+              numero: 5,
+              codigoEstablecimiento: "E02",
+              nombreEstablecimiento: "Hospital de Calama",
+            },
+          ],
+        },
+        secreto
+      );
       let body = {
+        idCita: "000000000020",
         correlativoCita: 20,
         tipoSolicitud: "ANULAR",
         motivo: 1,
@@ -568,8 +889,26 @@ describe("Endpoints", () => {
       done();
     });
     it("Solicitud ANULAR, que ya fue solicitada previamente.", async (done) => {
-      token = jwt.sign({ numeroPaciente: 1 }, secreto);
+      token = jwt.sign(
+        {
+          _id: "000000000000",
+          numerosPaciente: [
+            {
+              numero: 1,
+              codigoEstablecimiento: "E01",
+              nombreEstablecimiento: "Hospital Regional de Antofagasta",
+            },
+            {
+              numero: 5,
+              codigoEstablecimiento: "E02",
+              nombreEstablecimiento: "Hospital de Calama",
+            },
+          ],
+        },
+        secreto
+      );
       let body = {
+        idCita: "000000000026",
         correlativoCita: 26,
         tipoSolicitud: "ANULAR",
         motivo: 1,
@@ -578,7 +917,11 @@ describe("Endpoints", () => {
 
       //Crear solicitud
       await SolicitudesAnularCambiarCitasPacientes.create({
-        numeroPaciente: 1,
+        numeroPaciente: {
+          numero: 1,
+          codigoEstablecimiento: "E01",
+          nombreEstablecimiento: "Hospital Regional de Antofagasta",
+        },
         correlativoCita: 26,
         tipoSolicitud: "ANULAR",
         motivo: 1,
@@ -610,8 +953,26 @@ describe("Endpoints", () => {
       done();
     });
     it("Solicitud CAMBIAR, que ya fue solicitada previamente.", async (done) => {
-      token = jwt.sign({ numeroPaciente: 1 }, secreto);
+      token = jwt.sign(
+        {
+          _id: "000000000000",
+          numerosPaciente: [
+            {
+              numero: 1,
+              codigoEstablecimiento: "E01",
+              nombreEstablecimiento: "Hospital Regional de Antofagasta",
+            },
+            {
+              numero: 5,
+              codigoEstablecimiento: "E02",
+              nombreEstablecimiento: "Hospital de Calama",
+            },
+          ],
+        },
+        secreto
+      );
       let body = {
+        idCita: "000000000027",
         correlativoCita: 27,
         tipoSolicitud: "CAMBIAR",
         motivo: 1,
@@ -620,7 +981,11 @@ describe("Endpoints", () => {
 
       //Crear solicitud
       await SolicitudesAnularCambiarCitasPacientes.create({
-        numeroPaciente: 1,
+        numeroPaciente: {
+          numero: 1,
+          codigoEstablecimiento: "E01",
+          nombreEstablecimiento: "Hospital Regional de Antofagasta",
+        },
         correlativoCita: 27,
         tipoSolicitud: "ANULAR",
         motivo: 1,
@@ -652,8 +1017,26 @@ describe("Endpoints", () => {
       done();
     });
     it("Solicitud CAMBIAR, que ya fue solicitada ANULAR previamente.", async (done) => {
-      token = jwt.sign({ numeroPaciente: 1 }, secreto);
+      token = jwt.sign(
+        {
+          _id: "000000000000",
+          numerosPaciente: [
+            {
+              numero: 1,
+              codigoEstablecimiento: "E01",
+              nombreEstablecimiento: "Hospital Regional de Antofagasta",
+            },
+            {
+              numero: 5,
+              codigoEstablecimiento: "E02",
+              nombreEstablecimiento: "Hospital de Calama",
+            },
+          ],
+        },
+        secreto
+      );
       let body = {
+        idCita: "000000000026",
         correlativoCita: 26,
         tipoSolicitud: "ANULAR",
         motivo: 1,
@@ -662,7 +1045,11 @@ describe("Endpoints", () => {
 
       //Crear solicitud
       await SolicitudesAnularCambiarCitasPacientes.create({
-        numeroPaciente: 1,
+        numeroPaciente: {
+          numero: 1,
+          codigoEstablecimiento: "E01",
+          nombreEstablecimiento: "Hospital Regional de Antofagasta",
+        },
         correlativoCita: 26,
         tipoSolicitud: "ANULAR",
         motivo: 1,
@@ -696,8 +1083,26 @@ describe("Endpoints", () => {
       done();
     });
     it("Solicitud ANULAR, que ya fue solicitada CAMBIAR previamente.", async (done) => {
-      token = jwt.sign({ numeroPaciente: 1 }, secreto);
+      token = jwt.sign(
+        {
+          _id: "000000000000",
+          numerosPaciente: [
+            {
+              numero: 1,
+              codigoEstablecimiento: "E01",
+              nombreEstablecimiento: "Hospital Regional de Antofagasta",
+            },
+            {
+              numero: 5,
+              codigoEstablecimiento: "E02",
+              nombreEstablecimiento: "Hospital de Calama",
+            },
+          ],
+        },
+        secreto
+      );
       let body = {
+        idCita: "000000000027",
         correlativoCita: 27,
         tipoSolicitud: "CAMBIAR",
         motivo: 1,
@@ -706,7 +1111,11 @@ describe("Endpoints", () => {
 
       //Crear solicitud
       await SolicitudesAnularCambiarCitasPacientes.create({
-        numeroPaciente: 1,
+        numeroPaciente: {
+          numero: 1,
+          codigoEstablecimiento: "E01",
+          nombreEstablecimiento: "Hospital Regional de Antofagasta",
+        },
         correlativoCita: 27,
         tipoSolicitud: "ANULAR",
         motivo: 1,
@@ -740,10 +1149,10 @@ describe("Endpoints", () => {
       done();
     });
   });
-  describe("GET /v1/citas-pacientes/solicitudes/horas-medicas/anular-cambiar/existe/:correlativoCita", () => {
+  describe("GET /v1/citas-pacientes/solicitudes/horas-medicas/anular-cambiar/existe/:idCita", () => {
     it("Intenta averiguar si existe una solicitud para una cita sin token", async (done) => {
       const respuesta = await request.get(
-        "/v1/citas-pacientes/solicitudes/horas-medicas/anular-cambiar/existe/11"
+        "/v1/citas-pacientes/solicitudes/horas-medicas/anular-cambiar/existe/000000000011"
       );
 
       const mensaje = await getMensajes("forbiddenAccess");
@@ -760,10 +1169,67 @@ describe("Endpoints", () => {
 
       done();
     });
-    it("Intenta averiguar si existe una solicitud para una cita que no existe con token", async (done) => {
-      token = jwt.sign({ numeroPaciente: 1 }, secreto);
+    it("Intenta averiguar si existe una solicitud para una cita, que no existe, con token", async (done) => {
+      token = jwt.sign(
+        {
+          _id: "000000000000",
+          numerosPaciente: [
+            {
+              numero: 1,
+              codigoEstablecimiento: "E01",
+              nombreEstablecimiento: "Hospital Regional de Antofagasta",
+            },
+            {
+              numero: 5,
+              codigoEstablecimiento: "E02",
+              nombreEstablecimiento: "Hospital de Calama",
+            },
+          ],
+        },
+        secreto
+      );
       const respuesta = await request
-        .get("/v1/citas-pacientes/solicitudes/horas-medicas/anular-cambiar/existe/1")
+        .get(
+          "/v1/citas-pacientes/solicitudes/horas-medicas/anular-cambiar/existe/000000000000"
+        )
+        .set("Authorization", token);
+
+      const mensaje = await getMensajes("badRequest");
+      expect(respuesta.status).toBe(400);
+      expect(respuesta.body).toEqual({
+        respuesta: {
+          titulo: mensaje.titulo,
+          mensaje: mensaje.mensaje,
+          color: mensaje.color,
+          icono: mensaje.icono,
+        },
+      });
+
+      done();
+    });
+    it("Intenta averiguar si existe una solicitud para una cita, con token (No existe la solicitud).", async (done) => {
+      token = jwt.sign(
+        {
+          _id: "000000000000",
+          numerosPaciente: [
+            {
+              numero: 1,
+              codigoEstablecimiento: "E01",
+              nombreEstablecimiento: "Hospital Regional de Antofagasta",
+            },
+            {
+              numero: 5,
+              codigoEstablecimiento: "E02",
+              nombreEstablecimiento: "Hospital de Calama",
+            },
+          ],
+        },
+        secreto
+      );
+      const respuesta = await request
+        .get(
+          "/v1/citas-pacientes/solicitudes/horas-medicas/anular-cambiar/existe/000000000011"
+        )
         .set("Authorization", token);
 
       expect(respuesta.status).toBe(200);
@@ -771,21 +1237,29 @@ describe("Endpoints", () => {
 
       done();
     });
-    it("Intenta averiguar si existe una solicitud para una cita con token (No existe la solicitud).", async (done) => {
-      token = jwt.sign({ numeroPaciente: 1 }, secreto);
+    it("Intenta averiguar si existe una solicitud para una cita, con token (Existe la solicitud).", async (done) => {
+      token = jwt.sign(
+        {
+          _id: "000000000000",
+          numerosPaciente: [
+            {
+              numero: 1,
+              codigoEstablecimiento: "E01",
+              nombreEstablecimiento: "Hospital Regional de Antofagasta",
+            },
+            {
+              numero: 5,
+              codigoEstablecimiento: "E02",
+              nombreEstablecimiento: "Hospital de Calama",
+            },
+          ],
+        },
+        secreto
+      );
       const respuesta = await request
-        .get("/v1/citas-pacientes/solicitudes/horas-medicas/anular-cambiar/existe/11")
-        .set("Authorization", token);
-
-      expect(respuesta.status).toBe(200);
-      expect(respuesta.body).toEqual({ existeSolicitud: false });
-
-      done();
-    });
-    it("Intenta averiguar si existe una solicitud para una cita con token (Existe la solicitud).", async (done) => {
-      token = jwt.sign({ numeroPaciente: 1 }, secreto);
-      const respuesta = await request
-        .get("/v1/citas-pacientes/solicitudes/horas-medicas/anular-cambiar/existe/10")
+        .get(
+          "/v1/citas-pacientes/solicitudes/horas-medicas/anular-cambiar/existe/000000000012"
+        )
         .set("Authorization", token);
 
       const mensaje = await getMensajes("solicitudDuplicada");

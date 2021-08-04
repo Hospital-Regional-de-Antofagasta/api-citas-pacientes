@@ -1,7 +1,12 @@
 [
   {
     "correlativoSolicitud": 13,
-    "numeroPaciente": 1,
+    "numeroPaciente": 
+        {
+            "numero": 1,
+            "codigoEstablecimiento": "E01",
+            "nombreEstablecimiento": "Hospital Regional de Antofagasta"
+        },
     "correlativoCita": 7,
     "tipoSolicitud": "CAMBIAR",
     "motivo": "Quiero cambio de profesional",
@@ -12,7 +17,12 @@
   },
   {
     "correlativoSolicitud": 14,
-    "numeroPaciente": 1,
+    "numeroPaciente": 
+        {
+            "numero": 1,
+            "codigoEstablecimiento": "E01",
+            "nombreEstablecimiento": "Hospital Regional de Antofagasta"
+        },
     "correlativoCita": 8,
     "tipoSolicitud": "ANULAR",
     "motivo": "Ya me atendí",
@@ -23,7 +33,12 @@
   },
   {
     "correlativoSolicitud": 15,
-    "numeroPaciente": 1,
+    "numeroPaciente": 
+        {
+            "numero": 1,
+            "codigoEstablecimiento": "E01",
+            "nombreEstablecimiento": "Hospital Regional de Antofagasta"
+        },
     "correlativoCita": 9,
     "tipoSolicitud": "CAMBIAR",
     "motivo": "Quiero cambio de profesional",
@@ -34,8 +49,13 @@
   },
   {
     "correlativoSolicitud": 16,
-    "numeroPaciente": 1,
-    "correlativoCita": 10,
+    "numeroPaciente": 
+        {
+            "numero": 1,
+            "codigoEstablecimiento": "E01",
+            "nombreEstablecimiento": "Hospital Regional de Antofagasta"
+        },
+    "correlativoCita": 12,
     "tipoSolicitud": "ANULAR",
     "motivo": "Ya me atendí",
     "detallesMotivo": "",

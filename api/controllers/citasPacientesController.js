@@ -53,7 +53,7 @@ exports.getHorasExamenesPacienteHistorico = async (req, res) => {
 const citas = async (req, res, codigoAmbito) => {
   try {
     const arregloCitasPaciente = await CitasPacientes.find({
-      numeroPaciente: req.numeroPaciente,
+      numeroPaciente: { $in: req.numerosPaciente },
       codigoAmbito: { $in: codigoAmbito },
     })
       .sort({ fechaCitacion: 1 }) //1 ascendente
@@ -81,14 +81,14 @@ const citasProximas = async (req, res, codigoAmbito) => {
     // const fechaFin = new Date(fechaHoy.getFullYear(),fechaHoy.getMonth(),fechaHoy.getDate(),23,59,59,999)
     const arregloDeArreglosCitasPaciente = await Promise.all([
       CitasPacientes.find({
-        numeroPaciente: req.numeroPaciente,
+        numeroPaciente: { $in: req.numerosPaciente },
         fechaCitacion: { $gte: fechaInicio, $lte: fechaFin },
         codigoAmbito: { $in: codigoAmbito },
       })
         .sort({ fechaCitacion: 1 }) //1 ascendente, -1 descendente
         .exec(),
       CitasPacientes.find({
-        numeroPaciente: req.numeroPaciente,
+        numeroPaciente: { $in: req.numerosPaciente },
         fechaCitacion: { $gte: fechaFin },
         codigoAmbito: { $in: codigoAmbito },
       })
@@ -110,7 +110,7 @@ const citasHistorico = async (req, res, codigoAmbito) => {
     const fechaHoy = new Date();
     const hoy = moment.tz(fechaHoy, timeZone).startOf("day");
     const arregloCitasPaciente = await CitasPacientes.find({
-      numeroPaciente: req.numeroPaciente,
+      numeroPaciente: { $in: req.numerosPaciente },
       codigoAmbito: { $in: codigoAmbito },
       fechaCitacion: { $lt: hoy },
     })
