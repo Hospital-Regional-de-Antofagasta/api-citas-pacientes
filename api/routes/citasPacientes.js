@@ -4,7 +4,7 @@ const isAuthenticated = require("../middleware/auth");
 const router = express.Router();
 
 router.get(
-  "/:correlativoCita",
+  "/:idCita",
   isAuthenticated,
   citasPacientesController.getCita
 );

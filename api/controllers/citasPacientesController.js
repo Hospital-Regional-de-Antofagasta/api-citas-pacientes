@@ -7,13 +7,11 @@ const { getMensajes } = require("../config");
 
 exports.getCita = async (req, res) => {
   try {
-    const correlativo = req.params.correlativoCita;
-    if (typeof correlativo !== "string") {
+    const idCita = req.params.idCita;
+    if (typeof idCita !== "string") {
       res.status(400).send({ respuesta: await getMensajes("badRequest") });
     }
-    const cita = await CitasPacientes.findOne({
-      correlativoCita: correlativo,
-    }).exec();
+    const cita = await CitasPacientes.findById(idCita).exec();
     res.status(200).send(cita);
   } catch (error) {
     if (process.env.NODE_ENV === "dev")

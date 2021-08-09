@@ -7,7 +7,6 @@ const citasPacientesSeeds = require("../testSeeds/citasPacientesSeeds.json");
 const diasFeriadosSeeds = require("../testSeeds/diasFeriadosSeeds.json");
 const { cargarFeriados } = require("../config");
 
-
 const CitasPacientes = require("../models/CitasPacientes");
 const DiasFeriados = require("../models/DiasFeriados");
 
@@ -23,13 +22,10 @@ beforeAll(async (done) => {
   //Cerrar la conexión que se crea en el index.
   await mongoose.disconnect();
   //Conectar a la base de datos de prueba.
-  await mongoose.connect(
-    `${process.env.MONGO_URI_TEST}citas_pacientes_test`,
-    {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    }
-  );
+  await mongoose.connect(`${process.env.MONGO_URI_TEST}citas_pacientes_test`, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  });
   //Cargar los seeds a la base de datos.
   await CitasPacientes.create(citasPacientesSeeds);
   await DiasFeriados.create(diasFeriadosSeeds);
@@ -199,9 +195,9 @@ afterAll(async (done) => {
 });
 
 describe("Endpoints", () => {
-  describe("GET /v1/citas-pacientes/:correlativoCita", () => {
+  describe("GET /v1/citas-pacientes/:idCita", () => {
     it("Intenta obtener una cita sin token", async (done) => {
-      const respuesta = await request.get("/v1/citas-pacientes/20");
+      const respuesta = await request.get("/v1/citas-pacientes/000000000000");
 
       const mensaje = await getMensajes("forbiddenAccess");
 
@@ -237,7 +233,7 @@ describe("Endpoints", () => {
         secreto
       );
       const respuesta = await request
-        .get("/v1/citas-pacientes/10")
+        .get("/v1/citas-pacientes/000000000010")
         .set("Authorization", token);
       const cita = respuesta.body;
 
@@ -266,7 +262,7 @@ describe("Endpoints", () => {
         secreto
       );
       const respuesta = await request
-        .get("/v1/citas-pacientes/11")
+        .get("/v1/citas-pacientes/000000000011")
         .set("Authorization", token);
       const cita = respuesta.body;
 
@@ -513,17 +509,23 @@ describe("Endpoints", () => {
       expect(arregloHorasHoy.length).toStrictEqual(3);
 
       expect(arregloHorasHoy[0].numeroPaciente.numero).toBeFalsy();
-      expect(arregloHorasHoy[0].numeroPaciente.codigoEstablecimiento).toBeFalsy();
+      expect(
+        arregloHorasHoy[0].numeroPaciente.codigoEstablecimiento
+      ).toBeFalsy();
       expect(arregloHorasHoy[0].correlativoCita).toStrictEqual(17);
       expect(arregloHorasHoy[0].codigoAmbito).toStrictEqual("01");
 
       expect(arregloHorasHoy[1].numeroPaciente.numero).toBeFalsy();
-      expect(arregloHorasHoy[1].numeroPaciente.codigoEstablecimiento).toBeFalsy();
+      expect(
+        arregloHorasHoy[1].numeroPaciente.codigoEstablecimiento
+      ).toBeFalsy();
       expect(arregloHorasHoy[1].correlativoCita).toStrictEqual(18);
       expect(arregloHorasHoy[1].codigoAmbito).toStrictEqual("01");
 
       expect(arregloHorasHoy[2].numeroPaciente.numero).toBeFalsy();
-      expect(arregloHorasHoy[2].numeroPaciente.codigoEstablecimiento).toBeFalsy();
+      expect(
+        arregloHorasHoy[2].numeroPaciente.codigoEstablecimiento
+      ).toBeFalsy();
       expect(arregloHorasHoy[2].correlativoCita).toStrictEqual(19);
       expect(arregloHorasHoy[2].codigoAmbito).toStrictEqual("01");
 
@@ -532,37 +534,51 @@ describe("Endpoints", () => {
       expect(arregloHorasProximas.length).toStrictEqual(7);
 
       expect(arregloHorasProximas[0].numeroPaciente.numero).toBeFalsy();
-      expect(arregloHorasProximas[0].numeroPaciente.codigoEstablecimiento).toBeFalsy();
+      expect(
+        arregloHorasProximas[0].numeroPaciente.codigoEstablecimiento
+      ).toBeFalsy();
       expect(arregloHorasProximas[0].correlativoCita).toStrictEqual(20);
       expect(arregloHorasProximas[0].codigoAmbito).toStrictEqual("01");
 
       expect(arregloHorasProximas[1].numeroPaciente.numero).toBeFalsy();
-      expect(arregloHorasProximas[1].numeroPaciente.codigoEstablecimiento).toBeFalsy();
+      expect(
+        arregloHorasProximas[1].numeroPaciente.codigoEstablecimiento
+      ).toBeFalsy();
       expect(arregloHorasProximas[1].correlativoCita).toStrictEqual(24);
       expect(arregloHorasProximas[1].codigoAmbito).toStrictEqual("01");
 
       expect(arregloHorasProximas[2].numeroPaciente.numero).toBeFalsy();
-      expect(arregloHorasProximas[2].numeroPaciente.codigoEstablecimiento).toBeFalsy();
+      expect(
+        arregloHorasProximas[2].numeroPaciente.codigoEstablecimiento
+      ).toBeFalsy();
       expect(arregloHorasProximas[2].correlativoCita).toStrictEqual(25);
       expect(arregloHorasProximas[2].codigoAmbito).toStrictEqual("01");
 
       expect(arregloHorasProximas[3].numeroPaciente.numero).toBeFalsy();
-      expect(arregloHorasProximas[3].numeroPaciente.codigoEstablecimiento).toBeFalsy();
+      expect(
+        arregloHorasProximas[3].numeroPaciente.codigoEstablecimiento
+      ).toBeFalsy();
       expect(arregloHorasProximas[3].correlativoCita).toStrictEqual(26);
       expect(arregloHorasProximas[3].codigoAmbito).toStrictEqual("01");
 
       expect(arregloHorasProximas[4].numeroPaciente.numero).toBeFalsy();
-      expect(arregloHorasProximas[4].numeroPaciente.codigoEstablecimiento).toBeFalsy();
+      expect(
+        arregloHorasProximas[4].numeroPaciente.codigoEstablecimiento
+      ).toBeFalsy();
       expect(arregloHorasProximas[4].correlativoCita).toStrictEqual(27);
       expect(arregloHorasProximas[4].codigoAmbito).toStrictEqual("01");
 
       expect(arregloHorasProximas[5].numeroPaciente.numero).toBeFalsy();
-      expect(arregloHorasProximas[5].numeroPaciente.codigoEstablecimiento).toBeFalsy();
+      expect(
+        arregloHorasProximas[5].numeroPaciente.codigoEstablecimiento
+      ).toBeFalsy();
       expect(arregloHorasProximas[5].correlativoCita).toStrictEqual(28);
       expect(arregloHorasProximas[5].codigoAmbito).toStrictEqual("01");
 
       expect(arregloHorasProximas[6].numeroPaciente.numero).toBeFalsy();
-      expect(arregloHorasProximas[6].numeroPaciente.codigoEstablecimiento).toBeFalsy();
+      expect(
+        arregloHorasProximas[6].numeroPaciente.codigoEstablecimiento
+      ).toBeFalsy();
       expect(arregloHorasProximas[6].correlativoCita).toStrictEqual(29);
       expect(arregloHorasProximas[6].codigoAmbito).toStrictEqual("01");
 
@@ -871,12 +887,16 @@ describe("Endpoints", () => {
       expect(arregloHorasHoy.length).toStrictEqual(2);
 
       expect(arregloHorasHoy[0].numeroPaciente.numero).toBeFalsy();
-      expect(arregloHorasHoy[0].numeroPaciente.codigoEstablecimiento).toBeFalsy();
+      expect(
+        arregloHorasHoy[0].numeroPaciente.codigoEstablecimiento
+      ).toBeFalsy();
       expect(arregloHorasHoy[0].correlativoCita).toStrictEqual(14);
       expect(arregloHorasHoy[0].codigoAmbito).toStrictEqual("06");
 
       expect(arregloHorasHoy[1].numeroPaciente.numero).toBeFalsy();
-      expect(arregloHorasHoy[1].numeroPaciente.codigoEstablecimiento).toBeFalsy();
+      expect(
+        arregloHorasHoy[1].numeroPaciente.codigoEstablecimiento
+      ).toBeFalsy();
       expect(arregloHorasHoy[1].correlativoCita).toStrictEqual(15);
       expect(arregloHorasHoy[1].codigoAmbito).toStrictEqual("06");
 
@@ -885,7 +905,9 @@ describe("Endpoints", () => {
       expect(arregloHorasProximas.length).toStrictEqual(1);
 
       expect(arregloHorasProximas[0].numeroPaciente.numero).toBeFalsy();
-      expect(arregloHorasProximas[0].numeroPaciente.codigoEstablecimiento).toBeFalsy();
+      expect(
+        arregloHorasProximas[0].numeroPaciente.codigoEstablecimiento
+      ).toBeFalsy();
       expect(arregloHorasProximas[0].correlativoCita).toStrictEqual(21);
       expect(arregloHorasProximas[0].codigoAmbito).toStrictEqual("04");
 
