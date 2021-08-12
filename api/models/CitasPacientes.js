@@ -13,8 +13,8 @@ const CitasPacientes = mongoose.model(
     fechaCitacion: Date,
     horaCitacion: String,
     numeroPaciente: {
-      numero: {type: Number, require: true, unique: true, select: false},
-      codigoEstablecimiento: {type: String, require: true, unique: true, select: false},
+      numero: {type: Number, require: true, select: false},
+      codigoEstablecimiento: {type: String, require: true, select: false},
       nombreEstablecimiento: String,
     },
     codigoAmbito: String,
