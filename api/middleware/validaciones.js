@@ -58,7 +58,7 @@ exports.validarFechaSolicitudAnularCambiarHoraMedica = async (
   try {
     const cita = await CitasPacientes.findById(req.body.idCita)
       .select(
-        "numeroPaciente.numero numeroPaciente.codigoEstablecimiento numeroPaciente.nombreEstablecimiento correlativoCita fechaCitacion"
+        "numeroPaciente.numero numeroPaciente.codigoEstablecimiento numeroPaciente.hospital numeroPaciente.nombreEstablecimiento correlativoCita fechaCitacion"
       )
       .exec();
     if (!cita) {
