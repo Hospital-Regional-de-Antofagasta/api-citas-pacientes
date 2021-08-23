@@ -12,7 +12,6 @@ const SolicitudesAnularCambiarCitasPacientes = mongoose.model(
       numeroPaciente: {
         type: Number,
         require: true,
-        unique: true,
         select: false,
       },
       correlativoCita: Number,
