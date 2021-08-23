@@ -217,24 +217,7 @@ describe("Endpoints", () => {
       token = jwt.sign(
         {
           _id: "000000000000",
-          numerosPaciente: [
-            {
-              numero: 2,
-              codigoEstablecimiento: "E01",
-              hospital: {
-                E01: 1
-              },
-              nombreEstablecimiento: "Hospital Regional de Antofagasta",
-            },
-            {
-              numero: 57,
-              codigoEstablecimiento: "E02",
-              hospital: {
-                E02: 1
-              },
-              nombreEstablecimiento: "Hospital de Calama",
-            },
-          ],
+          numeroPaciente:  2,
         },
         secreto
       );
@@ -252,24 +235,7 @@ describe("Endpoints", () => {
       token = jwt.sign(
         {
           _id: "000000000000",
-          numerosPaciente: [
-            {
-              numero: 1,
-              codigoEstablecimiento: "E01",
-              hospital: {
-                E01: 1
-              },
-              nombreEstablecimiento: "Hospital Regional de Antofagasta",
-            },
-            {
-              numero: 5,
-              codigoEstablecimiento: "E02",
-              hospital: {
-                E02: 1
-              },
-              nombreEstablecimiento: "Hospital de Calama",
-            },
-          ],
+          numeroPaciente: 1,
         },
         secreto
       );
@@ -308,24 +274,7 @@ describe("Endpoints", () => {
       token = jwt.sign(
         {
           _id: "000000000000",
-          numerosPaciente: [
-            {
-              numero: 2,
-              codigoEstablecimiento: "E01",
-              hospital: {
-                E01: 1
-              },
-              nombreEstablecimiento: "Hospital Regional de Antofagasta",
-            },
-            {
-              numero: 57,
-              codigoEstablecimiento: "E02",
-              hospital: {
-                E02: 1
-              },
-              nombreEstablecimiento: "Hospital de Calama",
-            },
-          ],
+          numeroPaciente:  2,
         },
         secreto
       );
@@ -345,24 +294,7 @@ describe("Endpoints", () => {
       token = jwt.sign(
         {
           _id: "000000000000",
-          numerosPaciente: [
-            {
-              numero: 1,
-              codigoEstablecimiento: "E01",
-              hospital: {
-                E01: 1
-              },
-              nombreEstablecimiento: "Hospital Regional de Antofagasta",
-            },
-            {
-              numero: 5,
-              codigoEstablecimiento: "E02",
-              hospital: {
-                E02: 1
-              },
-              nombreEstablecimiento: "Hospital de Calama",
-            },
-          ],
+          numeroPaciente: 1
         },
         secreto
       );
@@ -375,63 +307,51 @@ describe("Endpoints", () => {
 
       expect(arregloHoras.length).toStrictEqual(12);
 
-      expect(arregloHoras[0].numeroPaciente.numero).toBeFalsy();
-      expect(arregloHoras[0].numeroPaciente.codigoEstablecimiento).toBeFalsy();
+      expect(arregloHoras[0].numeroPaciente).toBeFalsy();
       expect(arregloHoras[0].correlativoCita).toStrictEqual(11);
       expect(arregloHoras[0].codigoAmbito).toStrictEqual("01");
 
-      expect(arregloHoras[1].numeroPaciente.numero).toBeFalsy();
-      expect(arregloHoras[1].numeroPaciente.codigoEstablecimiento).toBeFalsy();
+      expect(arregloHoras[1].numeroPaciente).toBeFalsy();
       expect(arregloHoras[1].correlativoCita).toStrictEqual(12);
       expect(arregloHoras[1].codigoAmbito).toStrictEqual("01");
 
-      expect(arregloHoras[2].numeroPaciente.numero).toBeFalsy();
-      expect(arregloHoras[2].numeroPaciente.codigoEstablecimiento).toBeFalsy();
+      expect(arregloHoras[2].numeroPaciente).toBeFalsy();
       expect(arregloHoras[2].correlativoCita).toStrictEqual(17);
       expect(arregloHoras[2].codigoAmbito).toStrictEqual("01");
 
-      expect(arregloHoras[3].numeroPaciente.numero).toBeFalsy();
-      expect(arregloHoras[3].numeroPaciente.codigoEstablecimiento).toBeFalsy();
+      expect(arregloHoras[3].numeroPaciente).toBeFalsy();
       expect(arregloHoras[3].correlativoCita).toStrictEqual(18);
       expect(arregloHoras[3].codigoAmbito).toStrictEqual("01");
 
-      expect(arregloHoras[4].numeroPaciente.numero).toBeFalsy();
-      expect(arregloHoras[4].numeroPaciente.codigoEstablecimiento).toBeFalsy();
+      expect(arregloHoras[4].numeroPaciente).toBeFalsy();
       expect(arregloHoras[4].correlativoCita).toStrictEqual(19);
       expect(arregloHoras[4].codigoAmbito).toStrictEqual("01");
 
-      expect(arregloHoras[5].numeroPaciente.numero).toBeFalsy();
-      expect(arregloHoras[5].numeroPaciente.codigoEstablecimiento).toBeFalsy();
+      expect(arregloHoras[5].numeroPaciente).toBeFalsy();
       expect(arregloHoras[5].correlativoCita).toStrictEqual(20);
       expect(arregloHoras[5].codigoAmbito).toStrictEqual("01");
 
-      expect(arregloHoras[6].numeroPaciente.numero).toBeFalsy();
-      expect(arregloHoras[6].numeroPaciente.codigoEstablecimiento).toBeFalsy();
+      expect(arregloHoras[6].numeroPaciente).toBeFalsy();
       expect(arregloHoras[6].correlativoCita).toStrictEqual(24);
       expect(arregloHoras[6].codigoAmbito).toStrictEqual("01");
 
-      expect(arregloHoras[7].numeroPaciente.numero).toBeFalsy();
-      expect(arregloHoras[7].numeroPaciente.codigoEstablecimiento).toBeFalsy();
+      expect(arregloHoras[7].numeroPaciente).toBeFalsy();
       expect(arregloHoras[7].correlativoCita).toStrictEqual(25);
       expect(arregloHoras[7].codigoAmbito).toStrictEqual("01");
 
-      expect(arregloHoras[8].numeroPaciente.numero).toBeFalsy();
-      expect(arregloHoras[8].numeroPaciente.codigoEstablecimiento).toBeFalsy();
+      expect(arregloHoras[8].numeroPaciente).toBeFalsy();
       expect(arregloHoras[8].correlativoCita).toStrictEqual(26);
       expect(arregloHoras[8].codigoAmbito).toStrictEqual("01");
 
-      expect(arregloHoras[9].numeroPaciente.numero).toBeFalsy();
-      expect(arregloHoras[9].numeroPaciente.codigoEstablecimiento).toBeFalsy();
+      expect(arregloHoras[9].numeroPaciente).toBeFalsy();
       expect(arregloHoras[9].correlativoCita).toStrictEqual(27);
       expect(arregloHoras[9].codigoAmbito).toStrictEqual("01");
 
-      expect(arregloHoras[10].numeroPaciente.numero).toBeFalsy();
-      expect(arregloHoras[10].numeroPaciente.codigoEstablecimiento).toBeFalsy();
+      expect(arregloHoras[10].numeroPaciente).toBeFalsy();
       expect(arregloHoras[10].correlativoCita).toStrictEqual(28);
       expect(arregloHoras[10].codigoAmbito).toStrictEqual("01");
 
-      expect(arregloHoras[11].numeroPaciente.numero).toBeFalsy();
-      expect(arregloHoras[11].numeroPaciente.codigoEstablecimiento).toBeFalsy();
+      expect(arregloHoras[11].numeroPaciente).toBeFalsy();
       expect(arregloHoras[11].correlativoCita).toStrictEqual(29);
       expect(arregloHoras[11].codigoAmbito).toStrictEqual("01");
 
@@ -464,24 +384,7 @@ describe("Endpoints", () => {
       token = jwt.sign(
         {
           _id: "000000000000",
-          numerosPaciente: [
-            {
-              numero: 2,
-              codigoEstablecimiento: "E01",
-              hospital: {
-                E01: 1
-              },
-              nombreEstablecimiento: "Hospital Regional de Antofagasta",
-            },
-            {
-              numero: 57,
-              codigoEstablecimiento: "E02",
-              hospital: {
-                E02: 1
-              },
-              nombreEstablecimiento: "Hospital de Calama",
-            },
-          ],
+          numeroPaciente: 2,
         },
         secreto
       );
@@ -508,24 +411,7 @@ describe("Endpoints", () => {
       token = jwt.sign(
         {
           _id: "000000000000",
-          numerosPaciente: [
-            {
-              numero: 1,
-              codigoEstablecimiento: "E01",
-              hospital: {
-                E01: 1
-              },
-              nombreEstablecimiento: "Hospital Regional de Antofagasta",
-            },
-            {
-              numero: 5,
-              codigoEstablecimiento: "E02",
-              hospital: {
-                E02: 1
-              },
-              nombreEstablecimiento: "Hospital de Calama",
-            },
-          ],
+          numeroPaciente:  1,
         },
         secreto
       );
@@ -544,24 +430,15 @@ describe("Endpoints", () => {
 
       expect(arregloHorasHoy.length).toStrictEqual(3);
 
-      expect(arregloHorasHoy[0].numeroPaciente.numero).toBeFalsy();
-      expect(
-        arregloHorasHoy[0].numeroPaciente.codigoEstablecimiento
-      ).toBeFalsy();
+      expect(arregloHorasHoy[0].numeroPaciente).toBeFalsy();
       expect(arregloHorasHoy[0].correlativoCita).toStrictEqual(17);
       expect(arregloHorasHoy[0].codigoAmbito).toStrictEqual("01");
 
-      expect(arregloHorasHoy[1].numeroPaciente.numero).toBeFalsy();
-      expect(
-        arregloHorasHoy[1].numeroPaciente.codigoEstablecimiento
-      ).toBeFalsy();
+      expect(arregloHorasHoy[1].numeroPaciente).toBeFalsy();
       expect(arregloHorasHoy[1].correlativoCita).toStrictEqual(18);
       expect(arregloHorasHoy[1].codigoAmbito).toStrictEqual("01");
 
-      expect(arregloHorasHoy[2].numeroPaciente.numero).toBeFalsy();
-      expect(
-        arregloHorasHoy[2].numeroPaciente.codigoEstablecimiento
-      ).toBeFalsy();
+      expect(arregloHorasHoy[2].numeroPaciente).toBeFalsy();
       expect(arregloHorasHoy[2].correlativoCita).toStrictEqual(19);
       expect(arregloHorasHoy[2].codigoAmbito).toStrictEqual("01");
 
@@ -569,52 +446,31 @@ describe("Endpoints", () => {
 
       expect(arregloHorasProximas.length).toStrictEqual(7);
 
-      expect(arregloHorasProximas[0].numeroPaciente.numero).toBeFalsy();
-      expect(
-        arregloHorasProximas[0].numeroPaciente.codigoEstablecimiento
-      ).toBeFalsy();
+      expect(arregloHorasProximas[0].numeroPaciente).toBeFalsy();
       expect(arregloHorasProximas[0].correlativoCita).toStrictEqual(20);
       expect(arregloHorasProximas[0].codigoAmbito).toStrictEqual("01");
 
-      expect(arregloHorasProximas[1].numeroPaciente.numero).toBeFalsy();
-      expect(
-        arregloHorasProximas[1].numeroPaciente.codigoEstablecimiento
-      ).toBeFalsy();
+      expect(arregloHorasProximas[1].numeroPaciente).toBeFalsy();
       expect(arregloHorasProximas[1].correlativoCita).toStrictEqual(24);
       expect(arregloHorasProximas[1].codigoAmbito).toStrictEqual("01");
 
-      expect(arregloHorasProximas[2].numeroPaciente.numero).toBeFalsy();
-      expect(
-        arregloHorasProximas[2].numeroPaciente.codigoEstablecimiento
-      ).toBeFalsy();
+      expect(arregloHorasProximas[2].numeroPaciente).toBeFalsy();
       expect(arregloHorasProximas[2].correlativoCita).toStrictEqual(25);
       expect(arregloHorasProximas[2].codigoAmbito).toStrictEqual("01");
 
-      expect(arregloHorasProximas[3].numeroPaciente.numero).toBeFalsy();
-      expect(
-        arregloHorasProximas[3].numeroPaciente.codigoEstablecimiento
-      ).toBeFalsy();
+      expect(arregloHorasProximas[3].numeroPaciente).toBeFalsy();
       expect(arregloHorasProximas[3].correlativoCita).toStrictEqual(26);
       expect(arregloHorasProximas[3].codigoAmbito).toStrictEqual("01");
 
-      expect(arregloHorasProximas[4].numeroPaciente.numero).toBeFalsy();
-      expect(
-        arregloHorasProximas[4].numeroPaciente.codigoEstablecimiento
-      ).toBeFalsy();
+      expect(arregloHorasProximas[4].numeroPaciente).toBeFalsy();
       expect(arregloHorasProximas[4].correlativoCita).toStrictEqual(27);
       expect(arregloHorasProximas[4].codigoAmbito).toStrictEqual("01");
 
-      expect(arregloHorasProximas[5].numeroPaciente.numero).toBeFalsy();
-      expect(
-        arregloHorasProximas[5].numeroPaciente.codigoEstablecimiento
-      ).toBeFalsy();
+      expect(arregloHorasProximas[5].numeroPaciente).toBeFalsy();
       expect(arregloHorasProximas[5].correlativoCita).toStrictEqual(28);
       expect(arregloHorasProximas[5].codigoAmbito).toStrictEqual("01");
 
-      expect(arregloHorasProximas[6].numeroPaciente.numero).toBeFalsy();
-      expect(
-        arregloHorasProximas[6].numeroPaciente.codigoEstablecimiento
-      ).toBeFalsy();
+      expect(arregloHorasProximas[6].numeroPaciente).toBeFalsy();
       expect(arregloHorasProximas[6].correlativoCita).toStrictEqual(29);
       expect(arregloHorasProximas[6].codigoAmbito).toStrictEqual("01");
 
@@ -647,24 +503,7 @@ describe("Endpoints", () => {
       token = jwt.sign(
         {
           _id: "000000000000",
-          numerosPaciente: [
-            {
-              numero: 2,
-              codigoEstablecimiento: "E01",
-              hospital: {
-                E01: 1
-              },
-              nombreEstablecimiento: "Hospital Regional de Antofagasta",
-            },
-            {
-              numero: 57,
-              codigoEstablecimiento: "E02",
-              hospital: {
-                E02: 1
-              },
-              nombreEstablecimiento: "Hospital de Calama",
-            },
-          ],
+          numeroPaciente: 2,
         },
         secreto
       );
@@ -688,24 +527,7 @@ describe("Endpoints", () => {
       token = jwt.sign(
         {
           _id: "000000000000",
-          numerosPaciente: [
-            {
-              numero: 1,
-              codigoEstablecimiento: "E01",
-              hospital: {
-                E01: 1
-              },
-              nombreEstablecimiento: "Hospital Regional de Antofagasta",
-            },
-            {
-              numero: 5,
-              codigoEstablecimiento: "E02",
-              hospital: {
-                E02: 1
-              },
-              nombreEstablecimiento: "Hospital de Calama",
-            },
-          ],
+          numeroPaciente: 1,
         },
         secreto
       );
@@ -723,13 +545,11 @@ describe("Endpoints", () => {
 
       expect(arreglosHoras.length).toStrictEqual(2);
 
-      expect(arreglosHoras[0].numeroPaciente.numero).toBeFalsy();
-      expect(arreglosHoras[0].numeroPaciente.codigoEstablecimiento).toBeFalsy();
+      expect(arreglosHoras[0].numeroPaciente).toBeFalsy();
       expect(arreglosHoras[0].correlativoCita).toStrictEqual(12);
       expect(arreglosHoras[0].codigoAmbito).toStrictEqual("01");
 
-      expect(arreglosHoras[1].numeroPaciente.numero).toBeFalsy();
-      expect(arreglosHoras[1].numeroPaciente.codigoEstablecimiento).toBeFalsy();
+      expect(arreglosHoras[1].numeroPaciente).toBeFalsy();
       expect(arreglosHoras[1].correlativoCita).toStrictEqual(11);
       expect(arreglosHoras[1].codigoAmbito).toStrictEqual("01");
 
@@ -760,24 +580,7 @@ describe("Endpoints", () => {
       token = jwt.sign(
         {
           _id: "000000000000",
-          numerosPaciente: [
-            {
-              numero: 2,
-              codigoEstablecimiento: "E01",
-              hospital: {
-                E01: 1
-              },
-              nombreEstablecimiento: "Hospital Regional de Antofagasta",
-            },
-            {
-              numero: 57,
-              codigoEstablecimiento: "E02",
-              hospital: {
-                E02: 1
-              },
-              nombreEstablecimiento: "Hospital de Calama",
-            },
-          ],
+          numeroPaciente: 2,
         },
         secreto
       );
@@ -798,24 +601,7 @@ describe("Endpoints", () => {
       token = jwt.sign(
         {
           _id: "000000000000",
-          numerosPaciente: [
-            {
-              numero: 1,
-              codigoEstablecimiento: "E01",
-              hospital: {
-                E01: 1
-              },
-              nombreEstablecimiento: "Hospital Regional de Antofagasta",
-            },
-            {
-              numero: 5,
-              codigoEstablecimiento: "E02",
-              hospital: {
-                E02: 1
-              },
-              nombreEstablecimiento: "Hospital de Calama",
-            },
-          ],
+          numeroPaciente: 1,
         },
         secreto
       );
@@ -829,23 +615,19 @@ describe("Endpoints", () => {
 
       expect(arregloHoras.length).toStrictEqual(4);
 
-      expect(arregloHoras[0].numeroPaciente.numero).toBeFalsy();
-      expect(arregloHoras[0].numeroPaciente.codigoEstablecimiento).toBeFalsy();
+      expect(arregloHoras[0].numeroPaciente).toBeFalsy();
       expect(arregloHoras[0].correlativoCita).toStrictEqual(13);
       expect(arregloHoras[0].codigoAmbito).toStrictEqual("04");
 
-      expect(arregloHoras[1].numeroPaciente.numero).toBeFalsy();
-      expect(arregloHoras[1].numeroPaciente.codigoEstablecimiento).toBeFalsy();
+      expect(arregloHoras[1].numeroPaciente).toBeFalsy();
       expect(arregloHoras[1].correlativoCita).toStrictEqual(14);
       expect(arregloHoras[1].codigoAmbito).toStrictEqual("06");
 
-      expect(arregloHoras[2].numeroPaciente.numero).toBeFalsy();
-      expect(arregloHoras[2].numeroPaciente.codigoEstablecimiento).toBeFalsy();
+      expect(arregloHoras[2].numeroPaciente).toBeFalsy();
       expect(arregloHoras[2].correlativoCita).toStrictEqual(15);
       expect(arregloHoras[2].codigoAmbito).toStrictEqual("06");
 
-      expect(arregloHoras[3].numeroPaciente.numero).toBeFalsy();
-      expect(arregloHoras[3].numeroPaciente.codigoEstablecimiento).toBeFalsy();
+      expect(arregloHoras[3].numeroPaciente).toBeFalsy();
       expect(arregloHoras[3].correlativoCita).toStrictEqual(21);
       expect(arregloHoras[3].codigoAmbito).toStrictEqual("04");
 
@@ -878,24 +660,7 @@ describe("Endpoints", () => {
       token = jwt.sign(
         {
           _id: "000000000000",
-          numerosPaciente: [
-            {
-              numero: 2,
-              codigoEstablecimiento: "E01",
-              hospital: {
-                E01: 1
-              },
-              nombreEstablecimiento: "Hospital Regional de Antofagasta",
-            },
-            {
-              numero: 57,
-              codigoEstablecimiento: "E02",
-              hospital: {
-                E02: 1
-              },
-              nombreEstablecimiento: "Hospital de Calama",
-            },
-          ],
+          numeroPaciente: 2,
         },
         secreto
       );
@@ -922,24 +687,7 @@ describe("Endpoints", () => {
       token = jwt.sign(
         {
           _id: "000000000000",
-          numerosPaciente: [
-            {
-              numero: 1,
-              codigoEstablecimiento: "E01",
-              hospital: {
-                E01: 1
-              },
-              nombreEstablecimiento: "Hospital Regional de Antofagasta",
-            },
-            {
-              numero: 5,
-              codigoEstablecimiento: "E02",
-              hospital: {
-                E02: 1
-              },
-              nombreEstablecimiento: "Hospital de Calama",
-            },
-          ],
+          numeroPaciente: 1,
         },
         secreto
       );
@@ -958,17 +706,11 @@ describe("Endpoints", () => {
 
       expect(arregloHorasHoy.length).toStrictEqual(2);
 
-      expect(arregloHorasHoy[0].numeroPaciente.numero).toBeFalsy();
-      expect(
-        arregloHorasHoy[0].numeroPaciente.codigoEstablecimiento
-      ).toBeFalsy();
+      expect(arregloHorasHoy[0].numeroPaciente).toBeFalsy();
       expect(arregloHorasHoy[0].correlativoCita).toStrictEqual(14);
       expect(arregloHorasHoy[0].codigoAmbito).toStrictEqual("06");
 
-      expect(arregloHorasHoy[1].numeroPaciente.numero).toBeFalsy();
-      expect(
-        arregloHorasHoy[1].numeroPaciente.codigoEstablecimiento
-      ).toBeFalsy();
+      expect(arregloHorasHoy[1].numeroPaciente).toBeFalsy();
       expect(arregloHorasHoy[1].correlativoCita).toStrictEqual(15);
       expect(arregloHorasHoy[1].codigoAmbito).toStrictEqual("06");
 
@@ -976,10 +718,7 @@ describe("Endpoints", () => {
 
       expect(arregloHorasProximas.length).toStrictEqual(1);
 
-      expect(arregloHorasProximas[0].numeroPaciente.numero).toBeFalsy();
-      expect(
-        arregloHorasProximas[0].numeroPaciente.codigoEstablecimiento
-      ).toBeFalsy();
+      expect(arregloHorasProximas[0].numeroPaciente).toBeFalsy();
       expect(arregloHorasProximas[0].correlativoCita).toStrictEqual(21);
       expect(arregloHorasProximas[0].codigoAmbito).toStrictEqual("04");
 
@@ -1012,24 +751,7 @@ describe("Endpoints", () => {
       token = jwt.sign(
         {
           _id: "000000000000",
-          numerosPaciente: [
-            {
-              numero: 2,
-              codigoEstablecimiento: "E01",
-              hospital: {
-                E01: 1
-              },
-              nombreEstablecimiento: "Hospital Regional de Antofagasta",
-            },
-            {
-              numero: 57,
-              codigoEstablecimiento: "E02",
-              hospital: {
-                E02: 1
-              },
-              nombreEstablecimiento: "Hospital de Calama",
-            },
-          ],
+          numeroPaciente: 2,
         },
         secreto
       );
@@ -1054,24 +776,7 @@ describe("Endpoints", () => {
       token = jwt.sign(
         {
           _id: "000000000000",
-          numerosPaciente: [
-            {
-              numero: 1,
-              codigoEstablecimiento: "E01",
-              hospital: {
-                E01: 1
-              },
-              nombreEstablecimiento: "Hospital Regional de Antofagasta",
-            },
-            {
-              numero: 5,
-              codigoEstablecimiento: "E02",
-              hospital: {
-                E02: 1
-              },
-              nombreEstablecimiento: "Hospital de Calama",
-            },
-          ],
+          numeroPaciente: 1,
         },
         secreto
       );
@@ -1089,8 +794,7 @@ describe("Endpoints", () => {
 
       expect(arreglosHoras.length).toStrictEqual(1);
 
-      expect(arreglosHoras[0].numeroPaciente.numero).toBeFalsy();
-      expect(arreglosHoras[0].numeroPaciente.codigoEstablecimiento).toBeFalsy();
+      expect(arreglosHoras[0].numeroPaciente).toBeFalsy();
       expect(arreglosHoras[0].correlativoCita).toStrictEqual(13);
       expect(arreglosHoras[0].codigoAmbito).toStrictEqual("04");
 
