@@ -13,9 +13,10 @@ const CitasPacientes = mongoose.model(
     fechaCitacion: Date,
     horaCitacion: String,
     numeroPaciente: {
-      numero: {type: Number, require: true, unique: true, select: false},
-      codigoEstablecimiento: {type: String, require: true, unique: true, select: false},
-      nombreEstablecimiento: String,
+      type: Number,
+      require: true,
+      unique: true,
+      select: false,
     },
     codigoAmbito: String,
     tipoCita: String,
@@ -24,7 +25,6 @@ const CitasPacientes = mongoose.model(
       default: false,
     },
     blockedAt: Date,
-    codigoEstablecimiento: String,
   })
 );
 module.exports = CitasPacientes;

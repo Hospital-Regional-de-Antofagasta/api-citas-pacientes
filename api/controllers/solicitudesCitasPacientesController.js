@@ -34,7 +34,7 @@ exports.checkExisteSolicitudCambiarOAnularHoraMedica = async (req, res) => {
   try {
     const cita = await CitasPacientes.findById(req.params.idCita)
       .select(
-        "numeroPaciente.numero numeroPaciente.codigoEstablecimiento numeroPaciente.nombreEstablecimiento correlativoCita"
+        "numeroPaciente correlativoCita"
       )
       .exec();
       if (!cita) {

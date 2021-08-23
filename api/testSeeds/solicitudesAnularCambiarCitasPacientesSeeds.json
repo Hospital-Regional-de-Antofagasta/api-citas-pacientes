@@ -1,66 +1,42 @@
 [
   {
     "correlativoSolicitud": 13,
-    "numeroPaciente": 
-        {
-            "numero": 1,
-            "codigoEstablecimiento": "E01",
-            "nombreEstablecimiento": "Hospital Regional de Antofagasta"
-        },
+    "numeroPaciente": 1,
     "correlativoCita": 7,
     "tipoSolicitud": "CAMBIAR",
     "motivo": "Quiero cambio de profesional",
     "detallesMotivo": "",
     "respondida": true,
-    "enviadaHospital": false,
-    "codigoEstablecimiento": "HRA" 
+    "enviadaHospital": false
   },
   {
     "correlativoSolicitud": 14,
-    "numeroPaciente": 
-        {
-            "numero": 1,
-            "codigoEstablecimiento": "E01",
-            "nombreEstablecimiento": "Hospital Regional de Antofagasta"
-        },
+    "numeroPaciente": 1,
     "correlativoCita": 8,
     "tipoSolicitud": "ANULAR",
     "motivo": "Ya me atendí",
     "detallesMotivo": "",
     "respondida": true,
-    "enviadaHospital": false,
-    "codigoEstablecimiento": "OTRO" 
+    "enviadaHospital": false
   },
   {
     "correlativoSolicitud": 15,
-    "numeroPaciente": 
-        {
-            "numero": 1,
-            "codigoEstablecimiento": "E01",
-            "nombreEstablecimiento": "Hospital Regional de Antofagasta"
-        },
+    "numeroPaciente": 1,
     "correlativoCita": 9,
     "tipoSolicitud": "CAMBIAR",
     "motivo": "Quiero cambio de profesional",
     "detallesMotivo": "",
     "respondida": true,
-    "enviadaHospital": false,
-    "codigoEstablecimiento": "HRA" 
+    "enviadaHospital": false
   },
   {
     "correlativoSolicitud": 16,
-    "numeroPaciente": 
-        {
-            "numero": 1,
-            "codigoEstablecimiento": "E01",
-            "nombreEstablecimiento": "Hospital Regional de Antofagasta"
-        },
+    "numeroPaciente": 1,
     "correlativoCita": 12,
     "tipoSolicitud": "ANULAR",
     "motivo": "Ya me atendí",
     "detallesMotivo": "",
     "respondida": true,
-    "enviadaHospital": false,
-    "codigoEstablecimiento": "OTRO" 
+    "enviadaHospital": false
   }
 ]
