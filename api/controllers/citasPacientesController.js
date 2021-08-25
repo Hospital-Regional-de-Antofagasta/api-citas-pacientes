@@ -1,6 +1,5 @@
 const moment = require("moment-timezone");
 
-
 const CitasPacientes = require("../models/CitasPacientes");
 
 const { getMensajes } = require("../config");
@@ -61,6 +60,7 @@ const citas = async (req, res, codigoAmbito) => {
     const arregloCitasPaciente = await CitasPacientes.find({
       numeroPaciente: req.numeroPaciente,
       codigoAmbito: { $in: codigoAmbito },
+      blockedAt: null,
     })
       .sort({ fechaCitacion: 1 }) //1 ascendente
       .exec();
@@ -90,6 +90,7 @@ const citasProximas = async (req, res, codigoAmbito) => {
         numeroPaciente: req.numeroPaciente,
         fechaCitacion: { $gte: fechaInicio, $lte: fechaFin },
         codigoAmbito: { $in: codigoAmbito },
+        blockedAt: null,
       })
         .sort({ fechaCitacion: 1 }) //1 ascendente, -1 descendente
         .exec(),
@@ -97,6 +98,7 @@ const citasProximas = async (req, res, codigoAmbito) => {
         numeroPaciente: req.numeroPaciente,
         fechaCitacion: { $gte: fechaFin },
         codigoAmbito: { $in: codigoAmbito },
+        blockedAt: null,
       })
         .sort({ fechaCitacion: 1 }) //1 ascendente, -1 descendente
         .exec(),
@@ -127,6 +129,7 @@ const citasHistorico = async (req, res, codigoAmbito) => {
       numeroPaciente: req.numeroPaciente,
       fechaCitacion: { $lt: hoy },
       codigoAmbito: { $in: codigoAmbito },
+      blockedAt: null,
     })
       .sort({ fechaCitacion: -1 }) //-1 descendente
       .exec();
