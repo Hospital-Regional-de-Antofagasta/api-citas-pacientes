@@ -80,10 +80,10 @@ task apiBuild(type: NodeTask) {
     outputs.file "$project.buildDir/node/app.js";
 }
 
-// task dockerLogin(type:Exec){
-//     commandLine "docker", "login", "-u", "_json_key", "--password-stdin", "https://gcr.io"
-//     standardInput new BufferedInputStream(new FileInputStream("key.json"))
-// }
+task dockerLogin(type:Exec){
+    commandLine "docker", "login", "-u", "_json_key", "--password-stdin", "https://gcr.io"
+    standardInput new BufferedInputStream(new FileInputStream("key.json"))
+}
 
 task publish {
     dependsOn build
@@ -94,7 +94,7 @@ apiBuild.dependsOn test
 docker.dependsOn test, apiBuild
 assemble.dependsOn "docker"
 clean.dependsOn stopMongo
-//dockerPush.dependsOn assemble, dockerLogin
+dockerPush.dependsOn assemble, dockerLogin
 
 clean {
     delete testsExecutedMarkerName
