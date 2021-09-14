@@ -36,31 +36,12 @@ beforeAll(async (done) => {
     fechaHoy.getFullYear(),
     fechaHoy.getMonth(),
     fechaHoy.getDate(),
-    8,
-    30,
+    0,
+    0,
     0,
     0
   );
-  const fechaHoy2 = new Date(
-    fechaHoy.getFullYear(),
-    fechaHoy.getMonth(),
-    fechaHoy.getDate(),
-    16,
-    30,
-    0,
-    0
-  );
-  const fechaHoy3 = new Date(
-    fechaHoy.getFullYear(),
-    fechaHoy.getMonth(),
-    fechaHoy.getDate(),
-    18,
-    30,
-    0,
-    0
-  );
-  const fechaFeriado = new Date(moment(fechaHoy, "DD-MM-YYYY").add(1, "days"));
-  const fechaProxima = new Date(moment(fechaHoy, "DD-MM-YYYY").add(2, "days"));
+  const fechaFeriado = new Date(moment(fechaHoy1, "DD-MM-YYYY").add(1, "days"));
   let diaFeriado = fechaFeriado.getDate();
   let mesFeriado = 1 + fechaFeriado.getMonth(); //Date usa los meses de 0 a 11
   if (fechaFeriado.getDate() < 10) diaFeriado = "0" + diaFeriado;
@@ -73,8 +54,8 @@ beforeAll(async (done) => {
     fechaHoy.getFullYear() - 2,
     0,
     1,
-    8,
-    30,
+    0,
+    0,
     0,
     0
   );
@@ -82,26 +63,26 @@ beforeAll(async (done) => {
     fechaHoy.getFullYear() - 1,
     0,
     1,
-    8,
-    30,
+    0,
+    0,
     0,
     0
   );
   const fechaAnterior3 = new Date(
-    fechaHoy.getFullYear() - 1,
-    1,
-    2,
-    8,
-    30,
+    fechaHoy1.getFullYear(),
+    fechaHoy1.getMonth(),
+    fechaHoy1.getDate() - 1,
+    0,
+    0,
     0,
     0
   );
   const fechaPosterior1 = new Date(
-    fechaHoy.getFullYear() + 1,
-    1,
-    1,
-    8,
-    30,
+    fechaHoy1.getFullYear(),
+    fechaHoy1.getMonth(),
+    fechaHoy1.getDate() + 1,
+    0,
+    0,
     0,
     0
   );
@@ -109,8 +90,8 @@ beforeAll(async (done) => {
     fechaHoy.getFullYear() + 1,
     2,
     1,
-    16,
-    30,
+    0,
+    0,
     0,
     0
   );
@@ -138,19 +119,19 @@ beforeAll(async (done) => {
     ),
     CitasPacientes.updateOne(
       { correlativoCita: 17 },
-      { fechaCitacion: fechaHoy2 }
+      { fechaCitacion: fechaHoy1 }
     ),
     CitasPacientes.updateOne(
       { correlativoCita: 18 },
-      { fechaCitacion: fechaHoy2 }
+      { fechaCitacion: fechaHoy1 }
     ),
     CitasPacientes.updateOne(
       { correlativoCita: 19 },
-      { fechaCitacion: fechaHoy3 }
+      { fechaCitacion: fechaHoy1 }
     ),
     CitasPacientes.updateOne(
       { correlativoCita: 20 },
-      { fechaCitacion: fechaProxima }
+      { fechaCitacion: fechaPosterior1 }
     ),
     CitasPacientes.updateOne(
       { correlativoCita: 21 },
@@ -225,8 +206,8 @@ describe("Endpoints", () => {
     fechaHoy.getFullYear() - 1,
     0,
     1,
-    12,
-    30,
+    0,
+    0,
     0,
     0
   );
@@ -234,8 +215,8 @@ describe("Endpoints", () => {
     fechaHoy.getFullYear(),
     fechaHoy.getMonth(),
     fechaHoy.getDate(),
-    12,
-    30,
+    0,
+    0,
     0,
     0
   );
@@ -243,8 +224,8 @@ describe("Endpoints", () => {
     fechaHoy.getFullYear() + 1,
     1,
     1,
-    8,
-    30,
+    0,
+    0,
     0,
     0
   );
@@ -695,8 +676,12 @@ describe("Endpoints", () => {
       const arregloTodas = await CitasPacientes.find({
         numeroPaciente: 1,
         codigoAmbito: "01",
-        fechaCitacion: { $lte: fechaHoy },
+        fechaCitacion: { $lt: fechaHoy1 },
       });
+
+
+
+
       expect(arregloTodas.length).toStrictEqual(3);
       //Eliminar hora médica bloqueada.
       await CitasPacientes.deleteOne({ correlativoCita: 200 });
@@ -1048,7 +1033,7 @@ describe("Endpoints", () => {
       const arregloTodas = await CitasPacientes.find({
         numeroPaciente: 1,
         codigoAmbito: { $in: ["06", "04"] },
-        fechaCitacion: { $lte: fechaHoy },
+        fechaCitacion: { $lt: fechaHoy1 },
       });
       expect(arregloTodas.length).toStrictEqual(2);
       //Eliminar hora de examen bloqueada.

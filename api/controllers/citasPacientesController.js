@@ -77,14 +77,8 @@ const citasProximas = async (req, res, codigoAmbito) => {
       res.status(400).send({ respuesta: getMensajes("badRequest") });
     }
     const fechaHoy = new Date();
-    // sumarle un dia a la fecha de hoy para obtener la de maniana
-    // const fechaManiana = new Date()
-    // fechaManiana.setDate(fechaManiana.getDate() + 1)
-    // aplicar la zona horaria a las fechas y obtener solo el dia
-    const fechaInicio = moment.tz(fechaHoy, timeZone).startOf("day");
-    const fechaFin = moment.tz(fechaHoy, timeZone).endOf("day");
-    // const fechaInicio =  new Date(fechaHoy.getFullYear(),fechaHoy.getMonth(),fechaHoy.getDate(),0,0,0,0)
-    // const fechaFin = new Date(fechaHoy.getFullYear(),fechaHoy.getMonth(),fechaHoy.getDate(),23,59,59,999)
+    const fechaInicio = moment.tz(fechaHoy, timeZone).utc(true).startOf("day");
+    const fechaFin = moment.tz(fechaHoy, timeZone).utc(true).endOf("day");
     const arregloDeArreglosCitasPaciente = await Promise.all([
       CitasPacientes.find({
         numeroPaciente: req.numeroPaciente,
@@ -96,7 +90,7 @@ const citasProximas = async (req, res, codigoAmbito) => {
         .exec(),
       CitasPacientes.find({
         numeroPaciente: req.numeroPaciente,
-        fechaCitacion: { $gte: fechaFin },
+        fechaCitacion: { $gt: fechaFin },
         codigoAmbito: { $in: codigoAmbito },
         blockedAt: null,
       })
@@ -124,7 +118,7 @@ const citasHistorico = async (req, res, codigoAmbito) => {
       res.status(400).send({ respuesta: await getMensajes("badRequest") });
     }
     const fechaHoy = new Date();
-    const hoy = moment.tz(fechaHoy, timeZone).startOf("day");
+    const hoy = moment.tz(fechaHoy, timeZone).utc(true).startOf("day");
     const arregloCitasPaciente = await CitasPacientes.find({
       numeroPaciente: req.numeroPaciente,
       fechaCitacion: { $lt: hoy },
