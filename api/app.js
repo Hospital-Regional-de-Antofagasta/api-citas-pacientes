@@ -29,6 +29,10 @@ app.use("/v1/citas-pacientes/tipo", citasPacientesPorTipo);
 
 app.use("/v1/citas-pacientes/solicitudes", solicitudesCitasPacientes);
 
+app.get("/v1/citas-pacientes/health", (req, res) => {
+  res.status(200).send("ready");
+});
+
 if (require.main === module) {
   // true if file is executed
   process.on("SIGINT", function () {
