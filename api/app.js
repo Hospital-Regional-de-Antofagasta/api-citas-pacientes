@@ -1,5 +1,5 @@
-const setTZ = require("set-tz");
-setTZ("UTC");
+// const setTZ = require("set-tz");
+// setTZ("UTC");
 require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
@@ -23,15 +23,15 @@ mongoose.connect(connection, {
 
 cargarFeriados();
 
+app.get("/v1/citas-pacientes/health", (req, res) => {
+  res.status(200).send("ready");
+});
+
 app.use("/v1/citas-pacientes", citasPacientes);
 
 app.use("/v1/citas-pacientes/tipo", citasPacientesPorTipo);
 
 app.use("/v1/citas-pacientes/solicitudes", solicitudesCitasPacientes);
-
-app.get("/v1/citas-pacientes/health", (req, res) => {
-  res.status(200).send("ready");
-});
 
 if (require.main === module) {
   // true if file is executed
