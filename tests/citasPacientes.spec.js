@@ -1,18 +1,18 @@
-const app = require("../app");
+const app = require("../api/app");
 const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
 const supertest = require("supertest");
 const moment = require("moment");
-const citasPacientesSeeds = require("../testSeeds/citasPacientesSeeds.json");
-const diasFeriadosSeeds = require("../testSeeds/diasFeriadosSeeds.json");
-const { cargarFeriados } = require("../config");
+const citasPacientesSeeds = require("../tests/testSeeds/citasPacientesSeeds.json");
+const diasFeriadosSeeds = require("../tests/testSeeds/diasFeriadosSeeds.json");
+const { cargarFeriados } = require("../api/config");
 
-const CitasPacientes = require("../models/CitasPacientes");
-const DiasFeriados = require("../models/DiasFeriados");
+const CitasPacientes = require("../api/models/CitasPacientes");
+const DiasFeriados = require("../api/models/DiasFeriados");
 
-const { getMensajes } = require("../config");
-const ConfigApiCitasPacientes = require("../models/ConfigApiCitasPacientes");
-const configSeed = require("../testSeeds/configSeed.json");
+const { getMensajes } = require("../api/config");
+const ConfigApiCitasPacientes = require("../api/models/ConfigApiCitasPacientes");
+const configSeed = require("../tests/testSeeds/configSeed.json");
 
 const request = supertest(app);
 const secreto = process.env.JWT_SECRET;
@@ -22,7 +22,7 @@ beforeAll(async (done) => {
   //Cerrar la conexión que se crea en el index.
   await mongoose.disconnect();
   //Conectar a la base de datos de prueba.
-  await mongoose.connect(`${process.env.MONGO_URI_TEST}citas_pacientes_test`, {
+  await mongoose.connect(`${process.env.MONGO_URI}/citas_pacientes_test`, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   });
