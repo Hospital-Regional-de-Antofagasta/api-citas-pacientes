@@ -70,6 +70,7 @@ helm {
             from charts.api
 
             forTarget('local') {
+                values.put('secrets.apiKey', apiKey)
                 values.put('secrets.mongoUrl', "mongodb://$mongoIp:27017/hrapp_dev")
             }
 
@@ -91,7 +92,7 @@ helm {
 
     releaseTargets{
         local {
-            kubeContext = "docker-desktop"
+            kubeContext = "kind-kind"
         }
 
         staging {
