@@ -1,5 +1,5 @@
-const setTZ = require("set-tz");
-setTZ("UTC");
+// const setTZ = require("set-tz");
+// setTZ("UTC");
 require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");

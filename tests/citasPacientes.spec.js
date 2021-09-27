@@ -339,6 +339,8 @@ describe("Endpoints", () => {
       //Probar que el arreglo tiene 11 horas médicas y que todas son del mismo paciente.
       const arregloHoras = respuesta.body;
 
+      console.log("respuesta", respuesta.body)
+
       expect(arregloHoras.length).toStrictEqual(12);
 
       expect(arregloHoras[0].numeroPaciente).toBeFalsy();
