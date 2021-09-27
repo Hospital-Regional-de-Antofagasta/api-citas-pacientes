@@ -79,8 +79,6 @@ const citasProximas = async (req, res, codigoAmbito) => {
     const fechaHoy = new Date();
     const fechaInicio = moment.tz(fechaHoy, timeZone).utc(true).startOf("day");
     const fechaFin = moment.tz(fechaHoy, timeZone).utc(true).endOf("day");
-    console.log("fechaInicio", fechaInicio)
-    console.log("fechaFin", fechaFin)
     const arregloDeArreglosCitasPaciente = await Promise.all([
       CitasPacientes.find({
         numeroPaciente: req.numeroPaciente,

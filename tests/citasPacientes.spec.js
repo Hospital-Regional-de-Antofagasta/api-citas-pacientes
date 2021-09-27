@@ -50,24 +50,8 @@ beforeAll(async (done) => {
     fecha: fechaFeriado.getFullYear() + "-" + mesFeriado + "-" + diaFeriado,
   });
   cargarFeriados();
-  const fechaAnterior1 = new Date(
-    fechaHoy.getFullYear() - 2,
-    0,
-    1,
-    0,
-    0,
-    0,
-    0
-  );
-  const fechaAnterior2 = new Date(
-    fechaHoy.getFullYear() - 1,
-    0,
-    1,
-    0,
-    0,
-    0,
-    0
-  );
+  const fechaAnterior1 = new Date(fechaHoy.getFullYear() - 2, 0, 1, 0, 0, 0, 0);
+  const fechaAnterior2 = new Date(fechaHoy.getFullYear() - 1, 0, 1, 0, 0, 0, 0);
   const fechaAnterior3 = new Date(
     fechaHoy1.getFullYear(),
     fechaHoy1.getMonth(),
@@ -202,15 +186,7 @@ describe("Endpoints", () => {
     0,
     0
   );
-  const fechaAnterior1 = new Date(
-    fechaHoy.getFullYear() - 1,
-    0,
-    1,
-    0,
-    0,
-    0,
-    0
-  );
+  const fechaAnterior1 = new Date(fechaHoy.getFullYear() - 1, 0, 1, 0, 0, 0, 0);
   const fechaHoy1 = new Date(
     fechaHoy.getFullYear(),
     fechaHoy.getMonth(),
@@ -339,7 +315,9 @@ describe("Endpoints", () => {
       //Probar que el arreglo tiene 11 horas médicas y que todas son del mismo paciente.
       const arregloHoras = respuesta.body;
 
-      console.log("respuesta", respuesta.body)
+      arregloHoras.sort(function (anterior, siguiente) {
+        return anterior.correlativoCita - siguiente.correlativoCita;
+      });
 
       expect(arregloHoras.length).toStrictEqual(12);
 
@@ -479,10 +457,15 @@ describe("Endpoints", () => {
         )
         .set("Authorization", token);
       expect(respuesta.status).toBe(200);
+
       //Probar que el arreglo tiene dos arreglos de hora médicas y que todas son del mismo paciente.
       const arregloDeArreglosHoras = respuesta.body;
 
       const arregloHorasHoy = arregloDeArreglosHoras[0];
+
+      arregloHorasHoy.sort(function (anterior, siguiente) {
+        return anterior.correlativoCita - siguiente.correlativoCita;
+      });
 
       expect(arregloHorasHoy.length).toStrictEqual(3);
 
@@ -499,6 +482,10 @@ describe("Endpoints", () => {
       expect(arregloHorasHoy[2].codigoAmbito).toStrictEqual("01");
 
       const arregloHorasProximas = arregloDeArreglosHoras[1];
+
+      arregloHorasProximas.sort(function (anterior, siguiente) {
+        return anterior.correlativoCita - siguiente.correlativoCita;
+      });
 
       expect(arregloHorasProximas.length).toStrictEqual(7);
 
@@ -640,14 +627,18 @@ describe("Endpoints", () => {
 
       const arreglosHoras = respuesta.body;
 
+      arreglosHoras.sort(function (anterior, siguiente) {
+        return anterior.correlativoCita - siguiente.correlativoCita;
+      });
+
       expect(arreglosHoras.length).toStrictEqual(2);
 
       expect(arreglosHoras[0].numeroPaciente).toBeFalsy();
-      expect(arreglosHoras[0].correlativoCita).toStrictEqual(12);
+      expect(arreglosHoras[0].correlativoCita).toStrictEqual(11);
       expect(arreglosHoras[0].codigoAmbito).toStrictEqual("01");
 
       expect(arreglosHoras[1].numeroPaciente).toBeFalsy();
-      expect(arreglosHoras[1].correlativoCita).toStrictEqual(11);
+      expect(arreglosHoras[1].correlativoCita).toStrictEqual(12);
       expect(arreglosHoras[1].codigoAmbito).toStrictEqual("01");
 
       done();
@@ -680,9 +671,6 @@ describe("Endpoints", () => {
         codigoAmbito: "01",
         fechaCitacion: { $lt: fechaHoy1 },
       });
-
-
-
 
       expect(arregloTodas.length).toStrictEqual(3);
       //Eliminar hora médica bloqueada.
@@ -745,8 +733,13 @@ describe("Endpoints", () => {
         .set("Authorization", token);
 
       expect(respuesta.status).toBe(200);
+
       //Probar que el arreglo tiene cinco horas médicas y que todas son del mismo paciente.
       const arregloHoras = respuesta.body;
+
+      arregloHoras.sort(function (anterior, siguiente) {
+        return anterior.correlativoCita - siguiente.correlativoCita;
+      });
 
       expect(arregloHoras.length).toStrictEqual(4);
 
@@ -864,9 +857,15 @@ describe("Endpoints", () => {
         .set("Authorization", token);
 
       expect(respuesta.status).toBe(200);
+
       //Probar que el arreglo tiene dos arreglos de hora médicas y que todas son del mismo paciente.
       const arregloDeArreglosHoras = respuesta.body;
+
       const arregloHorasHoy = arregloDeArreglosHoras[0];
+
+      arregloHorasHoy.sort(function (anterior, siguiente) {
+        return anterior.correlativoCita - siguiente.correlativoCita;
+      });
 
       expect(arregloHorasHoy.length).toStrictEqual(2);
 
@@ -879,6 +878,10 @@ describe("Endpoints", () => {
       expect(arregloHorasHoy[1].codigoAmbito).toStrictEqual("06");
 
       const arregloHorasProximas = arregloDeArreglosHoras[1];
+
+      arregloHorasProximas.sort(function (anterior, siguiente) {
+        return anterior.correlativoCita - siguiente.correlativoCita;
+      });
 
       expect(arregloHorasProximas.length).toStrictEqual(1);
 
