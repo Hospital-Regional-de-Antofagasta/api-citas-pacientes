@@ -18,6 +18,8 @@ secrets:
   apiKey: ""
   mongoUrl: "mongodb://mongo/hrapp"
 
+enviroment: prod
+
 service:
   type: NodePort
   port: 80
