@@ -20,6 +20,7 @@ var clusterNombre = System.getenv("API_CLUSTER") ?: "CLUSTER"
 var apiKey = System.getenv("API_KEY") ?: "0123456789ABCDEF"
 var mongoIp = System.getenv("MONGO_IP") ?: "localhost"
 var keyJson = System.getenv("KEY") ?: "{}"
+var nodeEnv = System.getenv("NODE_ENV") ?: "prod"
 var commitId
 
 gitVersion{
@@ -179,10 +180,12 @@ helm {
             from charts.api
 
             forTarget('local') {
+                values.put('enviroment', nodeEnv)
                 values.put('secrets.mongoUrl', "mongodb://$mongoIp:27017/hrapp_dev")
             }
 
             forTarget('cloud') {
+                values.put('enviroment', nodeEnv)
                 values.put('secrets.apiKey', apiKey)
                 values.put('secrets.mongoUrl', "mongodb://$mongoIp:27017/hrapp")
             }

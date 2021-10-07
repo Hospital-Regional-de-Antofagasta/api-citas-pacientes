@@ -43,6 +43,8 @@ spec:
               path: /v1/citas-pacientes/health
               port: {{ .Values.service.targetPort }}
           env:
+            - name: NODE_ENV
+              value: {{ .Values.enviroment  }}
             - name: PORT
               value: "{{ .Values.service.targetPort }}"
             - name: HOSTNAME
