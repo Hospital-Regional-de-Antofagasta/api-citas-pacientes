@@ -303,12 +303,14 @@ clean.dependsOn stopMongo
 dockerPush.dependsOn build, gcrLogin
 
 task createNamespace(type:Exec){
+    shouldRunAfter "gcloudGetContextCredentials"
     commandLine 'kubectl', 'create','namespace','cl-hra-api'
 
     ignoreExitValue true
 }
 
 task gcloudLogin(type:Exec) {
+    shouldRunAfter "generateKeyFile"
     commandLine "gcloud", "auth", "activate-service-account"
     args "--key-file", "key.json"
     args "--project", "$projectId"
@@ -323,7 +325,7 @@ task gcloudGetContextCredentials(type:Exec){
 }
 
 helmInstallApiCitasPacientesToLocal.dependsOn dockerPush, createNamespace
-helmInstallApiCitasPacientesToCloud.dependsOn dockerPush, gcloudGetContextCredentials
+helmInstallApiCitasPacientesToCloud.dependsOn dockerPush, gcloudGetContextCredentials, createNamespace
 
 
 clean {
