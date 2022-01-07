@@ -181,13 +181,13 @@ helm {
 
             forTarget('local') {
                 values.put('enviroment', nodeEnv)
-                values.put('secrets.mongoUrl', "mongodb://$mongoIp:27017/hrapp_dev")
+                values.put('secrets.mongoUrl', "mongodb://$mongoIp:27017/hrapp_citas_pacientes_dev")
             }
 
             forTarget('cloud') {
                 values.put('enviroment', nodeEnv)
                 values.put('secrets.apiKey', apiKey)
-                values.put('secrets.mongoUrl', "mongodb://$mongoIp:27017/hrapp")
+                values.put('secrets.mongoUrl', "mongodb://$mongoIp:27017/hrapp_citas_pacientes")
             }
 
             forAnyTarget{
