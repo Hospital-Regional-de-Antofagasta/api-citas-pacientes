@@ -57,14 +57,15 @@ exports.getHorasExamenesPacienteHistorico = async (req, res) => {
 
 const citas = async (req, res, codigoAmbito) => {
   try {
-    const arregloCitasPaciente = await CitasPacientes.find({
-      numeroPaciente: req.numeroPaciente,
+    const rutPaciente = req.rutPaciente;
+    const citasPaciente = await CitasPacientes.find({
+      rutPaciente,
       codigoAmbito: { $in: codigoAmbito },
-      blockedAt: null,
+      bloqueadaEl: null,
     })
       .sort({ fechaCitacion: 1 }) //1 ascendente
       .exec();
-    res.status(200).send(arregloCitasPaciente);
+    res.status(200).send(citasPaciente);
   } catch (error) {
     res.status(500).send({ respuesta: getMensajes("serverError") });
   }
@@ -72,6 +73,7 @@ const citas = async (req, res, codigoAmbito) => {
 
 const citasProximas = async (req, res, codigoAmbito) => {
   try {
+    const rutPaciente = req.rutPaciente;
     const timeZone = req.params.timeZone;
     if (typeof timeZone !== "string") {
       res.status(400).send({ respuesta: getMensajes("badRequest") });
@@ -79,25 +81,25 @@ const citasProximas = async (req, res, codigoAmbito) => {
     const fechaHoy = new Date();
     const fechaInicio = moment.tz(fechaHoy, timeZone).utc(true).startOf("day");
     const fechaFin = moment.tz(fechaHoy, timeZone).utc(true).endOf("day");
-    const arregloDeArreglosCitasPaciente = await Promise.all([
+    const citasPaciente = await Promise.all([
       CitasPacientes.find({
-        numeroPaciente: req.numeroPaciente,
+        rutPaciente,
         fechaCitacion: { $gte: fechaInicio, $lte: fechaFin },
         codigoAmbito: { $in: codigoAmbito },
-        blockedAt: null,
+        bloqueadaEl: null,
       })
         .sort({ fechaCitacion: 1 }) //1 ascendente, -1 descendente
         .exec(),
       CitasPacientes.find({
-        numeroPaciente: req.numeroPaciente,
+        rutPaciente,
         fechaCitacion: { $gt: fechaFin },
         codigoAmbito: { $in: codigoAmbito },
-        blockedAt: null,
+        bloqueadaEl: null,
       })
         .sort({ fechaCitacion: 1 }) //1 ascendente, -1 descendente
         .exec(),
     ]);
-    res.status(200).send(arregloDeArreglosCitasPaciente);
+    res.status(200).send(citasPaciente);
   } catch (error) {
     if (process.env.NODE_ENV === "dev")
       return res.status(500).send({
@@ -114,20 +116,21 @@ const citasProximas = async (req, res, codigoAmbito) => {
 const citasHistorico = async (req, res, codigoAmbito) => {
   try {
     const timeZone = req.params.timeZone;
+    const rutPaciente = req.rutPaciente;
     if (typeof timeZone !== "string") {
       res.status(400).send({ respuesta: await getMensajes("badRequest") });
     }
     const fechaHoy = new Date();
     const hoy = moment.tz(fechaHoy, timeZone).utc(true).startOf("day");
-    const arregloCitasPaciente = await CitasPacientes.find({
-      numeroPaciente: req.numeroPaciente,
+    const citasPaciente = await CitasPacientes.find({
+      rutPaciente,
       fechaCitacion: { $lt: hoy },
       codigoAmbito: { $in: codigoAmbito },
-      blockedAt: null,
+      bloqueadaEl: null,
     })
       .sort({ fechaCitacion: -1 }) //-1 descendente
       .exec();
-    res.status(200).send(arregloCitasPaciente);
+    res.status(200).send(citasPaciente);
   } catch (error) {
     if (process.env.NODE_ENV === "dev")
       return res.status(500).send({
