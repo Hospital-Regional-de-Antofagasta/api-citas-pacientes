@@ -44,14 +44,17 @@ const setCurrentDates = async (datesDisplacement) => {
   }
 };
 
+let cont = 0;
+
 beforeEach(async () => {
   await mongoose.disconnect();
-  await mongoose.connect(`${process.env.MONGO_URI}/citas_pacientes_test`, {
+  await mongoose.connect(`${process.env.MONGO_URI}/citas_pacientes_test${cont}`, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   });
   await CitasPacientes.create(citasPacientesSeeds);
   await ConfigApiCitasPacientes.create(configSeed);
+  cont++;
 });
 
 afterEach(async () => {
