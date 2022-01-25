@@ -363,8 +363,6 @@ describe("Endpoints", () => {
 
       const citas = respuesta.body;
 
-      console.log(citas)
-
       expect(citas.length).toBe(7);
 
       expect(citas[6].rutPaciente).toBeFalsy();
@@ -587,8 +585,6 @@ describe("Endpoints", () => {
       expect(respuesta.status).toBe(200);
 
       const horas = respuesta.body;
-
-      console.log(horas)
 
       expect(horas.length).toBe(2);
 
