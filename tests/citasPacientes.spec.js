@@ -29,21 +29,6 @@ const tokenUsuarioSinDatos = jwt.sign(
   secreto
 );
 
-const setCurrentDates = async (datesDisplacement) => {
-  const citas = await CitasPacientes.find().select("_id").exec();
-
-  let indice = 0;
-  for (let cita of citas) {
-    await CitasPacientes.updateOne(
-      { _id: cita._id },
-      {
-        fechaCitacion: moment().add(datesDisplacement[indice], "days"),
-      }
-    );
-    indice++;
-  }
-};
-
 beforeEach(async () => {
   await mongoose.disconnect();
   await mongoose.connect(`${process.env.MONGO_URI}/citas_pacientes_test`, {
