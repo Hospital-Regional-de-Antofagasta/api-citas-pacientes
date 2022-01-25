@@ -32,8 +32,6 @@ const tokenUsuarioSinDatos = jwt.sign(
 const setCurrentDates = async (datesDisplacement) => {
   const citas = await CitasPacientes.find().select("_id").exec();
 
-  console.log(moment())
-
   let indice = 0;
   for (let cita of citas) {
     await CitasPacientes.updateOne(
@@ -365,6 +363,8 @@ describe("Endpoints", () => {
 
       const citas = respuesta.body;
 
+      console.log(citas)
+
       expect(citas.length).toBe(7);
 
       expect(citas[6].rutPaciente).toBeFalsy();
@@ -587,6 +587,8 @@ describe("Endpoints", () => {
       expect(respuesta.status).toBe(200);
 
       const horas = respuesta.body;
+
+      console.log(horas)
 
       expect(horas.length).toBe(2);
 
