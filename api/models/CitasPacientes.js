@@ -4,22 +4,22 @@ const Schema = mongoose.Schema;
 const CitasPacientes = mongoose.model(
   "citas_paciente",
   new Schema({
-    correlativo: { type: Number, require: true },
-    codigoLugar: { type: String, require: true },
+    correlativo: { type: Number, required: true },
+    codigoLugar: { type: String, required: true },
     nombreLugar: String,
-    codigoServicio: { type: String, require: true },
+    codigoServicio: { type: String, required: true },
     nombreServicio: String,
-    codigoProfesional: { type: String, require: true },
+    codigoProfesional: { type: String, required: true },
     nombreProfesional: String,
-    tipo: { type: String, require: true },
-    codigoAmbito: { type: String, require: true },
-    fechaCitacion: { type: Date, require: true },
-    horaCitacion: { type: String, require: true },
-    rutPaciente: { type: String, require: true, select: false },
+    tipo: { type: String, required: true },
+    codigoAmbito: { type: String, required: true },
+    fechaCitacion: { type: Date, required: true },
+    horaCitacion: { type: String, required: true },
+    rutPaciente: { type: String, required: true, select: false },
     alta: { type: Boolean, default: false },
     bloqueadaEl: Date,
-    codigoEstablecimiento: { type: String, require: true },
-    nombreEstablecimiento: { type: String, require: true },
+    codigoEstablecimiento: { type: String, required: true },
+    nombreEstablecimiento: { type: String, required: true },
   })
 );
 module.exports = CitasPacientes;
