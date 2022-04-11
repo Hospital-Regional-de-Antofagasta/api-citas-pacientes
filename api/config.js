@@ -1,6 +1,5 @@
 
 const ConfigApiCitasPacientes = require("./models/ConfigApiCitasPacientes");
-const DiasFeriados = require("./models/DiasFeriados");
 
 const mensajesPorDefecto = {
   forbiddenAccess: {
@@ -48,21 +47,4 @@ exports.getMensajes = async (tipo) => {
   } catch (error) {
     return mensajesPorDefecto[tipo];
   }
-};
-
-exports.cargarFeriados = async () => {
-  try {
-    const feriados = await DiasFeriados.find()
-      .select("fecha -_id") //quitar el _id
-      .exec();
-    momentBussinessDays.updateLocale("cl", {
-      holidays: feriados.map((feriado) => {
-        return feriado.fecha;
-      }),
-      holidayFormat: "YYYY-MM-DD",
-    });
-    momentBussinessDays.updateLocale("cl", {
-      workingWeekdays: [1, 2, 3, 4, 5],
-    });
-  } catch (error) {}
 };
